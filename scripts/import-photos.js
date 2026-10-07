@@ -13,6 +13,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const sharp = require('sharp');
 const db = require('../lib/db');
 
 const args = process.argv.slice(2), flags = args.filter((a) => a.startsWith('--'));
@@ -57,15 +58,18 @@ if (useMap) {
     groups.set(m.slug, { cat: m.category, base: m.slug, slug: m.slug, name: m.name, files: m.files.map((x, i) => ({ f: path.join(root, x), ext: path.extname(x).toLowerCase(), isModel: i > 0 })) });
   }
 }
+// Photos are resized to max 1400px wide (web JPEG, EXIF-rotated) so the store stays fast.
+const WEB = (f, out) => sharp(f).rotate().resize({ width: 1400, withoutEnlargement: true }).jpeg({ quality: 82, mozjpeg: true }).toFile(out);
+(async () => {
 let n = 0;
 for (const g of groups.values()) {
   const slug = g.slug || slugify(g.base);
   const ex = s.products.find((p) => p.slug === slug);
   if (ex) { if (flags.includes('--publish')) ex.active = true; console.log('skip (exists):', slug); continue; }
-  const images = g.files.map(({ f, ext, isModel }) => {
-    const name = `${slug}-${crypto.randomBytes(3).toString('hex')}${ext === '.jpeg' ? '.jpg' : ext}`;
-    fs.copyFileSync(f, path.join(UP, name)); return { file: name, kind: isModel ? 'model' : 'product' };
-  }).sort((a, b) => (a.kind === 'product' ? 0 : 1) - (b.kind === 'product' ? 0 : 1));
+  const images = (await Promise.all(g.files.map(async ({ f, isModel }) => {
+    const name = `${slug}-${crypto.randomBytes(3).toString('hex')}.jpg`;
+    await WEB(f, path.join(UP, name)); return { file: name, kind: isModel ? 'model' : 'product' };
+  }))).sort((a, b) => (a.kind === 'product' ? 0 : 1) - (b.kind === 'product' ? 0 : 1));
   const nm = g.name || { fa: title(g.base), en: title(g.base) };
   s.products.push({ id: db.nextId(), slug, name: nm, description: { fa: '', en: '' }, details: { fa: '', en: '' },
     categoryId: category(g.cat), price: PRICE, comparePrice: 0, sizes: SIZES.map((x) => ({ name: x, stock: STOCK })),
@@ -74,3 +78,4 @@ for (const g of groups.values()) {
 }
 db.save();
 console.log(`Imported ${n} product(s). Open /admin to set names (Farsi), prices and stock${flags.includes('--publish') ? '' : ', then switch them to Active'}.`);
+})();

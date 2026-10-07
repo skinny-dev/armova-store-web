@@ -58,7 +58,7 @@
     const cards = list.map((p) => {
       const out = p.sizes.length && p.sizes.every((s) => s.stock === 0);
       const main = img(p, ui.kind), alt2 = p.images.map((i) => '/uploads/' + encodeURIComponent(i.file)).find((u) => u !== main);
-      return `<a class="card" data-link aria-label="${esc(L(p.name))}" href="/product/${encodeURIComponent(p.slug)}"><img loading="lazy" src="${main}" alt="${esc(L(p.name))}">${alt2 ? `<img class="alt" loading="lazy" src="${alt2}" alt="">` : ''}
+      return `<a class="card" data-link aria-label="${esc(L(p.name))}" href="/product/${encodeURIComponent(p.slug)}"><img loading="lazy" decoding="async" src="${main}" alt="${esc(L(p.name))}">${alt2 ? `<img class="alt" loading="lazy" decoding="async" src="${alt2}" alt="">` : ''}
         ${out ? `<span class="badge">${t('soldOut')}</span>` : ''}</a>`;
     }).join('');
     const gb = (c, rows) => `<button class="gridbtn ${ui.cols === c ? 'on' : ''}" data-cols="${c}" aria-label="${c}"><i style="grid-template-columns:repeat(${rows},1fr)">${'<b></b>'.repeat(rows * rows)}</i></button>`;
