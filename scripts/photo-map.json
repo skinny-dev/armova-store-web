@@ -1,0 +1,833 @@
+[
+ {
+  "slug": "pocket-white",
+  "name": {
+   "fa": "پیراهن جیب‌دار سفید",
+   "en": "Pocket Shirt White"
+  },
+  "category": {
+   "fa": "پیراهن",
+   "en": "Shirts"
+  },
+  "files": [
+   "DSC01329.jpg",
+   "DSC01331.jpg",
+   "DSC01327.jpg",
+   "DSC01332.jpg"
+  ]
+ },
+ {
+  "slug": "pocket-brown",
+  "name": {
+   "fa": "پیراهن جیب‌دار قهوه‌ای",
+   "en": "Pocket Shirt Brown"
+  },
+  "category": {
+   "fa": "پیراهن",
+   "en": "Shirts"
+  },
+  "files": [
+   "DSC01391.jpg"
+  ]
+ },
+ {
+  "slug": "polo-red",
+  "name": {
+   "fa": "پولو کلاسیک قرمز",
+   "en": "Classic Polo Red"
+  },
+  "category": {
+   "fa": "پولو",
+   "en": "Polos"
+  },
+  "files": [
+   "DSC01411.jpg",
+   "DSC01409.jpg"
+  ]
+ },
+ {
+  "slug": "polo-blue",
+  "name": {
+   "fa": "پولو کلاسیک آبی",
+   "en": "Classic Polo Blue"
+  },
+  "category": {
+   "fa": "پولو",
+   "en": "Polos"
+  },
+  "files": [
+   "DSC01444.jpg"
+  ]
+ },
+ {
+  "slug": "polo-white",
+  "name": {
+   "fa": "پولو کلاسیک سفید",
+   "en": "Classic Polo White"
+  },
+  "category": {
+   "fa": "پولو",
+   "en": "Polos"
+  },
+  "files": [
+   "DSC01478.jpg"
+  ]
+ },
+ {
+  "slug": "polo-black",
+  "name": {
+   "fa": "پولو کلاسیک مشکی",
+   "en": "Classic Polo Black"
+  },
+  "category": {
+   "fa": "پولو",
+   "en": "Polos"
+  },
+  "files": [
+   "DSC01781.jpg"
+  ]
+ },
+ {
+  "slug": "rib-red",
+  "name": {
+   "fa": "تاپ ریب قرمز",
+   "en": "Ribbed Top Red"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01487.jpg"
+  ]
+ },
+ {
+  "slug": "rib-beige",
+  "name": {
+   "fa": "تاپ ریب بژ",
+   "en": "Ribbed Top Beige"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01491.jpg"
+  ]
+ },
+ {
+  "slug": "zip-pink",
+  "name": {
+   "fa": "بافت یقه‌زیپ صورتی",
+   "en": "Zip Knit Pink"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01490.jpg"
+  ]
+ },
+ {
+  "slug": "zip-green",
+  "name": {
+   "fa": "بافت یقه‌زیپ سبز",
+   "en": "Zip Knit Green"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01526.jpg",
+   "DSC01528.jpg",
+   "IMG_8989.JPG"
+  ]
+ },
+ {
+  "slug": "zip-beige",
+  "name": {
+   "fa": "بافت یقه‌زیپ بژ",
+   "en": "Zip Knit Beige"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01568.jpg",
+   "IMG_8990.JPG"
+  ]
+ },
+ {
+  "slug": "ruffle-yellow",
+  "name": {
+   "fa": "بافت دامنی زرد",
+   "en": "Ruffle Hem Knit Yellow"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01582.jpg"
+  ]
+ },
+ {
+  "slug": "ruffle-pink",
+  "name": {
+   "fa": "بافت دامنی صورتی",
+   "en": "Ruffle Hem Knit Pink"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01615.jpg"
+  ]
+ },
+ {
+  "slug": "ny-yellow",
+  "name": {
+   "fa": "بافت نیویورک زرد",
+   "en": "New York Knit Yellow"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01587.jpg"
+  ]
+ },
+ {
+  "slug": "ny-grey",
+  "name": {
+   "fa": "بافت نیویورک طوسی",
+   "en": "New York Knit Grey"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01616.jpg",
+   "IMG_8913.JPG"
+  ]
+ },
+ {
+  "slug": "ny-black",
+  "name": {
+   "fa": "بافت نیویورک مشکی",
+   "en": "New York Knit Black"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "IMG_8901.JPG"
+  ]
+ },
+ {
+  "slug": "ny-beige",
+  "name": {
+   "fa": "بافت نیویورک بژ",
+   "en": "New York Knit Beige"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "IMG_8903.JPG"
+  ]
+ },
+ {
+  "slug": "ny-white",
+  "name": {
+   "fa": "بافت نیویورک سفید",
+   "en": "New York Knit White"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "IMG_8904.JPG"
+  ]
+ },
+ {
+  "slug": "ny-pink",
+  "name": {
+   "fa": "بافت نیویورک صورتی",
+   "en": "New York Knit Pink"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "IMG_8906.JPG"
+  ]
+ },
+ {
+  "slug": "ny-green",
+  "name": {
+   "fa": "بافت نیویورک سبز",
+   "en": "New York Knit Green"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "IMG_8910.JPG"
+  ]
+ },
+ {
+  "slug": "ny-red",
+  "name": {
+   "fa": "بافت نیویورک قرمز",
+   "en": "New York Knit Red"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "IMG_8912.JPG"
+  ]
+ },
+ {
+  "slug": "tee-black",
+  "name": {
+   "fa": "تی‌شرت اورسایز مشکی",
+   "en": "Oversized Tee Black"
+  },
+  "category": {
+   "fa": "تی‌شرت",
+   "en": "T-Shirts"
+  },
+  "files": [
+   "DSC01654.jpg",
+   "DSC01657.jpg",
+   "DSC01659.jpg"
+  ]
+ },
+ {
+  "slug": "tee-navy",
+  "name": {
+   "fa": "تی‌شرت اورسایز سرمه‌ای",
+   "en": "Oversized Tee Navy"
+  },
+  "category": {
+   "fa": "تی‌شرت",
+   "en": "T-Shirts"
+  },
+  "files": [
+   "DSC01670.jpg",
+   "DSC01671.jpg"
+  ]
+ },
+ {
+  "slug": "heart-black",
+  "name": {
+   "fa": "بافت یقه‌اسکی قلب مشکی",
+   "en": "Heart Turtleneck Black"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01680.jpg",
+   "DSC01681.jpg"
+  ]
+ },
+ {
+  "slug": "heart-green",
+  "name": {
+   "fa": "بافت یقه‌اسکی قلب سبز",
+   "en": "Heart Turtleneck Green"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01686.jpg"
+  ]
+ },
+ {
+  "slug": "heart-yellow",
+  "name": {
+   "fa": "بافت یقه‌اسکی قلب زرد",
+   "en": "Heart Turtleneck Yellow"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01861.jpg",
+   "DSC01687.jpg"
+  ]
+ },
+ {
+  "slug": "heart-pink",
+  "name": {
+   "fa": "بافت یقه‌اسکی قلب صورتی",
+   "en": "Heart Turtleneck Pink"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01702.jpg"
+  ]
+ },
+ {
+  "slug": "heart-beige",
+  "name": {
+   "fa": "بافت یقه‌اسکی قلب بژ",
+   "en": "Heart Turtleneck Beige"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01706.jpg",
+   "DSC01711.jpg",
+   "DSC01858.jpg"
+  ]
+ },
+ {
+  "slug": "heart-red",
+  "name": {
+   "fa": "بافت یقه‌اسکی قلب قرمز",
+   "en": "Heart Turtleneck Red"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01715.jpg"
+  ]
+ },
+ {
+  "slug": "heart-grey",
+  "name": {
+   "fa": "بافت یقه‌اسکی قلب طوسی",
+   "en": "Heart Turtleneck Grey"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01726.jpg"
+  ]
+ },
+ {
+  "slug": "trim-green",
+  "name": {
+   "fa": "تی‌شرت یقه‌زیپ سبز",
+   "en": "Zip Trim Tee Green"
+  },
+  "category": {
+   "fa": "تی‌شرت",
+   "en": "T-Shirts"
+  },
+  "files": [
+   "IMG_8993.JPG",
+   "DSC01746.jpg"
+  ]
+ },
+ {
+  "slug": "cb-black",
+  "name": {
+   "fa": "تی‌شرت رنگی مشکی",
+   "en": "Colorblock Tee Black"
+  },
+  "category": {
+   "fa": "تی‌شرت",
+   "en": "T-Shirts"
+  },
+  "files": [
+   "DSC01747.jpg"
+  ]
+ },
+ {
+  "slug": "trim-red",
+  "name": {
+   "fa": "تی‌شرت یقه‌زیپ قرمز",
+   "en": "Zip Trim Tee Red"
+  },
+  "category": {
+   "fa": "تی‌شرت",
+   "en": "T-Shirts"
+  },
+  "files": [
+   "IMG_8994.JPG"
+  ]
+ },
+ {
+  "slug": "trim-black",
+  "name": {
+   "fa": "تی‌شرت یقه‌زیپ مشکی",
+   "en": "Zip Trim Tee Black"
+  },
+  "category": {
+   "fa": "تی‌شرت",
+   "en": "T-Shirts"
+  },
+  "files": [
+   "IMG_8995.JPG"
+  ]
+ },
+ {
+  "slug": "trim-grey",
+  "name": {
+   "fa": "تی‌شرت یقه‌زیپ طوسی",
+   "en": "Zip Trim Tee Grey"
+  },
+  "category": {
+   "fa": "تی‌شرت",
+   "en": "T-Shirts"
+  },
+  "files": [
+   "IMG_8996.JPG"
+  ]
+ },
+ {
+  "slug": "trim-yellow",
+  "name": {
+   "fa": "تی‌شرت یقه‌زیپ زرد",
+   "en": "Zip Trim Tee Yellow"
+  },
+  "category": {
+   "fa": "تی‌شرت",
+   "en": "T-Shirts"
+  },
+  "files": [
+   "IMG_8997.JPG"
+  ]
+ },
+ {
+  "slug": "trim-white",
+  "name": {
+   "fa": "تی‌شرت یقه‌زیپ سفید",
+   "en": "Zip Trim Tee White"
+  },
+  "category": {
+   "fa": "تی‌شرت",
+   "en": "T-Shirts"
+  },
+  "files": [
+   "IMG_8998.JPG"
+  ]
+ },
+ {
+  "slug": "ribpolo-lblue",
+  "name": {
+   "fa": "پولو ریب آبی روشن",
+   "en": "Ribbed Polo Light Blue"
+  },
+  "category": {
+   "fa": "پولو",
+   "en": "Polos"
+  },
+  "files": [
+   "DSC01845.jpg"
+  ]
+ },
+ {
+  "slug": "ribpolo-purple",
+  "name": {
+   "fa": "پولو ریب بنفش",
+   "en": "Ribbed Polo Purple"
+  },
+  "category": {
+   "fa": "پولو",
+   "en": "Polos"
+  },
+  "files": [
+   "DSC01855.jpg",
+   "DSC01864.jpg"
+  ]
+ },
+ {
+  "slug": "ribpolo-lime",
+  "name": {
+   "fa": "پولو ریب سبز فسفری",
+   "en": "Ribbed Polo Neon Green"
+  },
+  "category": {
+   "fa": "پولو",
+   "en": "Polos"
+  },
+  "files": [
+   "DSC01875.jpg"
+  ]
+ },
+ {
+  "slug": "vneck-white",
+  "name": {
+   "fa": "تاپ یقه‌هفت سفید",
+   "en": "V-Neck Top White"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01870.jpg"
+  ]
+ },
+ {
+  "slug": "vneck-grey",
+  "name": {
+   "fa": "تاپ یقه‌هفت طوسی",
+   "en": "V-Neck Top Grey"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01881.jpg"
+  ]
+ },
+ {
+  "slug": "vneck-green",
+  "name": {
+   "fa": "تاپ یقه‌هفت سبز",
+   "en": "V-Neck Top Green"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01886.jpg"
+  ]
+ },
+ {
+  "slug": "scallop-green",
+  "name": {
+   "fa": "تی‌شرت لبه‌دار سبز",
+   "en": "Scallop Tee Green"
+  },
+  "category": {
+   "fa": "تی‌شرت",
+   "en": "T-Shirts"
+  },
+  "files": [
+   "DSC01895.jpg"
+  ]
+ },
+ {
+  "slug": "scallop-yellow",
+  "name": {
+   "fa": "تی‌شرت لبه‌دار زرد",
+   "en": "Scallop Tee Yellow"
+  },
+  "category": {
+   "fa": "تی‌شرت",
+   "en": "T-Shirts"
+  },
+  "files": [
+   "DSC01904.jpg"
+  ]
+ },
+ {
+  "slug": "cable-green",
+  "name": {
+   "fa": "بافت طرح‌دار یقه‌زیپ سبز",
+   "en": "Cable Zip Knit Green"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01912.jpg"
+  ]
+ },
+ {
+  "slug": "cable-pink",
+  "name": {
+   "fa": "بافت طرح‌دار یقه‌زیپ صورتی",
+   "en": "Cable Zip Knit Pink"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01919.jpg"
+  ]
+ },
+ {
+  "slug": "cable-black",
+  "name": {
+   "fa": "بافت طرح‌دار یقه‌زیپ مشکی",
+   "en": "Cable Zip Knit Black"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01924.jpg"
+  ]
+ },
+ {
+  "slug": "cable-grey",
+  "name": {
+   "fa": "بافت طرح‌دار یقه‌زیپ طوسی",
+   "en": "Cable Zip Knit Grey"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01928.jpg"
+  ]
+ },
+ {
+  "slug": "scarf-grey",
+  "name": {
+   "fa": "بافت شالی طوسی",
+   "en": "Scarf Knit Grey"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01920.jpg"
+  ]
+ },
+ {
+  "slug": "scarf-red",
+  "name": {
+   "fa": "بافت شالی قرمز",
+   "en": "Scarf Knit Red"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01921.jpg",
+   "DSC01923.jpg"
+  ]
+ },
+ {
+  "slug": "scarf-yellow",
+  "name": {
+   "fa": "بافت شالی زرد",
+   "en": "Scarf Knit Yellow"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01925.jpg"
+  ]
+ },
+ {
+  "slug": "scarf-pink",
+  "name": {
+   "fa": "بافت شالی صورتی",
+   "en": "Scarf Knit Pink"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01926.jpg"
+  ]
+ },
+ {
+  "slug": "scarf-green",
+  "name": {
+   "fa": "بافت شالی سبز",
+   "en": "Scarf Knit Green"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01930.jpg"
+  ]
+ },
+ {
+  "slug": "scarf-beige",
+  "name": {
+   "fa": "بافت شالی بژ",
+   "en": "Scarf Knit Beige"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01931.jpg"
+  ]
+ },
+ {
+  "slug": "lace-grey",
+  "name": {
+   "fa": "بافت آستین توری طوسی",
+   "en": "Lace Cuff Knit Grey"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01934.jpg",
+   "DSC01935.jpg"
+  ]
+ },
+ {
+  "slug": "lace-beige",
+  "name": {
+   "fa": "بافت آستین توری بژ",
+   "en": "Lace Cuff Knit Beige"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01937.jpg"
+  ]
+ },
+ {
+  "slug": "lace-green",
+  "name": {
+   "fa": "بافت آستین توری سبز",
+   "en": "Lace Cuff Knit Green"
+  },
+  "category": {
+   "fa": "بافت",
+   "en": "Knitwear"
+  },
+  "files": [
+   "DSC01941.jpg"
+  ]
+ }
+]

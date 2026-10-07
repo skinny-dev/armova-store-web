@@ -5,6 +5,11 @@
 //   --publish make products visible immediately (default: draft, since price is 0)
 // Grouping: "jacket-1.jpg", "jacket_2.jpg", "jacket (3).jpg" -> one product "jacket".
 // A filename containing "model" is tagged as a model shot. Set prices/names in /admin afterwards.
+// If scripts/photo-map.json exists (curated mapping of camera filenames -> named products, see
+// scripts/build-photo-map.js) it is used instead; pass --auto to force filename grouping.
+//   --price=N   default price in Toman (e.g. --price=890000)
+//   --stock=N   default stock per size (default 0), e.g. --stock=5
+//   --sizes=S,M,L  default sizes (default S,M,L,XL)
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
@@ -16,6 +21,10 @@ const UP = path.join(__dirname, '..', 'uploads'); fs.mkdirSync(UP, { recursive: 
 const EXT = new Set(['.jpg', '.jpeg', '.png', '.webp', '.avif', '.gif']);
 if (!fs.existsSync(root)) { console.error('Folder not found:', root); process.exit(1); }
 
+const opt = (k, d) => { const a = flags.find((x) => x.startsWith('--' + k + '=')); return a ? a.split('=')[1] : d; };
+const PRICE = Math.max(0, parseInt(opt('price', '0'), 10) || 0), STOCK = Math.max(0, parseInt(opt('stock', '0'), 10) || 0);
+const SIZES = opt('sizes', 'S,M,L,XL').split(',').map((x) => x.trim()).filter(Boolean);
+const MAP = path.join(__dirname, 'photo-map.json');
 const s = db.get();
 if (flags.includes('--clear')) { s.products = []; s.categories = []; }
 const slugify = (x) => x.toLowerCase().replace(/[^a-z0-9؀-ۿ]+/g, '-').replace(/^-+|-+$/g, '') || 'item';
@@ -23,8 +32,9 @@ const title = (x) => x.replace(/[-_]+/g, ' ').trim();
 const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => e.isDirectory() ? walk(path.join(dir, e.name)) : [path.join(dir, e.name)]);
 
 function category(name) {
-  let c = s.categories.find((x) => x.name.en === name || x.name.fa === name);
-  if (!c) { c = { id: db.nextId(), slug: slugify(name), name: { fa: name, en: name }, order: s.categories.length }; s.categories.push(c); }
+  const nm = typeof name === 'string' ? { fa: name, en: name } : name;
+  let c = s.categories.find((x) => x.name.en === nm.en || x.name.fa === nm.fa);
+  if (!c) { c = { id: db.nextId(), slug: slugify(nm.en), name: nm, order: s.categories.length }; s.categories.push(c); }
   return c.id;
 }
 const groups = new Map();
@@ -40,20 +50,27 @@ for (const f of walk(root).sort()) {
   groups.get(key).files.push({ f, ext, isModel });
 }
 
+const useMap = fs.existsSync(MAP) && !flags.includes('--auto') && !args.find((a) => !a.startsWith('--'));
+if (useMap) {
+  groups.clear();
+  for (const m of JSON.parse(fs.readFileSync(MAP, 'utf8'))) {
+    groups.set(m.slug, { cat: m.category, base: m.slug, slug: m.slug, name: m.name, files: m.files.map((x, i) => ({ f: path.join(root, x), ext: path.extname(x).toLowerCase(), isModel: i > 0 })) });
+  }
+}
 let n = 0;
 for (const g of groups.values()) {
-  const slug = slugify(g.base);
+  const slug = g.slug || slugify(g.base);
   const ex = s.products.find((p) => p.slug === slug);
   if (ex) { if (flags.includes('--publish')) ex.active = true; console.log('skip (exists):', slug); continue; }
   const images = g.files.map(({ f, ext, isModel }) => {
     const name = `${slug}-${crypto.randomBytes(3).toString('hex')}${ext === '.jpeg' ? '.jpg' : ext}`;
     fs.copyFileSync(f, path.join(UP, name)); return { file: name, kind: isModel ? 'model' : 'product' };
   }).sort((a, b) => (a.kind === 'product' ? 0 : 1) - (b.kind === 'product' ? 0 : 1));
-  const nm = title(g.base);
-  s.products.push({ id: db.nextId(), slug, name: { fa: nm, en: nm }, description: { fa: '', en: '' }, details: { fa: '', en: '' },
-    categoryId: category(g.cat), price: 0, comparePrice: 0, sizes: ['S', 'M', 'L', 'XL'].map((x) => ({ name: x, stock: 0 })),
-    images, active: flags.includes('--publish'), createdAt: Date.now() + n, views: 0 });
-  n++; console.log(`+ ${nm} (${g.cat}) — ${images.length} image(s)`);
+  const nm = g.name || { fa: title(g.base), en: title(g.base) };
+  s.products.push({ id: db.nextId(), slug, name: nm, description: { fa: '', en: '' }, details: { fa: '', en: '' },
+    categoryId: category(g.cat), price: PRICE, comparePrice: 0, sizes: SIZES.map((x) => ({ name: x, stock: STOCK })),
+    images, active: flags.includes('--publish') || (PRICE > 0 && STOCK > 0), createdAt: Date.now() + n, views: 0 });
+  n++; console.log(`+ ${nm.en || nm} (${g.cat.en || g.cat}) — ${images.length} image(s)`);
 }
 db.save();
 console.log(`Imported ${n} product(s). Open /admin to set names (Farsi), prices and stock${flags.includes('--publish') ? '' : ', then switch them to Active'}.`);

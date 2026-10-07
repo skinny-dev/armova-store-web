@@ -2,13 +2,15 @@
   const $ = (s, r = document) => r.querySelector(s);
   const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const D = {
-    fa: { title: 'پنل مدیریت آرموا', dashboard: 'داشبورد', products: 'محصولات', categories: 'دسته‌بندی‌ها', files: 'فایل‌ها', orders: 'سفارش‌ها', logout: 'خروج', login: 'ورود', password: 'رمز عبور', badLogin: 'رمز عبور اشتباه است', tooMany: 'تلاش بیش از حد؛ بعداً امتحان کنید',
+    fa: {
+      bulkSel: 'انتخاب‌شده', bulkApply: 'اعمال', bulkKeep: '— بدون تغییر —', bulkPublish: 'فعال', bulkDraft: 'پیش‌نویس', bulkDelete: 'حذف انتخاب‌شده‌ها', bulkDone: 'اعمال شد', badStock: 'موجودی نامعتبر است', stockAll: 'موجودی هر سایز', selectAll: 'انتخاب همه', noPrice: 'قیمت ندارد', title: 'پنل مدیریت آرموا', dashboard: 'داشبورد', products: 'محصولات', categories: 'دسته‌بندی‌ها', files: 'فایل‌ها', orders: 'سفارش‌ها', logout: 'خروج', login: 'ورود', password: 'رمز عبور', badLogin: 'رمز عبور اشتباه است', tooMany: 'تلاش بیش از حد؛ بعداً امتحان کنید',
       revenue: 'درآمد', views: 'بازدید', newOrders: 'سفارش جدید', totalOrders: 'کل سفارش‌ها', lowStock: 'موجودی کم', outStock: 'ناموجود', last14: 'آمار ۱۴ روز اخیر', topProducts: 'پربازدیدترین محصولات', byCategory: 'محصولات به تفکیک دسته', pViews: 'بازدید محصول', carts: 'افزودن به سبد',
       add: 'افزودن', edit: 'ویرایش', del: 'حذف', save: 'ذخیره', cancel: 'انصراف', confirmDel: 'مطمئن هستید؟', saved: 'ذخیره شد', deleted: 'حذف شد', error: 'خطا رخ داد', name: 'نام', nameFa: 'نام (فارسی)', nameEn: 'نام (انگلیسی)', descFa: 'توضیحات (فارسی)', descEn: 'توضیحات (انگلیسی)', detFa: 'مشخصات (فارسی)', detEn: 'مشخصات (انگلیسی)',
       category: 'دسته', price: 'قیمت (تومان)', compare: 'قیمت قبل از تخفیف', status: 'وضعیت', active: 'فعال', draft: 'پیش‌نویس', stock: 'موجودی', sizes: 'سایزها', size: 'سایز', addSize: 'سایز جدید', images: 'تصاویر', upload: 'آپلود تصویر', fromLib: 'انتخاب از فایل‌ها', kindProduct: 'عکس محصول', kindModel: 'عکس مدل', order: 'ترتیب', count: 'تعداد',
       catInUse: 'این دسته محصول دارد.', fileInUse: 'این فایل در یک محصول استفاده شده است.', usedBy: 'استفاده در', unused: 'استفاده نشده', copyUrl: 'کپی لینک', copied: 'کپی شد', dropHere: 'تصاویر را اینجا رها کنید یا کلیک کنید (JPG, PNG, WebP, حداکثر ۱۰MB)', totalSize: 'حجم کل', empty: 'موردی وجود ندارد', done: 'تأیید', pick: 'انتخاب',
       customer: 'مشتری', total: 'جمع', date: 'تاریخ', phone: 'موبایل', address: 'آدرس', items: 'اقلام', new: 'جدید', processing: 'در حال پردازش', shipped: 'ارسال شد', delivered: 'تحویل شد', cancelled: 'لغو شد', currency: 'تومان', lang: 'EN', nameReq: 'نام الزامی است', badPrice: 'قیمت نامعتبر است', badCategory: 'دسته را انتخاب کنید' },
-    en: { title: 'Armova Admin', dashboard: 'Dashboard', products: 'Products', categories: 'Categories', files: 'Files', orders: 'Orders', logout: 'Log out', login: 'Log in', password: 'Password', badLogin: 'Wrong password', tooMany: 'Too many attempts, try later',
+    en: {
+      bulkSel: 'selected', bulkApply: 'Apply', bulkKeep: '— no change —', bulkPublish: 'Active', bulkDraft: 'Draft', bulkDelete: 'Delete selected', bulkDone: 'Applied', badStock: 'Invalid stock', stockAll: 'Stock per size', selectAll: 'Select all', noPrice: 'No price', title: 'Armova Admin', dashboard: 'Dashboard', products: 'Products', categories: 'Categories', files: 'Files', orders: 'Orders', logout: 'Log out', login: 'Log in', password: 'Password', badLogin: 'Wrong password', tooMany: 'Too many attempts, try later',
       revenue: 'Revenue', views: 'Visits', newOrders: 'New orders', totalOrders: 'Total orders', lowStock: 'Low stock', outStock: 'Out of stock', last14: 'Last 14 days', topProducts: 'Most viewed products', byCategory: 'Products by category', pViews: 'Product views', carts: 'Add to cart',
       add: 'Add', edit: 'Edit', del: 'Delete', save: 'Save', cancel: 'Cancel', confirmDel: 'Are you sure?', saved: 'Saved', deleted: 'Deleted', error: 'Something went wrong', name: 'Name', nameFa: 'Name (Farsi)', nameEn: 'Name (English)', descFa: 'Description (Farsi)', descEn: 'Description (English)', detFa: 'Specifications (Farsi)', detEn: 'Specifications (English)',
       category: 'Category', price: 'Price (Toman)', compare: 'Compare-at price', status: 'Status', active: 'Active', draft: 'Draft', stock: 'Stock', sizes: 'Sizes', size: 'Size', addSize: 'Add size', images: 'Images', upload: 'Upload images', fromLib: 'Pick from files', kindProduct: 'Product shot', kindModel: 'Model shot', order: 'Order', count: 'Count',
@@ -33,7 +35,7 @@
     if (!r.ok) throw Object.assign(new Error(j.error || 'error'), { code: j.error });
     return j;
   }
-  const errMsg = (e) => ({ name_required: t('nameReq'), bad_price: t('badPrice'), bad_category: t('badCategory'), category_in_use: t('catInUse'), file_in_use: t('fileInUse') }[e.code] || t('error'));
+  const errMsg = (e) => ({ name_required: t('nameReq'), bad_price: t('badPrice'), bad_stock: t('badStock'), bad_category: t('badCategory'), category_in_use: t('catInUse'), file_in_use: t('fileInUse') }[e.code] || t('error'));
   const setLang = () => { document.documentElement.lang = lang; document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr'; document.title = t('title'); };
 
   // ---------- login & shell ----------
@@ -100,12 +102,25 @@
   async function products() {
     const [list, cats] = await Promise.all([api('/products'), api('/categories')]);
     const catName = (id) => nm((cats.find((c) => c.id === id) || {}).name);
-    $('#main').innerHTML = `<div class="head"><h1>${t('products')}</h1><button class="btn" id="add">+ ${t('add')}</button></div><div class="scroll"><table>
-      <tr><th></th><th>${t('name')}</th><th>${t('category')}</th><th>${t('price')}</th><th>${t('stock')}</th><th>${t('status')}</th><th>${t('views')}</th><th></th></tr>
-      ${list.map((p) => { const st = p.sizes.reduce((a, s) => a + s.stock, 0); return `<tr><td>${p.images[0] ? `<img class="thumb" src="/uploads/${encodeURIComponent(p.images[0].file)}" alt="">` : ''}</td><td>${esc(nm(p.name))}</td><td>${esc(catName(p.categoryId))}</td><td>${num(p.price)}</td>
+    $('#main').innerHTML = `<div class="head"><h1>${t('products')}</h1><button class="btn" id="add">+ ${t('add')}</button></div><div id="bulk" class="bulkbar" hidden>
+        <b><span id="bc">0</span> ${t('bulkSel')}</b>
+        <select id="ba"><option value="">${t('status')}: ${t('bulkKeep')}</option><option value="1">${t('bulkPublish')}</option><option value="0">${t('bulkDraft')}</option></select>
+        <select id="bcat"><option value="">${t('category')}: ${t('bulkKeep')}</option>${cats.map((c) => `<option value="${c.id}">${esc(nm(c.name))}</option>`).join('')}</select>
+        <input id="bp" type="number" min="0" placeholder="${t('price')}"><input id="bs" type="number" min="0" placeholder="${t('stockAll')}">
+        <button class="btn sm" id="bgo">${t('bulkApply')}</button><button class="btn danger sm" id="bdel">${t('bulkDelete')}</button></div>
+      <div class="scroll"><table>
+      <tr><th><input type="checkbox" id="sa" title="${t('selectAll')}"></th><th></th><th>${t('name')}</th><th>${t('category')}</th><th>${t('price')}</th><th>${t('stock')}</th><th>${t('status')}</th><th>${t('views')}</th><th></th></tr>
+      ${list.map((p) => { const st = p.sizes.reduce((a, s) => a + s.stock, 0); return `<tr><td><input type="checkbox" class="bk" value="${p.id}"></td><td>${p.images[0] ? `<img class="thumb" src="/uploads/${encodeURIComponent(p.images[0].file)}" alt="">` : ''}</td><td>${esc(nm(p.name))}</td><td>${esc(catName(p.categoryId))}</td><td>${p.price ? num(p.price) : `<span class="pill warn">${t('noPrice')}</span>`}</td>
         <td><span class="pill ${st === 0 ? 'bad' : st < 6 ? 'warn' : 'ok'}">${num(st)}</span></td><td><span class="pill ${p.active ? 'ok' : ''}">${p.active ? t('active') : t('draft')}</span></td><td>${num(p.views)}</td>
-        <td><div class="actions"><button class="btn sec sm" data-e="${p.id}">${t('edit')}</button><button class="btn danger sm" data-d="${p.id}">${t('del')}</button></div></td></tr>`; }).join('') || `<tr><td colspan="8">${t('empty')}</td></tr>`}</table></div>`;
+        <td><div class="actions"><button class="btn sec sm" data-e="${p.id}">${t('edit')}</button><button class="btn danger sm" data-d="${p.id}">${t('del')}</button></div></td></tr>`; }).join('') || `<tr><td colspan="9">${t('empty')}</td></tr>`}</table></div>`;
     $('#add').onclick = () => productForm(null, cats);
+    const picked = () => [...document.querySelectorAll('.bk:checked')].map((c) => Number(c.value));
+    const upd = () => { const n = picked().length; $('#bc').textContent = num(n); $('#bulk').hidden = !n; };
+    document.querySelectorAll('.bk').forEach((c) => (c.onchange = upd));
+    $('#sa').onchange = (e) => { document.querySelectorAll('.bk').forEach((c) => (c.checked = e.target.checked)); upd(); };
+    const bulk = async (body) => { try { await api('/products/bulk', { method: 'POST', body: { ids: picked(), ...body } }); toast(t('bulkDone')); products(); } catch (e) { toast(errMsg(e)); } };
+    $('#bgo').onclick = () => { const body = {}; if ($('#ba').value) body.active = $('#ba').value === '1'; if ($('#bcat').value) body.categoryId = Number($('#bcat').value); if ($('#bp').value) body.price = Number($('#bp').value); if ($('#bs').value) body.stock = Number($('#bs').value); bulk(body); };
+    $('#bdel').onclick = () => { if (confirmDel()) bulk({ delete: true }); };
     document.querySelectorAll('[data-e]').forEach((b) => (b.onclick = () => productForm(list.find((p) => p.id == b.dataset.e), cats)));
     document.querySelectorAll('[data-d]').forEach((b) => (b.onclick = async () => { if (!confirmDel()) return; await api('/products/' + b.dataset.d, { method: 'DELETE' }); toast(t('deleted')); products(); }));
   }

@@ -158,6 +158,25 @@ admin.put('/products/:id', (req, res) => {
   const err = applyProduct(p, req.body); if (err) return res.status(400).json({ error: err });
   db.save(); res.json(p);
 });
+// Bulk edit: { ids, active?, price?, categoryId?, stock?, delete? } — only provided fields are applied.
+admin.post('/products/bulk', (req, res) => {
+  const s = db.get(), b = req.body || {};
+  const ids = new Set((Array.isArray(b.ids) ? b.ids : []).map(Number));
+  const has = (k) => b[k] !== undefined && b[k] !== null && b[k] !== '';
+  if (has('price') && !(Math.round(Number(b.price)) >= 0)) return res.status(400).json({ error: 'bad_price' });
+  if (has('categoryId') && !s.categories.some((c) => c.id === Number(b.categoryId))) return res.status(400).json({ error: 'bad_category' });
+  if (has('stock') && !(Math.floor(Number(b.stock)) >= 0)) return res.status(400).json({ error: 'bad_stock' });
+  let n = 0;
+  if (b.delete === true) { const before = s.products.length; s.products = s.products.filter((p) => !ids.has(p.id)); n = before - s.products.length; }
+  else for (const p of s.products) {
+    if (!ids.has(p.id)) continue; n++;
+    if (has('active')) p.active = b.active === true || b.active === 'true' || b.active === 1 || b.active === '1';
+    if (has('price')) { p.price = Math.round(Number(b.price)); if (p.comparePrice <= p.price) p.comparePrice = 0; }
+    if (has('categoryId')) p.categoryId = Number(b.categoryId);
+    if (has('stock')) p.sizes.forEach((z) => (z.stock = Math.floor(Number(b.stock))));
+  }
+  db.save(); res.json({ ok: true, updated: n });
+});
 admin.delete('/products/:id', (req, res) => {
   const s = db.get(); s.products = s.products.filter((p) => p.id !== Number(req.params.id)); db.save(); res.json({ ok: true });
 });
