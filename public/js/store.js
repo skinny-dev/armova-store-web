@@ -12,7 +12,7 @@
   const nf = () => new Intl.NumberFormat(lang === 'fa' ? 'fa-IR' : 'en-US');
   const num = (n) => nf().format(n);
   const money = (n) => `${num(n)} ${t('currency')}`;
-  const img = (p, kind) => { const im = p.images.find((i) => i.kind === kind) || p.images[0]; return im ? '/uploads/' + encodeURIComponent(im.file) : ''; };
+  const img = (p, kind, dir = 'uploads') => { const im = p.images.find((i) => i.kind === kind) || p.images[0]; return im ? `/${dir}/` + encodeURIComponent(im.file) : ''; };
   const track = (type, productId) => fetch('/api/track', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type, productId }) }).catch(() => {});
   const toast = (m) => { const el = $('#toast'); el.textContent = m; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('on'), 2200); };
 
@@ -57,7 +57,7 @@
       .map((c) => `<a class="tab ${(c.slug || null) === (cat ? cat.slug : null) ? 'on' : ''}" data-link href="${c.slug ? '/?cat=' + encodeURIComponent(c.slug) : '/'}">${esc(c.name)}</a>`).join('');
     const cards = list.map((p) => {
       const out = p.sizes.length && p.sizes.every((s) => s.stock === 0);
-      const main = img(p, ui.kind), alt2 = p.images.map((i) => '/uploads/' + encodeURIComponent(i.file)).find((u) => u !== main);
+      const main = img(p, ui.kind, 'uploads/t'), alt2 = p.images.map((i) => '/uploads/t/' + encodeURIComponent(i.file)).find((u) => u !== main);
       return `<a class="card" data-link aria-label="${esc(L(p.name))}" href="/product/${encodeURIComponent(p.slug)}"><img loading="lazy" decoding="async" src="${main}" alt="${esc(L(p.name))}">${alt2 ? `<img class="alt" loading="lazy" decoding="async" src="${alt2}" alt="">` : ''}
         ${out ? `<span class="badge">${t('soldOut')}</span>` : ''}</a>`;
     }).join('');
@@ -123,7 +123,7 @@
     cart = cartLines().map(({ productId, size, qty, max }) => ({ productId, size, qty: Math.min(qty, max) })).filter((i) => i.qty > 0); saveCart();
     const lines = cartLines(), total = lines.reduce((a, l) => a + l.p.price * l.qty, 0), count = lines.reduce((a, l) => a + l.qty, 0);
     drawer(`<div class="dh"><b>${t('cart')}</b><button data-close>✕</button></div>
-      <div class="db">${lines.length ? lines.map((l, i) => `<div class="line"><img src="${img(l.p, 'product')}" alt="">
+      <div class="db">${lines.length ? lines.map((l, i) => `<div class="line"><img src="${img(l.p, 'product', 'uploads/t')}" alt="">
         <div class="lc"><div class="top2"><span>${esc(L(l.p.name))}</span><span>${money(l.p.price)}</span></div><span>${t('size')}: ${esc(l.size)}</span>
         <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:auto"><div class="qty"><button data-q="${i}:-1">−</button><span>${num(l.qty)}</span><button data-q="${i}:1">+</button></div>
         <button class="link" data-rm="${i}">${t('remove')}</button></div></div></div>`).join('') : `<p class="empty">${t('emptyCart')}</p>`}</div>

@@ -243,6 +243,18 @@ app.use('/api/admin', admin);
 app.use((err, req, res, next) => { console.error(err); res.status(err.status || 500).json({ error: err.code || 'server_error' }); });
 
 // ---------- static ----------
+// On-demand cached thumbnails for the grid: /uploads/t/<file> (600px wide). Falls back to the original.
+let sharp = null; try { sharp = require('sharp'); } catch {}
+const THUMBS = path.join(__dirname, 'data', 'thumbs');
+app.get('/uploads/t/:file', async (req, res, next) => {
+  const f = path.basename(req.params.file), src = path.join(UPLOADS, f);
+  if (!sharp || !fs.existsSync(src) || /\.(gif|svg)$/i.test(f)) return res.redirect('/uploads/' + encodeURIComponent(f));
+  const out = path.join(THUMBS, f.replace(/\.[^.]+$/, '') + '.jpg');
+  try {
+    if (!fs.existsSync(out)) { fs.mkdirSync(THUMBS, { recursive: true }); await sharp(src).rotate().resize({ width: 600, withoutEnlargement: true }).jpeg({ quality: 78, mozjpeg: true }).toFile(out); }
+    res.set('Cache-Control', 'public, max-age=604800'); res.sendFile(out);
+  } catch { next(); }
+});
 app.use('/uploads', express.static(UPLOADS, { maxAge: '7d', setHeaders: (r) => r.set('X-Content-Type-Options', 'nosniff') }));
 app.use('/admin', express.static(path.join(__dirname, 'public', 'admin')));
 app.use(express.static(path.join(__dirname, 'public'), { index: false }));
