@@ -1,0 +1,19 @@
+{
+  "name": "armova-store-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Armova bilingual (Farsi/English) store with management dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node scripts/seed.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "express": "^4.22.3",
+    "multer": "^1.4.4"
+  }
+}

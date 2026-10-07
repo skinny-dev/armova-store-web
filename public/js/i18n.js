@@ -1,0 +1,26 @@
+window.I18N = {
+  fa: {
+    brand: 'آرموا', shop: 'فروشگاه', about: 'درباره ما', contact: 'تماس با ما', cart: 'سبد خرید', allProducts: 'همه محصولات', all: 'همه',
+    collection: 'مجموعه', products: 'محصول', filters: 'مرتب‌سازی', newest: 'جدیدترین', priceAsc: 'ارزان‌ترین', priceDesc: 'گران‌ترین',
+    product: 'محصول', model: 'مدل', currency: 'تومان', selectSize: 'انتخاب سایز', addToCart: 'افزودن به سبد', soldOut: 'ناموجود', fewLeft: 'تعداد محدود',
+    specs: 'مشخصات', sizeFit: 'راهنمای سایز', care: 'نگهداری', description: 'توضیحات', shopCrumb: 'فروشگاه', noProducts: 'محصولی یافت نشد.',
+    pickSize: 'لطفاً سایز را انتخاب کنید', added: 'به سبد اضافه شد', emptyCart: 'سبد خرید شما خالی است.', subtotal: 'جمع کل', items: 'کالا',
+    checkout: 'ثبت سفارش', remove: 'حذف', name: 'نام و نام خانوادگی', phone: 'شماره موبایل', address: 'آدرس کامل', note: 'توضیحات (اختیاری)',
+    placeOrder: 'تأیید و ثبت سفارش', back: 'بازگشت', size: 'سایز', orderDone: 'سفارش شما ثبت شد', orderNum: 'شماره سفارش', orderMsg: 'به‌زودی با شما تماس می‌گیریم.',
+    continue: 'ادامه خرید', errInvalid: 'لطفاً اطلاعات را کامل و صحیح وارد کنید.', errStock: 'موجودی یکی از کالاها تغییر کرده است. سبد را بررسی کنید.', errGeneric: 'خطایی رخ داد. دوباره تلاش کنید.',
+    notFound: 'صفحه پیدا نشد.', home: 'خانه', aboutText: 'آرموا برند پوشاک خیابانی است؛ طراحی ساده، جنس باکیفیت و دوخت دقیق. هر مجموعه با دقت و در تعداد محدود تولید می‌شود.',
+    contactText: 'برای پیگیری سفارش و پشتیبانی با ما در ارتباط باشید.', rights: 'تمامی حقوق محفوظ است.', langBtn: 'EN', close: 'بستن', free: 'تک‌سایز',
+  },
+  en: {
+    brand: 'Armova', shop: 'Shop', about: 'About', contact: 'Contact', cart: 'Cart', allProducts: 'All Products', all: 'All',
+    collection: 'Collection', products: 'products', filters: 'Sort', newest: 'Newest', priceAsc: 'Price: low to high', priceDesc: 'Price: high to low',
+    product: 'Product', model: 'Model', currency: 'Toman', selectSize: 'Select a size', addToCart: 'Add to cart', soldOut: 'Sold out', fewLeft: 'Only a few left',
+    specs: 'Specifications', sizeFit: 'Size & Fit', care: 'Product Care', description: 'Description', shopCrumb: 'Shop', noProducts: 'No products found.',
+    pickSize: 'Please select a size', added: 'Added to cart', emptyCart: 'Your cart is empty.', subtotal: 'Subtotal', items: 'items',
+    checkout: 'Checkout', remove: 'Remove', name: 'Full name', phone: 'Mobile number', address: 'Full address', note: 'Notes (optional)',
+    placeOrder: 'Place order', back: 'Back', size: 'Size', orderDone: 'Your order has been placed', orderNum: 'Order number', orderMsg: 'We will contact you shortly.',
+    continue: 'Continue shopping', errInvalid: 'Please fill in all fields correctly.', errStock: 'An item in your cart is no longer available in that quantity. Please review your cart.', errGeneric: 'Something went wrong. Please try again.',
+    notFound: 'Page not found.', home: 'Home', aboutText: 'Armova is a streetwear label — simple design, quality fabrics and precise construction. Every collection is made in limited runs.',
+    contactText: 'Get in touch for order tracking and support.', rights: 'All rights reserved.', langBtn: 'فا', close: 'Close', free: 'One size',
+  },
+};
