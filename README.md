@@ -12,3 +12,4 @@ ADMIN_PASSWORD='choose-a-password' npm start   # http://localhost:4000
 - First run auto-seeds demo data with placeholder images (`AUTO_SEED=0` to disable; `npm run seed -- --force` to reseed).
 - Env: `PORT`, `ADMIN_PASSWORD` (default `admin123` — change it), `SESSION_SECRET`.
 - Data lives in `data/db.json`; images in `uploads/`. Back up both.
+- Import your own photos: `npm run import -- [folder] [--clear] [--publish]` (default folder `public/armova-products`; subfolders become categories; `name-1.jpg`, `name-2.jpg` group into one product; filenames with "model" become model shots).
