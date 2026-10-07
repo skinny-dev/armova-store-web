@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const db = require('./lib/db');
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
 const UPLOADS = path.join(__dirname, 'uploads');
 const SECRET_FILE = path.join(__dirname, 'data', '.secret');

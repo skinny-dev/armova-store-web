@@ -4,7 +4,7 @@ Bilingual (Farsi default / English) storefront with a management dashboard. Node
 
 ```bash
 npm install
-ADMIN_PASSWORD='choose-a-password' npm start   # http://localhost:3000
+ADMIN_PASSWORD='choose-a-password' npm start   # http://localhost:4000
 ```
 
 - Store: `/` — RTL Farsi by default; language toggle in the header (choice is remembered). Product/Model image toggle, grid density, size drawer, cart drawer, checkout (order saved, stock decremented).
