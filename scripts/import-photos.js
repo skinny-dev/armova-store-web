@@ -43,7 +43,8 @@ for (const f of walk(root).sort()) {
 let n = 0;
 for (const g of groups.values()) {
   const slug = slugify(g.base);
-  if (s.products.some((p) => p.slug === slug)) { console.log('skip (exists):', slug); continue; }
+  const ex = s.products.find((p) => p.slug === slug);
+  if (ex) { if (flags.includes('--publish')) ex.active = true; console.log('skip (exists):', slug); continue; }
   const images = g.files.map(({ f, ext, isModel }) => {
     const name = `${slug}-${crypto.randomBytes(3).toString('hex')}${ext === '.jpeg' ? '.jpg' : ext}`;
     fs.copyFileSync(f, path.join(UP, name)); return { file: name, kind: isModel ? 'model' : 'product' };
