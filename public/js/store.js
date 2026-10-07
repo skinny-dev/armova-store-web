@@ -57,7 +57,8 @@
       .map((c) => `<a class="tab ${(c.slug || null) === (cat ? cat.slug : null) ? 'on' : ''}" data-link href="${c.slug ? '/?cat=' + encodeURIComponent(c.slug) : '/'}">${esc(c.name)}</a>`).join('');
     const cards = list.map((p) => {
       const out = p.sizes.length && p.sizes.every((s) => s.stock === 0);
-      return `<a class="card" data-link href="/product/${encodeURIComponent(p.slug)}"><img loading="lazy" src="${img(p, ui.kind)}" alt="${esc(L(p.name))}">
+      const main = img(p, ui.kind), alt2 = p.images.map((i) => '/uploads/' + encodeURIComponent(i.file)).find((u) => u !== main);
+      return `<a class="card" data-link href="/product/${encodeURIComponent(p.slug)}"><img loading="lazy" src="${main}" alt="${esc(L(p.name))}">${alt2 ? `<img class="alt" loading="lazy" src="${alt2}" alt="">` : ''}
         ${out ? `<span class="badge">${t('soldOut')}</span>` : ''}<div class="meta"><span>${esc(L(p.name))}</span><span>${money(p.price)}</span></div></a>`;
     }).join('');
     const gb = (c, rows) => `<button class="gridbtn ${ui.cols === c ? 'on' : ''}" data-cols="${c}" aria-label="${c}"><i style="grid-template-columns:repeat(${rows},1fr)">${'<b></b>'.repeat(rows * rows)}</i></button>`;
