@@ -59,7 +59,8 @@ function uniqueSlug(list, base, selfId) {
   return out;
 }
 const pub = (p) => ({ id: p.id, slug: p.slug, name: p.name, description: p.description, details: p.details, categoryId: p.categoryId,
-  price: p.price, comparePrice: p.comparePrice, sizes: p.sizes, images: p.images, createdAt: p.createdAt });
+  price: p.price, comparePrice: p.comparePrice, sizes: p.sizes, images: p.images, createdAt: p.createdAt,
+  group: p.group || '', color: p.color || null, sku: p.sku || '', properties: p.properties || [] });
 
 // ---------- public API ----------
 app.get('/api/store', (req, res) => {
@@ -143,7 +144,12 @@ function applyProduct(p, b) {
   const files = new Set(fs.readdirSync(UPLOADS));
   const images = (Array.isArray(b.images) ? b.images : []).filter((i) => i && files.has(i.file))
     .map((i) => ({ file: i.file, kind: i.kind === 'model' ? 'model' : 'product' }));
-  Object.assign(p, { name, description: bi(b.description, 4000), details: bi(b.details, 4000), categoryId, price,
+  const hex = (v) => (/^#[0-9a-f]{6}$/i.test(String(v || '')) ? String(v).toLowerCase() : '');
+  const color = b.color && (str(b.color.fa, 40) || str(b.color.en, 40)) ? { ...bi(b.color, 40), hex: hex(b.color.hex) } : null;
+  const properties = (Array.isArray(b.properties) ? b.properties : []).slice(0, 20)
+    .map((r) => ({ label: bi(r && r.label, 60), value: bi(r && r.value, 200) })).filter((r) => (r.label.fa || r.label.en) && (r.value.fa || r.value.en));
+  Object.assign(p, { group: str(b.group, 60).toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, ''), sku: str(b.sku, 40), color, properties,
+    name, description: bi(b.description, 4000), details: bi(b.details, 4000), categoryId, price,
     comparePrice: Number(b.comparePrice) > price ? Math.round(Number(b.comparePrice)) : 0, sizes, images, active: b.active !== false });
   return null;
 }
@@ -243,19 +249,31 @@ app.use('/api/admin', admin);
 app.use((err, req, res, next) => { console.error(err); res.status(err.status || 500).json({ error: err.code || 'server_error' }); });
 
 // ---------- static ----------
-// On-demand cached thumbnails for the grid: /uploads/t/<file> (600px wide). Falls back to the original.
+// On-demand cached WebP thumbnails: /uploads/t/<file>?w=480|720 (default 720). Falls back to the original.
 let sharp = null; try { sharp = require('sharp'); } catch {}
 const THUMBS = path.join(__dirname, 'data', 'thumbs');
 app.get('/uploads/t/:file', async (req, res, next) => {
   const f = path.basename(req.params.file), src = path.join(UPLOADS, f);
   if (!sharp || !fs.existsSync(src) || /\.(gif|svg)$/i.test(f)) return res.redirect('/uploads/' + encodeURIComponent(f));
-  const out = path.join(THUMBS, f.replace(/\.[^.]+$/, '') + '.jpg');
+  const w = req.query.w === '480' ? 480 : 720;
+  const out = path.join(THUMBS, f.replace(/\.[^.]+$/, '') + '-' + w + '.webp');
   try {
-    if (!fs.existsSync(out)) { fs.mkdirSync(THUMBS, { recursive: true }); await sharp(src).rotate().resize({ width: 600, withoutEnlargement: true }).jpeg({ quality: 78, mozjpeg: true }).toFile(out); }
-    res.set('Cache-Control', 'public, max-age=604800'); res.sendFile(out);
+    if (!fs.existsSync(out)) { fs.mkdirSync(THUMBS, { recursive: true }); await sharp(src).rotate().resize({ width: w, withoutEnlargement: true }).webp({ quality: 72 }).toFile(out); }
+    res.set('Cache-Control', 'public, max-age=31536000, immutable'); res.sendFile(out);
   } catch { next(); }
 });
-app.use('/uploads', express.static(UPLOADS, { maxAge: '7d', setHeaders: (r) => r.set('X-Content-Type-Options', 'nosniff') }));
+// Pre-generate thumbnails in the background so the first visit is already fast.
+async function warmThumbs() {
+  if (!sharp) return;
+  fs.mkdirSync(THUMBS, { recursive: true });
+  const files = fs.readdirSync(UPLOADS).filter((f) => !/\.(gif|svg)$/i.test(f));
+  for (const f of files) for (const w of [480, 720]) {
+    const out = path.join(THUMBS, f.replace(/\.[^.]+$/, '') + '-' + w + '.webp');
+    if (!fs.existsSync(out)) await sharp(path.join(UPLOADS, f)).rotate().resize({ width: w, withoutEnlargement: true }).webp({ quality: 72 }).toFile(out).catch(() => {});
+  }
+}
+setTimeout(() => warmThumbs().catch(() => {}), 500);
+app.use('/uploads', express.static(UPLOADS, { maxAge: '365d', immutable: true, setHeaders: (r) => r.set('X-Content-Type-Options', 'nosniff') }));
 app.use('/admin', express.static(path.join(__dirname, 'public', 'admin')));
 app.use(express.static(path.join(__dirname, 'public'), { index: false }));
 app.get('/api/*', (req, res) => res.status(404).json({ error: 'not_found' }));

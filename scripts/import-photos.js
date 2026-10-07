@@ -55,24 +55,38 @@ const useMap = fs.existsSync(MAP) && !flags.includes('--auto') && !args.find((a)
 if (useMap) {
   groups.clear();
   for (const m of JSON.parse(fs.readFileSync(MAP, 'utf8'))) {
-    groups.set(m.slug, { cat: m.category, base: m.slug, slug: m.slug, name: m.name, files: m.files.map((x, i) => ({ f: path.join(root, x), ext: path.extname(x).toLowerCase(), isModel: i > 0 })) });
+    groups.set(m.slug, { cat: m.category, base: m.slug, slug: m.slug, name: m.name, group: m.group, color: m.color, files: m.files.map((x, i) => ({ f: path.join(root, x), ext: path.extname(x).toLowerCase(), isModel: i > 0 })) });
   }
 }
-// Photos are resized to max 1400px wide (web JPEG, EXIF-rotated) so the store stays fast.
-const WEB = (f, out) => sharp(f).rotate().resize({ width: 1400, withoutEnlargement: true }).jpeg({ quality: 82, mozjpeg: true }).toFile(out);
+// Photos are resized to max 1400px wide (WebP, EXIF-rotated) so the store stays fast.
+const WEB = (f, out) => sharp(f).rotate().resize({ width: 1400, withoutEnlargement: true }).webp({ quality: 80 }).toFile(out);
+// Variant data: group (style key, links colour variants), colour swatch, SKU and auto properties (colour, category, code).
+const meta = (g, categoryId, id) => {
+  if (!g.group) return {};
+  const cat = s.categories.find((c) => c.id === categoryId), sku = 'ARM-' + String(id).padStart(4, '0');
+  return { group: g.group, color: g.color, sku, properties: [
+    { label: { fa: 'رنگ', en: 'Color' }, value: { fa: g.color.fa, en: g.color.en } },
+    ...(cat ? [{ label: { fa: 'دسته', en: 'Category' }, value: cat.name }] : []),
+    { label: { fa: 'کد محصول', en: 'Product code' }, value: { fa: sku, en: sku } }] };
+};
 (async () => {
 let n = 0;
 for (const g of groups.values()) {
   const slug = g.slug || slugify(g.base);
   const ex = s.products.find((p) => p.slug === slug);
-  if (ex) { if (flags.includes('--publish')) ex.active = true; console.log('skip (exists):', slug); continue; }
+  if (ex) {
+    if (flags.includes('--publish')) ex.active = true;
+    if (g.group && !ex.group) { Object.assign(ex, meta(g, ex.categoryId, ex.id)); console.log('backfilled variants:', slug); } else console.log('skip (exists):', slug);
+    continue;
+  }
   const images = (await Promise.all(g.files.map(async ({ f, isModel }) => {
-    const name = `${slug}-${crypto.randomBytes(3).toString('hex')}.jpg`;
+    const name = `${slug}-${crypto.randomBytes(3).toString('hex')}.webp`;
     await WEB(f, path.join(UP, name)); return { file: name, kind: isModel ? 'model' : 'product' };
   }))).sort((a, b) => (a.kind === 'product' ? 0 : 1) - (b.kind === 'product' ? 0 : 1));
   const nm = g.name || { fa: title(g.base), en: title(g.base) };
-  s.products.push({ id: db.nextId(), slug, name: nm, description: { fa: '', en: '' }, details: { fa: '', en: '' },
-    categoryId: category(g.cat), price: PRICE, comparePrice: 0, sizes: SIZES.map((x) => ({ name: x, stock: STOCK })),
+  const id = db.nextId(), categoryId = category(g.cat);
+  s.products.push({ id, slug, ...meta(g, categoryId, id), name: nm, description: { fa: '', en: '' }, details: { fa: '', en: '' },
+    categoryId, price: PRICE, comparePrice: 0, sizes: SIZES.map((x) => ({ name: x, stock: STOCK })),
     images, active: flags.includes('--publish') || (PRICE > 0 && STOCK > 0), createdAt: Date.now() + n, views: 0 });
   n++; console.log(`+ ${nm.en || nm} (${g.cat.en || g.cat}) — ${images.length} image(s)`);
 }

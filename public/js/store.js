@@ -21,7 +21,8 @@
     document.documentElement.lang = lang; document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
     document.title = t('brand');
     $('#logo').textContent = t('brand');
-    $('#nav').innerHTML = `<a href="/" data-link>${t('shop')}</a><a href="/about" data-link>${t('about')}</a><a href="/contact" data-link>${t('contact')}</a>`;
+    $('#nav').innerHTML = `<button class="menubtn" id="menuBtn" aria-label="${t('menu')}">☰</button><a href="/" data-link>${t('shop')}</a><a href="/about" data-link>${t('about')}</a><a href="/contact" data-link>${t('contact')}</a>`;
+    $('#menuBtn').onclick = () => drawer(`<div class="dh"><b>${t('menu')}</b><button data-close aria-label="${t('close')}">✕</button></div><div class="db"><a class="row" data-link href="/">${t('shop')}</a>${data.categories.map((c) => `<a class="row sub" data-link href="/?cat=${encodeURIComponent(c.slug)}">${esc(L(c.name))}</a>`).join('')}<a class="row" data-link href="/about">${t('about')}</a><a class="row" data-link href="/contact">${t('contact')}</a></div>`, 'side');
     $('#lang').textContent = t('langBtn');
     const n = cart.reduce((a, i) => a + i.qty, 0);
     $('#cartBtn').textContent = `${t('cart')} (${num(n)})`;
@@ -57,8 +58,8 @@
       .map((c) => `<a class="tab ${(c.slug || null) === (cat ? cat.slug : null) ? 'on' : ''}" data-link href="${c.slug ? '/?cat=' + encodeURIComponent(c.slug) : '/'}">${esc(c.name)}</a>`).join('');
     const cards = list.map((p) => {
       const out = p.sizes.length && p.sizes.every((s) => s.stock === 0);
-      const main = img(p, ui.kind, 'uploads/t'), alt2 = p.images.map((i) => '/uploads/t/' + encodeURIComponent(i.file)).find((u) => u !== main);
-      return `<a class="card" data-link aria-label="${esc(L(p.name))}" href="/product/${encodeURIComponent(p.slug)}"><img loading="lazy" decoding="async" src="${main}" alt="${esc(L(p.name))}">${alt2 ? `<img class="alt" loading="lazy" decoding="async" src="${alt2}" alt="">` : ''}
+      const gw = innerWidth < 900 ? 480 : 720, main = img(p, ui.kind, 'uploads/t') + '?w=' + gw, alt2 = p.images.map((i) => '/uploads/t/' + encodeURIComponent(i.file) + '?w=' + gw).find((u) => u !== main);
+      return `<a class="card" data-link aria-label="${esc(L(p.name))}" href="/product/${encodeURIComponent(p.slug)}"><img loading="lazy" decoding="async" width="720" height="900" src="${main}" alt="${esc(L(p.name))}">${alt2 ? `<img class="alt" decoding="async" data-src="${alt2}" alt="">` : ''}
         ${out ? `<span class="badge">${t('soldOut')}</span>` : ''}</a>`;
     }).join('');
     const gb = (c, rows) => `<button class="gridbtn ${ui.cols === c ? 'on' : ''}" data-cols="${c}" aria-label="${c}"><i style="grid-template-columns:repeat(${rows},1fr)">${'<b></b>'.repeat(rows * rows)}</i></button>`;
@@ -72,6 +73,7 @@
           <button data-kind="product" class="${ui.kind === 'product' ? 'on' : ''}">${t('product')}</button><button data-kind="model" class="${ui.kind === 'model' ? 'on' : ''}">${t('model')}</button></span>
       </div>
       ${list.length ? `<div class="grid ${ui.cols >= 8 ? 'dense' : ''}" style="--cols:${ui.cols}">${cards}</div>` : `<p class="empty">${t('noProducts')}</p>`}`;
+    document.querySelectorAll('.card').forEach((c) => { const a = c.querySelector('img.alt'); if (a) c.addEventListener('pointerenter', () => { if (a.dataset.src) { a.src = a.dataset.src; delete a.dataset.src; } }, { once: true }); });
     $('#sort').onchange = (e) => { ui.sort = e.target.value; shopPage(catSlug); };
     document.querySelectorAll('[data-cols]').forEach((b) => (b.onclick = () => { ui.cols = +b.dataset.cols; shopPage(catSlug); }));
     document.querySelectorAll('[data-kind]').forEach((b) => (b.onclick = () => { ui.kind = b.dataset.kind; shopPage(catSlug); }));
@@ -79,23 +81,40 @@
 
   // ---------- product ----------
   let pick = null;
+  const thumb = (p, w = 480) => { const im = p.images.find((i) => i.kind === 'product') || p.images[0]; return im ? `/uploads/t/${encodeURIComponent(im.file)}?w=${w}` : ''; };
+  const soldOut = (p) => p.sizes.length && p.sizes.every((s) => s.stock === 0);
   function productPage(slug) {
     const p = data.products.find((x) => x.slug === slug);
     if (!p) return staticPage('404', t('notFound'));
     pick = null; track('product', p.id);
     const cat = data.categories.find((c) => c.id === p.categoryId);
     document.title = `${L(p.name)} | ${t('brand')}`;
+    const sibs = p.group ? data.products.filter((x) => x.group === p.group).sort((a, b) => a.id - b.id) : [];
+    const swatches = sibs.length > 1 ? `<div class="colors"><div class="clabel">${t('color')}: <b>${esc(p.color ? L(p.color) : '')}</b></div><div class="sw-row">${sibs.map((x) =>
+      `<a class="swatch ${x.id === p.id ? 'on' : ''} ${soldOut(x) ? 'out' : ''}" data-link href="/product/${encodeURIComponent(x.slug)}" title="${esc(x.color ? L(x.color) : L(x.name))}" aria-label="${esc(x.color ? L(x.color) : L(x.name))}"><img src="${thumb(x, 120)}" alt="" loading="lazy"></a>`).join('')}</div></div>` : '';
+    const rows = (p.properties || []).map((r) => `<div><dt>${esc(L(r.label))}</dt><dd>${esc(L(r.value))}</dd></div>`).join('');
+    const sizeChips = p.sizes.length ? `<div class="chips">${p.sizes.map((s) => `<span class="chip ${s.stock <= 0 ? 'out' : ''}">${esc(s.name)}</span>`).join('')}</div>` : '';
+    const peers = data.products.filter((x) => x.categoryId === p.categoryId && x.id !== p.id && (!p.group || x.group !== p.group));
+    const start = peers.length ? p.id % peers.length : 0;
+    const rel = [...peers.slice(start), ...peers.slice(0, start)].slice(0, 10);
+    const order = data.products.filter((x) => x.categoryId === p.categoryId), at = order.findIndex((x) => x.id === p.id);
+    const pn = order.length > 1 ? [order[(at - 1 + order.length) % order.length], order[(at + 1) % order.length]] : null;
     const acc = (title, body) => body ? `<details><summary>${title}</summary><div class="body">${esc(body)}</div></details>` : '';
     $('#app').innerHTML = `<div class="pdp">
-      <div class="gallery">${p.images.map((i) => `<img src="/uploads/${encodeURIComponent(i.file)}" alt="${esc(L(p.name))}">`).join('')}</div>
+      <div class="gwrap"><div class="gallery" id="gal">${p.images.map((i) => `<img src="/uploads/${encodeURIComponent(i.file)}" alt="${esc(L(p.name))}">`).join('')}</div>${p.images.length > 1 ? `<div class="gdots" id="gdots">${p.images.map((_, i) => `<i class="${i ? '' : 'on'}"></i>`).join('')}</div>` : ''}</div>
       <div class="info">
         <div class="crumbs"><a data-link href="/">${t('shopCrumb')}</a> › ${cat ? `<a data-link href="/?cat=${encodeURIComponent(cat.slug)}">${esc(L(cat.name))}</a>` : ''}</div>
         <h1 class="display">${esc(L(p.name))}</h1>
+        ${swatches}${sizeChips}
         <div class="buy"><button class="sizebtn" id="sizeBtn"><span id="sizeLbl">${t('selectSize')}</span><span>⌄</span></button>
           <button class="addbtn" id="addBtn"><span>${t('addToCart')}</span><span>${p.comparePrice ? `<s class="price-old">${num(p.comparePrice)}</s>` : ''}${money(p.price)}</span></button></div>
         <p class="desc">${esc(L(p.description))}</p>
-        <div class="acc">${acc(t('specs'), L(p.details))}</div>
-      </div></div>`;
+        <div class="acc">${rows ? `<details open><summary>${t('props')}</summary><dl class="props">${rows}</dl></details>` : ''}${acc(t('specs'), L(p.details))}</div>
+        ${pn ? `<div class="pn"><a data-link href="/product/${encodeURIComponent(pn[0].slug)}">‹ ${t('prev')}</a><a data-link href="/product/${encodeURIComponent(pn[1].slug)}">${t('next')} ›</a></div>` : ''}
+      </div></div>
+      ${rel.length ? `<section class="related"><h2>${t('related')}</h2><div class="rrow">${rel.map((x) => `<a class="rcard" data-link href="/product/${encodeURIComponent(x.slug)}"><span class="rimg"><img src="${thumb(x)}" alt="${esc(L(x.name))}" loading="lazy" decoding="async"></span><span class="rn">${esc(L(x.name))}</span><span class="rp">${money(x.price)}</span></a>`).join('')}</div></section>` : ''}`;
+    const gal = $('#gal'), dots = document.querySelectorAll('#gdots i');
+    if (dots.length) gal.addEventListener('scroll', () => { const i = Math.round(Math.abs(gal.scrollLeft) / gal.clientWidth); dots.forEach((d, k) => d.classList.toggle('on', k === i)); }, { passive: true });
     $('#sizeBtn').onclick = () => sizeDrawer(p);
     $('#addBtn').onclick = () => {
       if (!pick) return sizeDrawer(p);
@@ -106,7 +125,7 @@
     drawer(`<div class="dh"><b>${t('selectSize')}</b><button data-close>✕</button></div><div class="db">${p.sizes.map((s) => {
       const out = s.stock <= 0;
       return `<button class="row" data-size="${esc(s.name)}" ${out ? 'disabled' : ''}><span class="n">${esc(s.name)}</span><span>${out ? t('soldOut') : s.stock <= 3 ? t('fewLeft') : ''}</span></button>`;
-    }).join('')}</div>`);
+    }).join('')}</div>`, 'bottom');
     document.querySelectorAll('[data-size]').forEach((b) => (b.onclick = () => { pick = b.dataset.size; $('#sizeLbl').textContent = `${t('size')}: ${pick}`; closeDrawer(); }));
   }
 
@@ -157,8 +176,8 @@
 
   // ---------- drawer ----------
   let drawerOpen = false;
-  function drawer(html) { const d = $('#drawer'); d.innerHTML = html; d.classList.add('on'); $('#overlay').classList.add('on'); d.setAttribute('aria-hidden', 'false'); drawerOpen = true; }
-  function closeDrawer() { $('#drawer').classList.remove('on'); $('#overlay').classList.remove('on'); $('#drawer').setAttribute('aria-hidden', 'true'); drawerOpen = false; }
+  function drawer(html, cls = '') { const d = $('#drawer'); d.innerHTML = html; d.className = 'drawer on ' + cls; document.body.classList.add('lock'); $('#overlay').classList.add('on'); d.setAttribute('aria-hidden', 'false'); drawerOpen = true; }
+  function closeDrawer() { document.body.classList.remove('lock'); $('#drawer').classList.remove('on'); $('#overlay').classList.remove('on'); $('#drawer').setAttribute('aria-hidden', 'true'); drawerOpen = false; }
   $('#overlay').onclick = closeDrawer;
   $('#drawer').addEventListener('click', (e) => { if (e.target.closest('[data-close]')) closeDrawer(); });
   addEventListener('keydown', (e) => e.key === 'Escape' && closeDrawer());

@@ -1,6 +1,6 @@
 window.I18N = {
   fa: {
-    brand: 'آرموا', shop: 'فروشگاه', about: 'درباره ما', contact: 'تماس با ما', cart: 'سبد خرید', allProducts: 'همه محصولات', all: 'همه',
+    brand: 'آرموا', color: 'رنگ', related: 'شاید دوست داشته باشید', props: 'مشخصات محصول', sameStyle: 'سایر رنگ‌ها', prev: 'قبلی', next: 'بعدی', inStock: 'موجود', menu: 'منو', shop: 'فروشگاه', about: 'درباره ما', contact: 'تماس با ما', cart: 'سبد خرید', allProducts: 'همه محصولات', all: 'همه',
     collection: 'مجموعه', products: 'محصول', filters: 'مرتب‌سازی', newest: 'جدیدترین', priceAsc: 'ارزان‌ترین', priceDesc: 'گران‌ترین',
     product: 'محصول', model: 'مدل', currency: 'تومان', selectSize: 'انتخاب سایز', addToCart: 'افزودن به سبد', soldOut: 'ناموجود', fewLeft: 'تعداد محدود',
     specs: 'مشخصات', sizeFit: 'راهنمای سایز', care: 'نگهداری', description: 'توضیحات', shopCrumb: 'فروشگاه', noProducts: 'محصولی یافت نشد.',
@@ -12,7 +12,7 @@ window.I18N = {
     contactText: 'برای پیگیری سفارش و پشتیبانی با ما در ارتباط باشید.', rights: 'تمامی حقوق محفوظ است.', langBtn: 'EN', close: 'بستن', free: 'تک‌سایز',
   },
   en: {
-    brand: 'Armova', shop: 'Shop', about: 'About', contact: 'Contact', cart: 'Cart', allProducts: 'All Products', all: 'All',
+    brand: 'Armova', color: 'Color', related: 'You may also like', props: 'Product details', sameStyle: 'Other colors', prev: 'Previous', next: 'Next', inStock: 'In stock', menu: 'Menu', shop: 'Shop', about: 'About', contact: 'Contact', cart: 'Cart', allProducts: 'All Products', all: 'All',
     collection: 'Collection', products: 'products', filters: 'Sort', newest: 'Newest', priceAsc: 'Price: low to high', priceDesc: 'Price: high to low',
     product: 'Product', model: 'Model', currency: 'Toman', selectSize: 'Select a size', addToCart: 'Add to cart', soldOut: 'Sold out', fewLeft: 'Only a few left',
     specs: 'Specifications', sizeFit: 'Size & Fit', care: 'Product Care', description: 'Description', shopCrumb: 'Shop', noProducts: 'No products found.',

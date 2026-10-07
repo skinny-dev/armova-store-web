@@ -3,6 +3,7 @@
 const C = { knit: ['بافت', 'Knitwear'], polo: ['پولو', 'Polos'], tee: ['تی‌شرت', 'T-Shirts'], shirt: ['پیراهن', 'Shirts'] };
 const COL = { white: ['سفید', 'White'], brown: ['قهوه‌ای', 'Brown'], red: ['قرمز', 'Red'], blue: ['آبی', 'Blue'], pink: ['صورتی', 'Pink'], green: ['سبز', 'Green'],
   beige: ['بژ', 'Beige'], yellow: ['زرد', 'Yellow'], grey: ['طوسی', 'Grey'], black: ['مشکی', 'Black'], navy: ['سرمه‌ای', 'Navy'], purple: ['بنفش', 'Purple'], lblue: ['آبی روشن', 'Light Blue'], lime: ['سبز فسفری', 'Neon Green'] };
+const HEX = { white: '#f5f5f2', brown: '#6b4a3a', red: '#c0272d', blue: '#1f4fbf', pink: '#e8a5b5', green: '#3f9d85', beige: '#c8b49a', yellow: '#e5a912', grey: '#7a7d80', black: '#111111', navy: '#1b2a4a', purple: '#8a5cc7', lblue: '#5bb7e8', lime: '#8cd21a' };
 const STYLES = {
   pocket: ['پیراهن جیب‌دار', 'Pocket Shirt', 'shirt'], polo: ['پولو کلاسیک', 'Classic Polo', 'polo'],
   rib: ['تاپ ریب', 'Ribbed Top', 'knit'], zip: ['بافت یقه‌زیپ', 'Zip Knit', 'knit'], ruffle: ['بافت دامنی', 'Ruffle Hem Knit', 'knit'],
@@ -41,7 +42,7 @@ const used = new Set(), count = {};
 const products = L.map(({ s, c, f }) => {
   const [fa, en, cat] = STYLES[s], [cfa, cen] = COL[c];
   f.forEach((x) => { if (used.has(x)) throw new Error('dup ' + x); used.add(x); });
-  return { slug: `${s}-${c}`, name: { fa: `${fa} ${cfa}`, en: `${en} ${cen}` }, category: { fa: C[cat][0], en: C[cat][1] }, files: f.map(find) };
+  return { slug: `${s}-${c}`, group: s, color: { fa: cfa, en: cen, hex: HEX[c] }, name: { fa: `${fa} ${cfa}`, en: `${en} ${cen}` }, category: { fa: C[cat][0], en: C[cat][1] }, files: f.map(find) };
 });
 const missing = real.filter((x) => !used.has(path.parse(x).name)); if (missing.length) console.log('UNASSIGNED:', missing.join(' '));
 fs.writeFileSync(path.join(__dirname, 'photo-map.json'), JSON.stringify(products, null, 1));
