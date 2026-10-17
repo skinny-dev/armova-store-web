@@ -104,6 +104,23 @@ admin.post('/categories/:id/move', A.can('categories.manage'), (req, res) => {
   if (sib[j]) { sib.splice(j, 0, sib.splice(i, 1)[0]); }
   sib.forEach((x, k) => (x.order = k)); db.save(); res.json({ ok: true });
 });
+// Drag & drop: put a category under `parentId` (null = top level) right before `beforeId` (null = at the end).
+admin.post('/categories/:id/place', A.can('categories.manage'), (req, res) => {
+  const s = db.get(), c = s.categories.find((x) => x.id === Number(req.params.id)), b = req.body || {};
+  if (!c) return res.status(404).end();
+  const parentId = b.parentId ? Number(b.parentId) : null, beforeId = b.beforeId ? Number(b.beforeId) : null;
+  if (parentId !== null) {
+    if (!s.categories.some((x) => x.id === parentId)) return res.status(400).json({ error: 'bad_parent' });
+    if (pricing.descendants(c.id).has(parentId)) return res.status(400).json({ error: 'parent_cycle' });
+    const height = (id) => 1 + Math.max(0, ...s.categories.filter((x) => x.parentId === id).map((x) => height(x.id)));
+    if (pricing.categoryPath(parentId).length + height(c.id) > 4) return res.status(400).json({ error: 'too_deep' });
+  }
+  c.parentId = parentId;
+  const sib = s.categories.filter((x) => (x.parentId || null) === parentId && x.id !== c.id).sort((x, y) => x.order - y.order || x.id - y.id);
+  let i = beforeId ? sib.findIndex((x) => x.id === beforeId) : -1; if (i < 0) i = sib.length;
+  sib.splice(i, 0, c); sib.forEach((x, k) => (x.order = k));
+  db.save(); res.json({ ok: true });
+});
 admin.delete('/categories/:id', A.can('categories.manage'), (req, res) => {
   const s = db.get(), id = Number(req.params.id);
   if (s.categories.some((c) => c.parentId === id)) return res.status(409).json({ error: 'category_has_children' });

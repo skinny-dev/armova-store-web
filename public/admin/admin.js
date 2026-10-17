@@ -3,8 +3,8 @@
   const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const D = {
     fa: {
-      devCodeIs: 'حالت آزمایشی — کد ورود:', username: 'نام کاربری', otpCode: 'کد پیامک‌شده', sendCode: 'ارسال کد', usePassword: 'ورود با رمز عبور', useSms: 'ورود با پیامک', codeSent: 'کد ارسال شد', badCode: 'کد نادرست یا منقضی است', storeLink: 'فروشگاه', more: 'بیشتر', changePwHint: 'لطفا رمز عبور خود را تغییر دهید',
-      treeHint: 'دسته‌ها به‌صورت درختی هستند؛ با «زیردسته» یک دسته داخل دسته دیگر بسازید و با فلش‌ها ترتیب را عوض کنید.', subcat: 'زیردسته', parentCat: 'دسته والد', rootCat: 'دسته اصلی',
+      e_wait: 'لطفا یک دقیقه صبر کنید و دوباره کد بگیرید', devCodeIs: 'حالت آزمایشی — کد ورود:', username: 'نام کاربری', otpCode: 'کد پیامک‌شده', sendCode: 'ارسال کد', usePassword: 'ورود با رمز عبور', useSms: 'ورود با پیامک', codeSent: 'کد ارسال شد', badCode: 'کد نادرست یا منقضی است', storeLink: 'فروشگاه', more: 'بیشتر', changePwHint: 'لطفا رمز عبور خود را تغییر دهید',
+      treeHint: 'دسته‌ها درختی‌اند. دستگیره ⋮⋮ را بکشید: روی لبه بالا/پایین یک ردیف رها کنید تا ترتیب عوض شود، وسط ردیف رها کنید تا زیردسته آن شود.', expandAll: 'باز کردن همه', collapseAll: 'بستن همه', dragMove: 'برای جابه‌جایی بکشید', subcat: 'زیردسته', parentCat: 'دسته والد', rootCat: 'دسته اصلی',
       payment: 'پرداخت', tracking: 'رهگیری', trackingCode: 'کد رهگیری', trackingHint: 'اگر سفارش ارسال شده باشد، کد رهگیری برای مشتری پیامک می‌شود.', notifyDelay: 'اطلاع تاخیر', confirmDelay: 'پیامک تاخیر ارسال برای مشتری فرستاده شود؟', confirmCancel: 'سفارش لغو شود؟ موجودی به انبار برمی‌گردد و غیرقابل بازگشت است.',
       smsWillSend: 'در صورت فعال بودن قالب پیامک، به مشتری اطلاع داده می‌شود.', smsQueued: 'پیامک در صف ارسال قرار گرفت', sendSms: 'پیامک', message: 'متن پیام', send: 'ارسال', chars: 'نویسه', smsParts: 'پیامک', view: 'مشاهده', pricePct: 'تغییر قیمت ٪ (مثلا -10)', stockAdd: 'افزودن به موجودی', makeDiscount: 'ایجاد تخفیف',
       st_new: 'ثبت شد', st_confirmed: 'تایید شد', st_processing: 'در حال پردازش', st_shipped: 'ارسال شد', st_out_for_delivery: 'در مسیر تحویل', st_ready_pickup: 'آماده تحویل حضوری', st_delivered: 'تحویل شد', st_cancelled: 'لغو شد', st_return_requested: 'درخواست مرجوعی', st_return_approved: 'مرجوعی تایید شد', st_return_rejected: 'مرجوعی رد شد', st_returned: 'مرجوع شد',
@@ -23,8 +23,8 @@
       catInUse: 'این دسته محصول دارد.', fileInUse: 'این فایل در یک محصول استفاده شده است.', usedBy: 'استفاده در', unused: 'استفاده نشده', copyUrl: 'کپی لینک', copied: 'کپی شد', dropHere: 'تصاویر را اینجا رها کنید یا کلیک کنید (JPG, PNG, WebP, حداکثر ۱۰MB)', totalSize: 'حجم کل', empty: 'موردی وجود ندارد', done: 'تأیید', pick: 'انتخاب',
       customer: 'مشتری', total: 'جمع', date: 'تاریخ', phone: 'موبایل', address: 'آدرس', items: 'اقلام', new: 'جدید', processing: 'در حال پردازش', shipped: 'ارسال شد', delivered: 'تحویل شد', cancelled: 'لغو شد', currency: 'تومان', lang: 'EN', nameReq: 'نام الزامی است', badPrice: 'قیمت نامعتبر است', badCategory: 'دسته را انتخاب کنید' },
     en: {
-      devCodeIs: 'Dev mode — login code:', username: 'Username', otpCode: 'SMS code', sendCode: 'Send code', usePassword: 'Log in with password', useSms: 'Log in with SMS', codeSent: 'Code sent', badCode: 'Wrong or expired code', storeLink: 'Store', more: 'More', changePwHint: 'Please change your password',
-      treeHint: 'Categories form a tree: use "Sub-category" to nest one under another and the arrows to reorder.', subcat: 'Sub-category', parentCat: 'Parent category', rootCat: 'Top level',
+      e_wait: 'Please wait a minute before requesting another code', devCodeIs: 'Dev mode — login code:', username: 'Username', otpCode: 'SMS code', sendCode: 'Send code', usePassword: 'Log in with password', useSms: 'Log in with SMS', codeSent: 'Code sent', badCode: 'Wrong or expired code', storeLink: 'Store', more: 'More', changePwHint: 'Please change your password',
+      treeHint: 'Categories form a tree. Drag the ⋮⋮ handle: drop on the top/bottom edge of a row to reorder, in the middle of a row to make it a sub-category.', expandAll: 'Expand all', collapseAll: 'Collapse all', dragMove: 'Drag to move', subcat: 'Sub-category', parentCat: 'Parent category', rootCat: 'Top level',
       payment: 'Payment', tracking: 'Tracking', trackingCode: 'Tracking code', trackingHint: 'If the order is already shipped, the customer gets the tracking code by SMS.', notifyDelay: 'Notify delay', confirmDelay: 'Send a shipping-delay SMS to the customer?', confirmCancel: 'Cancel this order? Stock is returned and this cannot be undone.',
       smsWillSend: 'The customer is notified by SMS if the template is enabled.', smsQueued: 'SMS queued', sendSms: 'SMS', message: 'Message', send: 'Send', chars: 'chars', smsParts: 'SMS', view: 'View', pricePct: 'Price change % (e.g. -10)', stockAdd: 'Add to stock', makeDiscount: 'Create discount',
       st_new: 'Placed', st_confirmed: 'Confirmed', st_processing: 'Processing', st_shipped: 'Shipped', st_out_for_delivery: 'Out for delivery', st_ready_pickup: 'Ready for pickup', st_delivered: 'Delivered', st_cancelled: 'Cancelled', st_return_requested: 'Return requested', st_return_approved: 'Return approved', st_return_rejected: 'Return rejected', st_returned: 'Returned',
@@ -92,7 +92,7 @@
         if (!otp) { session = await api('/login', { method: 'POST', body: { username: $('#un').value, password: $('#pw').value } }); return shell(); }
         if (!sent) { const r = await api('/otp/request', { method: 'POST', body: { phone: $('#ph').value } }); sent = true; $('#cw').hidden = false; $('#lb').textContent = t('login'); $('#le').style.color = 'var(--ok)'; $('#le').textContent = r.devCode ? `${t('devCodeIs')} ${r.devCode}` : t('codeSent'); if (r.devCode) $('#cd').value = r.devCode; $('#cd').focus(); return; }
         session = await api('/otp/verify', { method: 'POST', body: { phone: $('#ph').value, code: $('#cd').value } }); shell();
-      } catch (er) { $('#le').style.color = 'var(--bad)'; $('#le').textContent = er.code === 'too_many' ? t('tooMany') : otp ? t('badCode') : t('badLogin'); }
+      } catch (er) { $('#le').style.color = 'var(--bad)'; $('#le').textContent = er.code === 'too_many' ? t('tooMany') : er.code === 'wait' ? t('e_wait') : otp ? (sent ? t('badCode') : t('error')) : t('badLogin'); }
     };
   }
   // pages: key -> { fn, perm: [..any of..], icon }. Core pages first, extensions append more.
@@ -160,34 +160,91 @@
   }
 
   // ---------- categories ----------
-  // ---------- categories (tree) ----------
+  // ---------- categories (tree, drag & drop) ----------
+  const collapsed = new Set();
   async function categories() {
     const list = await api('/categories');
-    const rows = flatTree(list);
-    $('#main').innerHTML = `<div class="head"><h1>${t('categories')} <small class="muted">(${num(list.length)})</small></h1><button class="btn" id="add">+ ${t('add')}</button></div>
+    const byId = new Map(list.map((c) => [c.id, c]));
+    const childrenOf = (id) => list.filter((c) => (c.parentId || null) === id).sort((a, b) => a.order - b.order || a.id - b.id);
+    const descendants = (id) => { const s = new Set(); const w = (x) => childrenOf(x).forEach((c) => { s.add(c.id); w(c.id); }); w(id); return s; };
+    // visible rows: skip everything under a collapsed node
+    const rows = []; (function walk(pid, depth) { childrenOf(pid).forEach((c) => { rows.push({ c, depth }); if (!collapsed.has(c.id)) walk(c.id, depth + 1); }); })(null, 0);
+    const canEdit = can('categories.manage');
+    $('#main').innerHTML = `<div class="head"><h1>${t('categories')} <small class="muted">(${num(list.length)})</small></h1><div class="actions"><button class="btn sec sm" id="ex">${t('expandAll')}</button><button class="btn sec sm" id="co">${t('collapseAll')}</button>${canEdit ? `<button class="btn" id="add">+ ${t('add')}</button>` : ''}</div></div>
       <p class="muted hint">${t('treeHint')}</p>
-      <div class="tree">${rows.map(({ c, depth }) => `<div class="trow" style="--d:${depth}"><div class="tname"><span class="tline">${depth ? '└' : '●'}</span><div><b>${esc(nm(c.name))}</b><small class="muted"> ${esc(lang === 'fa' ? c.name.en : c.name.fa)} · /${esc(c.slug)}</small></div></div>
+      <div class="tree" id="tree">${rows.map(({ c, depth }) => `<div class="trow" data-id="${c.id}" data-parent="${c.parentId || ''}" style="--d:${depth}">
+        ${canEdit ? `<span class="grip" data-grip="${c.id}" title="${t('dragMove')}" aria-label="${t('dragMove')}">⋮⋮</span>` : ''}
+        ${c.children ? `<button class="chev ${collapsed.has(c.id) ? 'closed' : ''}" data-tg="${c.id}" aria-label="toggle">▾</button>` : '<span class="chev-sp"></span>'}
+        <div class="tname"><div><b>${esc(nm(c.name))}</b><small class="muted"> ${esc(lang === 'fa' ? c.name.en : c.name.fa)} · /${esc(c.slug)}</small></div></div>
         <div class="tcount"><span class="pill">${num(c.count)}</span>${c.children ? `<span class="pill" title="${t('total')}">Σ ${num(c.total)}</span>` : ''}</div>
-        <div class="actions"><button class="btn sec sm" data-mv="${c.id}:up" aria-label="up">↑</button><button class="btn sec sm" data-mv="${c.id}:down" aria-label="down">↓</button><button class="btn sec sm" data-sub="${c.id}">+ ${t('subcat')}</button><button class="btn sec sm" data-e="${c.id}">${t('edit')}</button><button class="btn danger sm" data-d="${c.id}">${t('del')}</button></div></div>`).join('') || `<p class="emptyrow">${t('empty')}</p>`}</div>`;
+        ${canEdit ? `<div class="actions"><button class="btn sec sm" data-mv="${c.id}:up" aria-label="up">↑</button><button class="btn sec sm" data-mv="${c.id}:down" aria-label="down">↓</button><button class="btn sec sm" data-sub="${c.id}">+ ${t('subcat')}</button><button class="btn sec sm" data-e="${c.id}">${t('edit')}</button><button class="btn danger sm" data-d="${c.id}">${t('del')}</button></div>` : ''}</div>`).join('') || `<p class="emptyrow">${t('empty')}</p>`}</div>`;
+
     const form = (c = { name: {}, parentId: null }) => {
-      const exclude = new Set(); if (c.id) { const walk = (id) => { exclude.add(id); list.filter((x) => x.parentId === id).forEach((x) => walk(x.id)); }; walk(c.id); }
+      const exclude = c.id ? new Set([c.id, ...descendants(c.id)]) : new Set();
       modal(`<h1>${c.id ? t('edit') : t('add')}</h1><div class="grid2"><label><span>${t('nameFa')}</span><input id="cf" dir="rtl" value="${esc(c.name.fa)}"></label><label><span>${t('nameEn')}</span><input id="ce" dir="ltr" value="${esc(c.name.en)}"></label></div>
         <label><span>${t('parentCat')}</span><select id="cp">${catOptions(list, c.parentId, exclude, '— ' + t('rootCat') + ' —')}</select></label>
         <div class="actions sticky"><button class="btn sec" id="x">${t('cancel')}</button><button class="btn" id="ok">${t('save')}</button></div>`);
       $('#x').onclick = () => closeModal(); $('#cf').focus();
       $('#ok').onclick = async () => {
         const body = { name: { fa: $('#cf').value, en: $('#ce').value }, parentId: $('#cp').value ? Number($('#cp').value) : null };
-        try { await api(c.id ? `/categories/${c.id}` : '/categories', { method: c.id ? 'PUT' : 'POST', body }); closeModal(true); toast(t('saved')); categories(); } catch (e) { toast(errMsg(e)); }
+        try { await api(c.id ? `/categories/${c.id}` : '/categories', { method: c.id ? 'PUT' : 'POST', body }); if (body.parentId) collapsed.delete(body.parentId); closeModal(true); toast(t('saved')); categories(); } catch (e) { toast(errMsg(e)); }
       };
     };
-    $('#add').onclick = () => form();
-    $('.tree').onclick = async (e) => {
+    if ($('#add')) $('#add').onclick = () => form();
+    $('#ex').onclick = () => { collapsed.clear(); categories(); };
+    $('#co').onclick = () => { list.filter((c) => c.children).forEach((c) => collapsed.add(c.id)); categories(); };
+
+    const tree = $('#tree');
+    tree.onclick = async (e) => {
       const b = e.target.closest('button'); if (!b) return;
-      if (b.dataset.e) form(list.find((c) => c.id == b.dataset.e));
+      if (b.dataset.tg) { const id = Number(b.dataset.tg); collapsed.has(id) ? collapsed.delete(id) : collapsed.add(id); return categories(); }
+      if (b.dataset.e) form(byId.get(Number(b.dataset.e)));
       else if (b.dataset.sub) form({ name: {}, parentId: Number(b.dataset.sub) });
       else if (b.dataset.mv) { const [id, dir] = b.dataset.mv.split(':'); try { await api(`/categories/${id}/move`, { method: 'POST', body: { direction: dir } }); categories(); } catch (er) { toast(errMsg(er)); } }
       else if (b.dataset.d) { if (!confirmDel()) return; try { await api('/categories/' + b.dataset.d, { method: 'DELETE' }); toast(t('deleted')); categories(); } catch (er) { toast(errMsg(er)); } }
     };
+
+    // ----- drag & drop (pointer events: works with mouse, touch and pen) -----
+    let drag = null;
+    const clearMarks = () => tree.querySelectorAll('.drop-before,.drop-after,.drop-inside').forEach((r) => r.classList.remove('drop-before', 'drop-after', 'drop-inside'));
+    const zoneOf = (row, y) => { const r = row.getBoundingClientRect(), f = (y - r.top) / r.height; return f < 0.28 ? 'before' : f > 0.72 ? 'after' : 'inside'; };
+    const end = (apply) => {
+      if (!drag) return; const d = drag; drag = null;
+      document.removeEventListener('pointermove', onMove); document.removeEventListener('pointerup', onUp); document.removeEventListener('pointercancel', onCancel); document.removeEventListener('keydown', onKey);
+      d.ghost.remove(); d.row.classList.remove('dragging'); tree.classList.remove('is-dragging'); clearMarks(); cancelAnimationFrame(d.raf);
+      if (apply && d.target) place(d.id, d.target);
+    };
+    const place = async (id, tgt) => {
+      const to = byId.get(tgt.id); let parentId, beforeId = null;
+      if (tgt.zone === 'inside') { parentId = to.id; collapsed.delete(to.id); }
+      else {
+        parentId = to.parentId || null;
+        if (tgt.zone === 'before') beforeId = to.id;
+        else { const sib = childrenOf(parentId), i = sib.findIndex((x) => x.id === to.id); beforeId = sib[i + 1] ? sib[i + 1].id : null; if (beforeId === id) beforeId = sib[i + 2] ? sib[i + 2].id : null; }
+      }
+      try { await api(`/categories/${id}/place`, { method: 'POST', body: { parentId, beforeId } }); toast(t('saved')); } catch (er) { toast(errMsg(er)); }
+      categories();
+    };
+    const onMove = (e) => {
+      if (!drag) return;
+      drag.ghost.style.transform = `translate(${e.clientX + 12}px, ${e.clientY + 8}px)`; drag.y = e.clientY;
+      const el = document.elementFromPoint(e.clientX, e.clientY), row = el && el.closest('.trow');
+      clearMarks(); drag.target = null;
+      if (!row || !tree.contains(row)) return;
+      const id = Number(row.dataset.id); if (id === drag.id || drag.blocked.has(id)) return;
+      const zone = zoneOf(row, e.clientY); row.classList.add('drop-' + zone); drag.target = { id, zone };
+    };
+    const autoscroll = () => { if (!drag) return; const h = innerHeight; if (drag.y < 70) scrollBy(0, -14); else if (drag.y > h - 70) scrollBy(0, 14); drag.raf = requestAnimationFrame(autoscroll); };
+    const onUp = () => end(true), onCancel = () => end(false), onKey = (e) => e.key === 'Escape' && end(false);
+    tree.addEventListener('pointerdown', (e) => {
+      const g = e.target.closest('[data-grip]'); if (!g || (e.button !== undefined && e.button > 0)) return;
+      e.preventDefault();
+      const id = Number(g.dataset.grip), row = g.closest('.trow'), ghost = document.createElement('div');
+      ghost.className = 'dragghost'; ghost.textContent = nm(byId.get(id).name); document.body.appendChild(ghost);
+      drag = { id, row, ghost, target: null, y: e.clientY, blocked: descendants(id), raf: 0 };
+      row.classList.add('dragging'); tree.classList.add('is-dragging'); onMove(e); drag.raf = requestAnimationFrame(autoscroll);
+      document.addEventListener('pointermove', onMove); document.addEventListener('pointerup', onUp); document.addEventListener('pointercancel', onCancel); document.addEventListener('keydown', onKey);
+    });
   }
 
   // ---------- products ----------
