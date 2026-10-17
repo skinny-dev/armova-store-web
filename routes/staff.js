@@ -52,9 +52,9 @@ module.exports = function (app, admin) {
   admin.get('/me', (req, res) => res.json({ ...me(req.user), catalog: A.PERMS }));
   admin.post('/account/password', (req, res) => {
     const { current, next } = req.body || {};
-    if (!A.checkPassword(current, req.user.passwordHash)) return res.status(400).json({ error: 'bad_password' });
+    if (!req.user.noPassword && !A.checkPassword(current, req.user.passwordHash)) return res.status(400).json({ error: 'bad_password' }); // SMS-only accounts can set a first password without one
     if (typeof next !== 'string' || next.length < 8) return res.status(400).json({ error: 'weak_password' });
-    req.user.passwordHash = A.hashPassword(next); req.user.mustChange = false; req.user.tokenVersion = (req.user.tokenVersion || 1) + 1;
+    req.user.passwordHash = A.hashPassword(next); req.user.mustChange = false; req.user.noPassword = false; req.user.tokenVersion = (req.user.tokenVersion || 1) + 1;
     db.save(); startSession(res, req.user); res.json({ ok: true });
   });
   admin.put('/account', (req, res) => { req.user.name = str(req.body.name, 80) || req.user.name; req.user.phone = str(req.body.phone, 20); db.save(); res.json(A.publicUser(req.user)); });

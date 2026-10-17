@@ -155,9 +155,9 @@
       <div class="grid2"><label><span>${t('uName')}</span><input id="nm" value="${esc(u.name)}"></label><label><span>${t('uPhone')}</span><input id="ph" dir="ltr" inputmode="tel" value="${esc(u.phone)}"></label></div>
       <p class="muted hint">${t('uUsername')}: <b dir="ltr">${esc(u.username)}</b> · ${t('aRole')}: <b>${esc(role ? nm(role.name) : u.role)}</b></p><button class="btn" id="sp">${t('save')}</button>
       <h3 style="margin:24px 0 8px">${t('aPassword')}</h3>${u.mustChange ? `<div class="banner">${t('changePwHint')}</div>` : ''}
-      <div class="grid2"><label><span>${t('aCurrent')}</span><input id="cp" type="password" autocomplete="current-password"></label><label><span>${t('aNew')}</span><input id="np" type="password" autocomplete="new-password"></label></div><small class="muted">${t('uPassHint')}</small><p><button class="btn" id="spw">${t('aPassword')}</button></p>`;
+      <div class="grid2">${u.noPassword ? '' : `<label><span>${t('aCurrent')}</span><input id="cp" type="password" autocomplete="current-password"></label>`}<label><span>${t('aNew')}</span><input id="np" type="password" autocomplete="new-password"></label></div><small class="muted">${t('uPassHint')}</small><p><button class="btn" id="spw">${t('aPassword')}</button></p>`;
     $('#sp').onclick = async () => { try { const x = await api('/account', { method: 'PUT', body: { name: $('#nm').value, phone: $('#ph').value } }); kit.session.user = { ...kit.session.user, ...x }; toast(t('saved')); } catch (e) { toast(errMsg(e)); } };
-    $('#spw').onclick = async () => { try { await api('/account/password', { method: 'POST', body: { current: $('#cp').value, next: $('#np').value } }); kit.session.user.mustChange = false; toast(t('saved')); account(); } catch (e) { toast(errMsg(e)); } };
+    $('#spw').onclick = async () => { try { await api('/account/password', { method: 'POST', body: { current: $('#cp') ? $('#cp').value : '', next: $('#np').value } }); kit.session.user.mustChange = false; kit.session.user.noPassword = false; toast(t('saved')); account(); } catch (e) { toast(errMsg(e)); } };
   }
   window.AdminAccount = account;
 
