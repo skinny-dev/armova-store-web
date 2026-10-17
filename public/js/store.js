@@ -239,13 +239,13 @@
         <label>${t('phone')}<input name="phone" required inputmode="tel" dir="ltr" autocomplete="tel" placeholder="09xxxxxxxxx" value="${esc(phone)}" autofocus></label><div class="err" id="lerr"></div><button class="btn" type="submit">${t('sendCode')}</button></form>`);
       $('#lf').onsubmit = async (e) => {
         e.preventDefault(); phone = e.target.phone.value; const btn = e.target.querySelector('button'); btn.disabled = true;
-        try { const r = await jsonApi('/api/auth/otp/request', { method: 'POST', body: { phone } }); stepCode(r.dev); }
+        try { const r = await jsonApi('/api/auth/otp/request', { method: 'POST', body: { phone } }); stepCode(r.dev, r.devCode); }
         catch (er) { const c = (er.data || {}).error; $('#lerr').textContent = c === 'invalid_phone' ? t('invalidPhone') : c === 'wait' ? t('waitCode').replace('{n}', num(er.data.retryIn)) : c === 'too_many' ? t('tooManyCodes') : t('errGeneric'); btn.disabled = false; }
       };
     };
-    const stepCode = (dev) => {
-      drawer(`<div class="dh"><b>${t('login')}</b><button data-close aria-label="${t('close')}">✕</button></div><form class="form db" id="vf"><p class="muted">${t('codeSentTo')} <b dir="ltr">${esc(phone)}</b></p>${dev ? `<p class="err" style="color:#8a5a00">${t('devOtpHint')}</p>` : ''}
-        <label>${t('otpCode')}<input name="code" required inputmode="numeric" dir="ltr" autocomplete="one-time-code" maxlength="6" autofocus></label>
+    const stepCode = (dev, devCode) => {
+      drawer(`<div class="dh"><b>${t('login')}</b><button data-close aria-label="${t('close')}">✕</button></div><form class="form db" id="vf"><p class="muted">${t('codeSentTo')} <b dir="ltr">${esc(phone)}</b></p>${dev ? `<p class="err" style="color:#8a5a00">${devCode ? `${t('devCodeIs')} <b dir="ltr">${devCode}</b>` : t('devOtpHint')}</p>` : ''}
+        <label>${t('otpCode')}<input name="code" required inputmode="numeric" dir="ltr" autocomplete="one-time-code" maxlength="6" value="${devCode || ''}" autofocus></label>
         <label>${t('nameOptional')}<input name="name" maxlength="100" autocomplete="name"></label><div class="err" id="lerr"></div>
         <button class="btn" type="submit">${t('verify')}</button><button class="btn ghost" type="button" id="chg">${t('changeNumber')}</button><button class="link" type="button" id="rs" disabled></button></form>`);
       let left = 60; const tick = () => { const b = $('#rs'); if (!b) return clearInterval(timer); b.disabled = left > 0; b.textContent = left > 0 ? t('resendIn').replace('{n}', num(left)) : t('resend'); left--; };

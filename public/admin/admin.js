@@ -3,7 +3,7 @@
   const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const D = {
     fa: {
-      username: 'نام کاربری', otpCode: 'کد پیامک‌شده', sendCode: 'ارسال کد', usePassword: 'ورود با رمز عبور', useSms: 'ورود با پیامک', codeSent: 'کد ارسال شد', badCode: 'کد نادرست یا منقضی است', storeLink: 'فروشگاه', more: 'بیشتر', changePwHint: 'لطفا رمز عبور خود را تغییر دهید',
+      devCodeIs: 'حالت آزمایشی — کد ورود:', username: 'نام کاربری', otpCode: 'کد پیامک‌شده', sendCode: 'ارسال کد', usePassword: 'ورود با رمز عبور', useSms: 'ورود با پیامک', codeSent: 'کد ارسال شد', badCode: 'کد نادرست یا منقضی است', storeLink: 'فروشگاه', more: 'بیشتر', changePwHint: 'لطفا رمز عبور خود را تغییر دهید',
       treeHint: 'دسته‌ها به‌صورت درختی هستند؛ با «زیردسته» یک دسته داخل دسته دیگر بسازید و با فلش‌ها ترتیب را عوض کنید.', subcat: 'زیردسته', parentCat: 'دسته والد', rootCat: 'دسته اصلی',
       payment: 'پرداخت', tracking: 'رهگیری', trackingCode: 'کد رهگیری', trackingHint: 'اگر سفارش ارسال شده باشد، کد رهگیری برای مشتری پیامک می‌شود.', notifyDelay: 'اطلاع تاخیر', confirmDelay: 'پیامک تاخیر ارسال برای مشتری فرستاده شود؟', confirmCancel: 'سفارش لغو شود؟ موجودی به انبار برمی‌گردد و غیرقابل بازگشت است.',
       smsWillSend: 'در صورت فعال بودن قالب پیامک، به مشتری اطلاع داده می‌شود.', smsQueued: 'پیامک در صف ارسال قرار گرفت', sendSms: 'پیامک', message: 'متن پیام', send: 'ارسال', chars: 'نویسه', smsParts: 'پیامک', view: 'مشاهده', pricePct: 'تغییر قیمت ٪ (مثلا -10)', stockAdd: 'افزودن به موجودی', makeDiscount: 'ایجاد تخفیف',
@@ -23,7 +23,7 @@
       catInUse: 'این دسته محصول دارد.', fileInUse: 'این فایل در یک محصول استفاده شده است.', usedBy: 'استفاده در', unused: 'استفاده نشده', copyUrl: 'کپی لینک', copied: 'کپی شد', dropHere: 'تصاویر را اینجا رها کنید یا کلیک کنید (JPG, PNG, WebP, حداکثر ۱۰MB)', totalSize: 'حجم کل', empty: 'موردی وجود ندارد', done: 'تأیید', pick: 'انتخاب',
       customer: 'مشتری', total: 'جمع', date: 'تاریخ', phone: 'موبایل', address: 'آدرس', items: 'اقلام', new: 'جدید', processing: 'در حال پردازش', shipped: 'ارسال شد', delivered: 'تحویل شد', cancelled: 'لغو شد', currency: 'تومان', lang: 'EN', nameReq: 'نام الزامی است', badPrice: 'قیمت نامعتبر است', badCategory: 'دسته را انتخاب کنید' },
     en: {
-      username: 'Username', otpCode: 'SMS code', sendCode: 'Send code', usePassword: 'Log in with password', useSms: 'Log in with SMS', codeSent: 'Code sent', badCode: 'Wrong or expired code', storeLink: 'Store', more: 'More', changePwHint: 'Please change your password',
+      devCodeIs: 'Dev mode — login code:', username: 'Username', otpCode: 'SMS code', sendCode: 'Send code', usePassword: 'Log in with password', useSms: 'Log in with SMS', codeSent: 'Code sent', badCode: 'Wrong or expired code', storeLink: 'Store', more: 'More', changePwHint: 'Please change your password',
       treeHint: 'Categories form a tree: use "Sub-category" to nest one under another and the arrows to reorder.', subcat: 'Sub-category', parentCat: 'Parent category', rootCat: 'Top level',
       payment: 'Payment', tracking: 'Tracking', trackingCode: 'Tracking code', trackingHint: 'If the order is already shipped, the customer gets the tracking code by SMS.', notifyDelay: 'Notify delay', confirmDelay: 'Send a shipping-delay SMS to the customer?', confirmCancel: 'Cancel this order? Stock is returned and this cannot be undone.',
       smsWillSend: 'The customer is notified by SMS if the template is enabled.', smsQueued: 'SMS queued', sendSms: 'SMS', message: 'Message', send: 'Send', chars: 'chars', smsParts: 'SMS', view: 'View', pricePct: 'Price change % (e.g. -10)', stockAdd: 'Add to stock', makeDiscount: 'Create discount',
@@ -90,7 +90,7 @@
       e.preventDefault(); $('#le').textContent = '';
       try {
         if (!otp) { session = await api('/login', { method: 'POST', body: { username: $('#un').value, password: $('#pw').value } }); return shell(); }
-        if (!sent) { await api('/otp/request', { method: 'POST', body: { phone: $('#ph').value } }); sent = true; $('#cw').hidden = false; $('#cd').focus(); $('#lb').textContent = t('login'); $('#le').textContent = t('codeSent'); $('#le').style.color = 'var(--ok)'; return; }
+        if (!sent) { const r = await api('/otp/request', { method: 'POST', body: { phone: $('#ph').value } }); sent = true; $('#cw').hidden = false; $('#lb').textContent = t('login'); $('#le').style.color = 'var(--ok)'; $('#le').textContent = r.devCode ? `${t('devCodeIs')} ${r.devCode}` : t('codeSent'); if (r.devCode) $('#cd').value = r.devCode; $('#cd').focus(); return; }
         session = await api('/otp/verify', { method: 'POST', body: { phone: $('#ph').value, code: $('#cd').value } }); shell();
       } catch (er) { $('#le').style.color = 'var(--bad)'; $('#le').textContent = er.code === 'too_many' ? t('tooMany') : otp ? t('badCode') : t('badLogin'); }
     };
