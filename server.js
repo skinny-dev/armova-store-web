@@ -7,16 +7,14 @@ const path = require('path');
 const db = require('./lib/db');
 
 const PORT = process.env.PORT || 4000;
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
 const UPLOADS = path.join(__dirname, 'uploads');
-const SECRET_FILE = path.join(__dirname, 'data', '.secret');
 fs.mkdirSync(UPLOADS, { recursive: true });
-let SECRET = process.env.SESSION_SECRET;
-if (!SECRET) {
-  try { SECRET = fs.readFileSync(SECRET_FILE, 'utf8'); }
-  catch { SECRET = crypto.randomBytes(32).toString('hex'); fs.writeFileSync(SECRET_FILE, SECRET); }
-}
-if (!process.env.ADMIN_PASSWORD) console.warn('! Using default admin password "admin123" — set ADMIN_PASSWORD.');
+const A = require('./lib/auth');
+A.ensure();
+const sms = require('./lib/sms');
+const pricing = require('./lib/pricing');
+const ordersLib = require('./lib/orders');
+sms.syncCustomersFromOrders();
 
 if (process.env.AUTO_SEED !== '0' && !db.get().categories.length && !db.get().products.length) require('./scripts/seed.js'); // demo data on first run
 
@@ -24,30 +22,10 @@ const app = express();
 app.use(express.json({ limit: '1mb' }));
 app.use(cookieParser());
 
-// ---------- auth ----------
-const sign = (v) => crypto.createHmac('sha256', SECRET).update(v).digest('hex');
-const safeEq = (a, b) => { const x = Buffer.from(a), y = Buffer.from(b); return x.length === y.length && crypto.timingSafeEqual(x, y); };
-function makeToken() { const exp = String(Date.now() + 12 * 3600e3); return exp + '.' + sign(exp); }
-function validToken(t) {
-  if (!t || typeof t !== 'string') return false;
-  const [exp, sig] = t.split('.');
-  return !!sig && Number(exp) > Date.now() && safeEq(sig, sign(exp));
-}
-const requireAdmin = (req, res, next) => validToken(req.cookies.armova_admin) ? next() : res.status(401).json({ error: 'unauthorized' });
-const attempts = new Map();
-
-app.post('/api/admin/login', (req, res) => {
-  const ip = req.ip, a = attempts.get(ip) || { n: 0, t: Date.now() };
-  if (Date.now() - a.t > 15 * 60e3) { a.n = 0; a.t = Date.now(); }
-  if (a.n >= 8) return res.status(429).json({ error: 'too_many' });
-  const ok = typeof req.body.password === 'string' && safeEq(sign(req.body.password), sign(ADMIN_PASSWORD));
-  if (!ok) { a.n++; attempts.set(ip, a); return res.status(401).json({ error: 'bad_password' }); }
-  attempts.delete(ip);
-  res.cookie('armova_admin', makeToken(), { httpOnly: true, sameSite: 'strict', maxAge: 12 * 3600e3 });
-  res.json({ ok: true });
-});
-app.post('/api/admin/logout', (req, res) => { res.clearCookie('armova_admin'); res.json({ ok: true }); });
-app.get('/api/admin/me', requireAdmin, (req, res) => res.json({ ok: true }));
+// ---------- admin router (auth lives in routes/staff.js) ----------
+const admin = express.Router();
+admin.use(A.requireAuth);
+require('./routes/staff')(app, admin);
 
 // ---------- helpers ----------
 const str = (v, max = 500) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
@@ -60,12 +38,12 @@ function uniqueSlug(list, base, selfId) {
 }
 const pub = (p) => ({ id: p.id, slug: p.slug, name: p.name, description: p.description, details: p.details, categoryId: p.categoryId,
   price: p.price, comparePrice: p.comparePrice, sizes: p.sizes, images: p.images, createdAt: p.createdAt,
-  group: p.group || '', color: p.color || null, sku: p.sku || '', properties: p.properties || [] });
+  group: p.group || '', color: p.color || null, sku: p.sku || '', properties: p.properties || [], sale: pricing.sale(p) });
 
 // ---------- public API ----------
 app.get('/api/store', (req, res) => {
   const s = db.get();
-  res.json({ categories: [...s.categories].sort((a, b) => a.order - b.order),
+  res.json({ categories: [...s.categories].sort((a, b) => a.order - b.order).map((c) => ({ id: c.id, slug: c.slug, name: c.name, order: c.order, parentId: c.parentId || null })),
     products: s.products.filter((p) => p.active).sort((a, b) => b.createdAt - a.createdAt).map(pub) });
 });
 app.post('/api/track', (req, res) => {
@@ -78,59 +56,65 @@ app.post('/api/track', (req, res) => {
   else return res.status(400).end();
   db.save(); res.json({ ok: true });
 });
-app.post('/api/orders', (req, res) => {
-  const s = db.get(), b = req.body || {};
-  const customer = { name: str(b.name, 100), phone: str(b.phone, 30), address: str(b.address, 500), note: str(b.note, 500) };
-  if (!customer.name || !/^[\d+\-\s()۰-۹]{7,20}$/.test(customer.phone) || !customer.address) return res.status(400).json({ error: 'invalid_customer' });
-  if (!Array.isArray(b.items) || !b.items.length || b.items.length > 50) return res.status(400).json({ error: 'empty_cart' });
-  const items = [];
-  for (const it of b.items) {
-    const p = s.products.find((x) => x.id === Number(it.productId) && x.active);
-    const size = p && p.sizes.find((z) => z.name === it.size);
-    const qty = Math.floor(Number(it.qty));
-    if (!p || !size || !(qty > 0) || qty > size.stock) return res.status(409).json({ error: 'unavailable', productId: it.productId });
-    items.push({ productId: p.id, name: p.name, size: size.name, qty, price: p.price, image: (p.images[0] || {}).file || '' });
-  }
-  for (const it of items) { const p = s.products.find((x) => x.id === it.productId); p.sizes.find((z) => z.name === it.size).stock -= it.qty; }
-  const total = items.reduce((a, i) => a + i.price * i.qty, 0);
-  const order = { id: db.nextId(), items, customer, total, status: 'new', createdAt: Date.now() };
-  s.orders.push(order); db.bump('orders'); db.bump('revenue', total); db.save();
-  res.json({ ok: true, orderId: order.id });
-});
+require('./routes/shop')(app);
 
 // ---------- admin API: categories ----------
-const admin = express.Router();
-admin.use(requireAdmin);
 
 admin.get('/categories', (req, res) => {
   const s = db.get();
-  res.json(s.categories.sort((a, b) => a.order - b.order).map((c) => ({ ...c, count: s.products.filter((p) => p.categoryId === c.id).length })));
+  res.json(s.categories.sort((a, b) => a.order - b.order).map((c) => ({ ...c, parentId: c.parentId || null, count: s.products.filter((p) => p.categoryId === c.id).length,
+    total: s.products.filter((p) => pricing.descendants(c.id).has(p.categoryId)).length, children: s.categories.filter((x) => x.parentId === c.id).length })));
 });
 function applyCategory(c, b) {
-  c.name = bi(b.name, 80); c.order = Number(b.order) || 0;
-  if (!c.name.fa && !c.name.en) return false;
-  c.name.fa ||= c.name.en; c.name.en ||= c.name.fa; return true;
+  const s = db.get();
+  c.name = bi(b.name, 80);
+  if (!c.name.fa && !c.name.en) return 'name_required';
+  c.name.fa ||= c.name.en; c.name.en ||= c.name.fa;
+  if (b.parentId !== undefined) {
+    const pid = b.parentId === null || b.parentId === '' || Number(b.parentId) === 0 ? null : Number(b.parentId);
+    if (pid !== null) {
+      if (!s.categories.some((x) => x.id === pid)) return 'bad_parent';
+      if (c.id && pricing.descendants(c.id).has(pid)) return 'parent_cycle'; // cannot move a category under itself or its own children
+      if (pricing.categoryPath(pid).length >= 4) return 'too_deep';
+    }
+    c.parentId = pid;
+  } else if (c.parentId === undefined) c.parentId = null;
+  if (b.order !== undefined) c.order = Number(b.order) || 0;
+  else if (c.order === undefined) c.order = s.categories.filter((x) => (x.parentId || null) === c.parentId).length;
+  return null;
 }
-admin.post('/categories', (req, res) => {
+admin.post('/categories', A.can('categories.manage'), (req, res) => {
   const s = db.get(), c = { id: db.nextId() };
-  if (!applyCategory(c, req.body)) return res.status(400).json({ error: 'name_required' });
+  const err = applyCategory(c, req.body); if (err) return res.status(400).json({ error: err });
   c.slug = uniqueSlug(s.categories, c.name.en);
   s.categories.push(c); db.save(); res.json(c);
 });
-admin.put('/categories/:id', (req, res) => {
+admin.put('/categories/:id', A.can('categories.manage'), (req, res) => {
   const s = db.get(), c = s.categories.find((x) => x.id === Number(req.params.id));
   if (!c) return res.status(404).end();
-  if (!applyCategory(c, req.body)) return res.status(400).json({ error: 'name_required' });
+  const err = applyCategory(c, req.body); if (err) return res.status(400).json({ error: err });
   db.save(); res.json(c);
 });
-admin.delete('/categories/:id', (req, res) => {
+// Move up/down among siblings
+admin.post('/categories/:id/move', A.can('categories.manage'), (req, res) => {
+  const s = db.get(), c = s.categories.find((x) => x.id === Number(req.params.id));
+  if (!c) return res.status(404).end();
+  const sib = s.categories.filter((x) => (x.parentId || null) === (c.parentId || null)).sort((a, b) => a.order - b.order || a.id - b.id);
+  const i = sib.indexOf(c), j = req.body.direction === 'up' ? i - 1 : i + 1;
+  if (sib[j]) { sib.splice(j, 0, sib.splice(i, 1)[0]); }
+  sib.forEach((x, k) => (x.order = k)); db.save(); res.json({ ok: true });
+});
+admin.delete('/categories/:id', A.can('categories.manage'), (req, res) => {
   const s = db.get(), id = Number(req.params.id);
+  if (s.categories.some((c) => c.parentId === id)) return res.status(409).json({ error: 'category_has_children' });
   if (s.products.some((p) => p.categoryId === id)) return res.status(409).json({ error: 'category_in_use' });
-  s.categories = s.categories.filter((c) => c.id !== id); db.save(); res.json({ ok: true });
+  s.categories = s.categories.filter((c) => c.id !== id);
+  s.discounts.forEach((d) => { if (d.scope && d.scope.categoryIds) d.scope.categoryIds = d.scope.categoryIds.filter((x) => x !== id); });
+  db.save(); res.json({ ok: true });
 });
 
 // ---------- admin API: products ----------
-admin.get('/products', (req, res) => res.json([...db.get().products].sort((a, b) => b.createdAt - a.createdAt)));
+admin.get('/products', A.can('products.view'), (req, res) => res.json([...db.get().products].sort((a, b) => b.createdAt - a.createdAt)));
 function applyProduct(p, b) {
   const s = db.get();
   const name = bi(b.name, 120);
@@ -153,25 +137,29 @@ function applyProduct(p, b) {
     comparePrice: Number(b.comparePrice) > price ? Math.round(Number(b.comparePrice)) : 0, sizes, images, active: b.active !== false });
   return null;
 }
-admin.post('/products', (req, res) => {
+admin.post('/products', A.can('products.edit'), (req, res) => {
   const s = db.get(), p = { id: db.nextId(), createdAt: Date.now(), views: 0 };
   const err = applyProduct(p, req.body); if (err) return res.status(400).json({ error: err });
   p.slug = uniqueSlug(s.products, p.name.en); s.products.push(p); db.save(); res.json(p);
 });
-admin.put('/products/:id', (req, res) => {
+admin.put('/products/:id', A.can('products.edit'), (req, res) => {
   const p = db.get().products.find((x) => x.id === Number(req.params.id));
   if (!p) return res.status(404).end();
   const err = applyProduct(p, req.body); if (err) return res.status(400).json({ error: err });
-  db.save(); res.json(p);
+  db.save(); ordersLib.checkBackInStock(); ordersLib.clearLowStockFlags(); res.json(p);
 });
 // Bulk edit: { ids, active?, price?, categoryId?, stock?, delete? } — only provided fields are applied.
-admin.post('/products/bulk', (req, res) => {
+admin.post('/products/bulk', A.can('products.bulk', 'products.edit'), (req, res) => {
   const s = db.get(), b = req.body || {};
   const ids = new Set((Array.isArray(b.ids) ? b.ids : []).map(Number));
   const has = (k) => b[k] !== undefined && b[k] !== null && b[k] !== '';
   if (has('price') && !(Math.round(Number(b.price)) >= 0)) return res.status(400).json({ error: 'bad_price' });
   if (has('categoryId') && !s.categories.some((c) => c.id === Number(b.categoryId))) return res.status(400).json({ error: 'bad_category' });
   if (has('stock') && !(Math.floor(Number(b.stock)) >= 0)) return res.status(400).json({ error: 'bad_stock' });
+  if (has('priceAdjustPct') && !(Number(b.priceAdjustPct) > -100 && Number(b.priceAdjustPct) < 1000)) return res.status(400).json({ error: 'bad_price' });
+  if (has('stockAdd') && !Number.isFinite(Number(b.stockAdd))) return res.status(400).json({ error: 'bad_stock' });
+  if (b.delete === true && !A.has(req.perms, 'products.delete')) return res.status(403).json({ error: 'forbidden' });
+  if (b.delete !== true && !A.has(req.perms, 'products.bulk') && !A.has(req.perms, 'products.edit')) return res.status(403).json({ error: 'forbidden' });
   let n = 0;
   if (b.delete === true) { const before = s.products.length; s.products = s.products.filter((p) => !ids.has(p.id)); n = before - s.products.length; }
   else for (const p of s.products) {
@@ -180,10 +168,18 @@ admin.post('/products/bulk', (req, res) => {
     if (has('price')) { p.price = Math.round(Number(b.price)); if (p.comparePrice <= p.price) p.comparePrice = 0; }
     if (has('categoryId')) p.categoryId = Number(b.categoryId);
     if (has('stock')) p.sizes.forEach((z) => (z.stock = Math.floor(Number(b.stock))));
+    if (has('stockAdd')) p.sizes.forEach((z) => (z.stock = Math.max(0, z.stock + Math.floor(Number(b.stockAdd)))));
+    if (has('priceAdjustPct')) { // e.g. -10 lowers by 10%, 15 raises by 15%; roundTo snaps to a multiple (e.g. 1000)
+      const r = Math.max(1, Math.floor(Number(b.roundTo)) || 1); p.price = Math.max(0, Math.round(p.price * (100 + Number(b.priceAdjustPct)) / 100 / r) * r);
+      if (p.comparePrice <= p.price) p.comparePrice = 0;
+    }
+    if (has('comparePrice')) p.comparePrice = Number(b.comparePrice) > p.price ? Math.round(Number(b.comparePrice)) : 0;
+    if (Array.isArray(b.addSizes)) b.addSizes.map((x) => str(x, 20)).filter(Boolean).forEach((nm) => { if (!p.sizes.some((z) => z.name === nm)) p.sizes.push({ name: nm, stock: 0 }); });
+    if (has('slugRefresh')) p.slug = uniqueSlug(s.products, p.name.en, p.id);
   }
-  db.save(); res.json({ ok: true, updated: n });
+  db.save(); ordersLib.checkBackInStock(); ordersLib.clearLowStockFlags(); res.json({ ok: true, updated: n });
 });
-admin.delete('/products/:id', (req, res) => {
+admin.delete('/products/:id', A.can('products.delete'), (req, res) => {
   const s = db.get(); s.products = s.products.filter((p) => p.id !== Number(req.params.id)); db.save(); res.json({ ok: true });
 });
 
@@ -201,7 +197,7 @@ const upload = multer({
   fileFilter: (req, file, cb) => cb(null, !!ALLOWED[file.mimetype]),
 });
 const SAFE_NAME = /^[\w؀-ۿ.-]+$/;
-admin.get('/files', (req, res) => {
+admin.get('/files', A.can('files.manage', 'products.edit'), (req, res) => {
   const s = db.get(), usage = {};
   s.products.forEach((p) => p.images.forEach((i) => (usage[i.file] ||= []).push({ id: p.id, name: p.name })));
   const files = fs.readdirSync(UPLOADS).filter((f) => !f.startsWith('.')).map((name) => {
@@ -210,8 +206,8 @@ admin.get('/files', (req, res) => {
   }).sort((a, b) => b.mtime - a.mtime);
   res.json({ files, totalSize: files.reduce((a, f) => a + f.size, 0) });
 });
-admin.post('/files', upload.array('files', 20), (req, res) => res.json({ uploaded: (req.files || []).map((f) => f.filename) }));
-admin.delete('/files/:name', (req, res) => {
+admin.post('/files', A.can('files.manage', 'products.edit'), upload.array('files', 20), (req, res) => res.json({ uploaded: (req.files || []).map((f) => f.filename) }));
+admin.delete('/files/:name', A.can('files.manage'), (req, res) => {
   const name = req.params.name;
   if (!SAFE_NAME.test(name) || name.startsWith('.')) return res.status(400).end();
   if (db.get().products.some((p) => p.images.some((i) => i.file === name))) return res.status(409).json({ error: 'file_in_use' });
@@ -220,15 +216,23 @@ admin.delete('/files/:name', (req, res) => {
 });
 
 // ---------- admin API: orders & stats ----------
-admin.get('/orders', (req, res) => res.json([...db.get().orders].sort((a, b) => b.createdAt - a.createdAt)));
-admin.put('/orders/:id', (req, res) => {
-  const o = db.get().orders.find((x) => x.id === Number(req.params.id));
-  if (!o || !['new', 'processing', 'shipped', 'delivered', 'cancelled'].includes(req.body.status)) return res.status(400).end();
-  if (req.body.status === 'cancelled' && o.status !== 'cancelled') // restock
-    o.items.forEach((it) => { const p = db.get().products.find((x) => x.id === it.productId); const z = p && p.sizes.find((q) => q.name === it.size); if (z) z.stock += it.qty; });
-  o.status = req.body.status; db.save(); res.json(o);
+admin.get('/orders', A.can('orders.view'), (req, res) => res.json([...db.get().orders].sort((a, b) => b.createdAt - a.createdAt)));
+admin.put('/orders/:id', A.can('orders.manage'), (req, res) => {
+  const o = db.get().orders.find((x) => x.id === Number(req.params.id)), b = req.body || {};
+  if (!o) return res.status(404).end();
+  let err = null;
+  if (b.status !== undefined) err = ordersLib.setStatus(o, b.status, { by: req.user.id, tracking: b.trackingCode });
+  else if (b.trackingCode !== undefined) ordersLib.setTracking(o, b.trackingCode);
+  if (!err && b.paymentStatus !== undefined) err = ordersLib.setPayment(o, b.paymentStatus, req.user.id);
+  if (b.adminNote !== undefined) { o.adminNote = str(b.adminNote, 1000); db.save(); }
+  if (err) return res.status(err === 'order_cancelled' ? 409 : 400).json({ error: err });
+  res.json(o);
 });
-admin.get('/stats', (req, res) => {
+admin.post('/orders/:id/delay', A.can('orders.manage'), (req, res) => {
+  const o = db.get().orders.find((x) => x.id === Number(req.params.id)); if (!o) return res.status(404).end();
+  ordersLib.notify(o, 'shipping_delayed'); o.history = (o.history || []).concat([{ note: 'delay_notified', at: Date.now(), by: req.user.id }]); db.save(); res.json({ ok: true });
+});
+admin.get('/stats', A.can('stats.view'), (req, res) => {
   const s = db.get(), days = [];
   for (let i = 13; i >= 0; i--) {
     const k = new Date(Date.now() - i * 864e5).toISOString().slice(0, 10);
@@ -245,6 +249,8 @@ admin.get('/stats', (req, res) => {
     byCategory: s.categories.map((c) => ({ name: c.name, count: s.products.filter((p) => p.categoryId === c.id).length })),
   });
 });
+require('./routes/crm')(admin);
+require('./routes/discounts')(admin);
 app.use('/api/admin', admin);
 app.use((err, req, res, next) => { console.error(err); res.status(err.status || 500).json({ error: err.code || 'server_error' }); });
 
@@ -279,4 +285,5 @@ app.use(express.static(path.join(__dirname, 'public'), { index: false }));
 app.get('/api/*', (req, res) => res.status(404).json({ error: 'not_found' }));
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
 
+require('./lib/jobs').start();
 app.listen(PORT, () => console.log(`Armova running on http://localhost:${PORT}  (admin: /admin)`));

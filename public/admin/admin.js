@@ -3,6 +3,17 @@
   const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const D = {
     fa: {
+      username: 'نام کاربری', otpCode: 'کد پیامک‌شده', sendCode: 'ارسال کد', usePassword: 'ورود با رمز عبور', useSms: 'ورود با پیامک', codeSent: 'کد ارسال شد', badCode: 'کد نادرست یا منقضی است', storeLink: 'فروشگاه', more: 'بیشتر', changePwHint: 'لطفا رمز عبور خود را تغییر دهید',
+      treeHint: 'دسته‌ها به‌صورت درختی هستند؛ با «زیردسته» یک دسته داخل دسته دیگر بسازید و با فلش‌ها ترتیب را عوض کنید.', subcat: 'زیردسته', parentCat: 'دسته والد', rootCat: 'دسته اصلی',
+      payment: 'پرداخت', tracking: 'رهگیری', trackingCode: 'کد رهگیری', trackingHint: 'اگر سفارش ارسال شده باشد، کد رهگیری برای مشتری پیامک می‌شود.', notifyDelay: 'اطلاع تاخیر', confirmDelay: 'پیامک تاخیر ارسال برای مشتری فرستاده شود؟', confirmCancel: 'سفارش لغو شود؟ موجودی به انبار برمی‌گردد و غیرقابل بازگشت است.',
+      smsWillSend: 'در صورت فعال بودن قالب پیامک، به مشتری اطلاع داده می‌شود.', smsQueued: 'پیامک در صف ارسال قرار گرفت', sendSms: 'پیامک', message: 'متن پیام', send: 'ارسال', chars: 'نویسه', smsParts: 'پیامک', view: 'مشاهده', pricePct: 'تغییر قیمت ٪ (مثلا -10)', stockAdd: 'افزودن به موجودی', makeDiscount: 'ایجاد تخفیف',
+      st_new: 'ثبت شد', st_confirmed: 'تایید شد', st_processing: 'در حال پردازش', st_shipped: 'ارسال شد', st_out_for_delivery: 'در مسیر تحویل', st_ready_pickup: 'آماده تحویل حضوری', st_delivered: 'تحویل شد', st_cancelled: 'لغو شد', st_return_requested: 'درخواست مرجوعی', st_return_approved: 'مرجوعی تایید شد', st_return_rejected: 'مرجوعی رد شد', st_returned: 'مرجوع شد',
+      pay_unpaid: 'پرداخت نشده', pay_paid: 'پرداخت شد', pay_failed: 'ناموفق', pay_refunded: 'بازپرداخت شد', pay_refund_failed: 'بازپرداخت ناموفق',
+      e_forbidden: 'دسترسی ندارید', e_parent_cycle: 'نمی‌توان دسته را داخل خودش یا زیرمجموعه‌اش قرار داد', e_too_deep: 'حداکثر ۴ سطح مجاز است', e_bad_parent: 'دسته والد نامعتبر است', e_category_has_children: 'این دسته زیردسته دارد', e_order_cancelled: 'سفارش لغوشده را نمی‌توان تغییر داد', e_bad_status: 'وضعیت نامعتبر', e_bad_payment: 'وضعیت پرداخت نامعتبر',
+      e_invalid_phone: 'شماره موبایل نامعتبر است', e_no_recipients: 'گیرنده‌ای برای ارسال وجود ندارد', e_text_required: 'متن پیام الزامی است', e_too_many: 'تعداد درخواست زیاد است؛ بعدا امتحان کنید', e_too_many_recipients: 'حداکثر ۳۰۰۰ گیرنده در هر ارسال', e_bad_code: 'کد نامعتبر است',
+      e_username_taken: 'این نام کاربری قبلا ثبت شده', e_bad_username: 'نام کاربری: ۳ تا ۳۰ حرف انگلیسی/عدد', e_weak_password: 'رمز عبور حداقل ۸ نویسه باشد', e_last_owner: 'حداقل یک مالک فعال باید بماند', e_cannot_disable_self: 'نمی‌توانید خودتان را غیرفعال کنید', e_cannot_delete_self: 'نمی‌توانید خودتان را حذف کنید',
+      e_cannot_grant_role: 'نمی‌توانید این نقش را بدهید', e_system_role: 'نقش سیستمی قابل تغییر نیست', e_role_in_use: 'این نقش کاربر دارد', e_role_exists: 'این نقش وجود دارد', e_cannot_edit_own_role: 'نقش خودتان را نمی‌توانید ویرایش کنید', e_bad_password: 'رمز فعلی نادرست است',
+      e_bad_value: 'مقدار تخفیف نامعتبر است', e_scope_empty: 'محصول یا دسته‌ای انتخاب نشده', e_code_taken: 'این کد قبلا استفاده شده', e_bad_dates: 'تاریخ پایان قبل از شروع است', e_otp_required: 'قالب کد ورود را نمی‌توان غیرفعال کرد', e_customer_exists: 'این مشتری قبلا ثبت شده',
       search: 'جستجوی نام یا کد…', allF: 'همه', noPrice: 'بدون قیمت', clearSel: 'لغو انتخاب', bulkNone: 'هیچ تغییری انتخاب نشده', discard: 'تغییرات ذخیره‌نشده از بین می‌رود. ادامه می‌دهید؟', mainImg: 'تصویر اصلی',
       bulkSel: 'انتخاب‌شده', bulkApply: 'اعمال', bulkKeep: '— بدون تغییر —', bulkPublish: 'فعال', bulkDraft: 'پیش‌نویس', bulkDelete: 'حذف انتخاب‌شده‌ها', bulkDone: 'اعمال شد', badStock: 'موجودی نامعتبر است', stockAll: 'موجودی هر سایز', selectAll: 'انتخاب همه', noPrice: 'قیمت ندارد', title: 'پنل مدیریت آرموا', dashboard: 'داشبورد', products: 'محصولات', categories: 'دسته‌بندی‌ها', files: 'فایل‌ها', orders: 'سفارش‌ها', logout: 'خروج', login: 'ورود', password: 'رمز عبور', badLogin: 'رمز عبور اشتباه است', tooMany: 'تلاش بیش از حد؛ بعداً امتحان کنید',
       variants: 'تنوع و مشخصات', group: 'گروه رنگ‌ها (کلید)', groupHint: 'محصولاتی با کلید یکسان در صفحه محصول به هم لینک می‌شوند', sku: 'کد محصول', colorFa: 'رنگ (فارسی)', colorEn: 'رنگ (انگلیسی)', colorHex: 'کد رنگ', props: 'ویژگی‌ها', propLabelFa: 'عنوان (فا)', propLabelEn: 'عنوان (EN)', propValFa: 'مقدار (فا)', propValEn: 'مقدار (EN)', addProp: 'افزودن ویژگی', menu: 'منو', more: 'بیشتر', allOrders: 'همه',
@@ -12,6 +23,17 @@
       catInUse: 'این دسته محصول دارد.', fileInUse: 'این فایل در یک محصول استفاده شده است.', usedBy: 'استفاده در', unused: 'استفاده نشده', copyUrl: 'کپی لینک', copied: 'کپی شد', dropHere: 'تصاویر را اینجا رها کنید یا کلیک کنید (JPG, PNG, WebP, حداکثر ۱۰MB)', totalSize: 'حجم کل', empty: 'موردی وجود ندارد', done: 'تأیید', pick: 'انتخاب',
       customer: 'مشتری', total: 'جمع', date: 'تاریخ', phone: 'موبایل', address: 'آدرس', items: 'اقلام', new: 'جدید', processing: 'در حال پردازش', shipped: 'ارسال شد', delivered: 'تحویل شد', cancelled: 'لغو شد', currency: 'تومان', lang: 'EN', nameReq: 'نام الزامی است', badPrice: 'قیمت نامعتبر است', badCategory: 'دسته را انتخاب کنید' },
     en: {
+      username: 'Username', otpCode: 'SMS code', sendCode: 'Send code', usePassword: 'Log in with password', useSms: 'Log in with SMS', codeSent: 'Code sent', badCode: 'Wrong or expired code', storeLink: 'Store', more: 'More', changePwHint: 'Please change your password',
+      treeHint: 'Categories form a tree: use "Sub-category" to nest one under another and the arrows to reorder.', subcat: 'Sub-category', parentCat: 'Parent category', rootCat: 'Top level',
+      payment: 'Payment', tracking: 'Tracking', trackingCode: 'Tracking code', trackingHint: 'If the order is already shipped, the customer gets the tracking code by SMS.', notifyDelay: 'Notify delay', confirmDelay: 'Send a shipping-delay SMS to the customer?', confirmCancel: 'Cancel this order? Stock is returned and this cannot be undone.',
+      smsWillSend: 'The customer is notified by SMS if the template is enabled.', smsQueued: 'SMS queued', sendSms: 'SMS', message: 'Message', send: 'Send', chars: 'chars', smsParts: 'SMS', view: 'View', pricePct: 'Price change % (e.g. -10)', stockAdd: 'Add to stock', makeDiscount: 'Create discount',
+      st_new: 'Placed', st_confirmed: 'Confirmed', st_processing: 'Processing', st_shipped: 'Shipped', st_out_for_delivery: 'Out for delivery', st_ready_pickup: 'Ready for pickup', st_delivered: 'Delivered', st_cancelled: 'Cancelled', st_return_requested: 'Return requested', st_return_approved: 'Return approved', st_return_rejected: 'Return rejected', st_returned: 'Returned',
+      pay_unpaid: 'Unpaid', pay_paid: 'Paid', pay_failed: 'Failed', pay_refunded: 'Refunded', pay_refund_failed: 'Refund failed',
+      e_forbidden: 'You do not have access', e_parent_cycle: 'A category cannot be moved under itself or its children', e_too_deep: 'At most 4 levels are allowed', e_bad_parent: 'Invalid parent category', e_category_has_children: 'This category has sub-categories', e_order_cancelled: 'A cancelled order cannot be changed', e_bad_status: 'Invalid status', e_bad_payment: 'Invalid payment status',
+      e_invalid_phone: 'Invalid mobile number', e_no_recipients: 'No recipients to send to', e_text_required: 'Message text is required', e_too_many: 'Too many requests, try later', e_too_many_recipients: 'At most 3000 recipients per send', e_bad_code: 'Invalid code',
+      e_username_taken: 'That username is taken', e_bad_username: 'Username: 3–30 letters/digits', e_weak_password: 'Password must be at least 8 characters', e_last_owner: 'At least one active owner must remain', e_cannot_disable_self: 'You cannot deactivate yourself', e_cannot_delete_self: 'You cannot delete yourself',
+      e_cannot_grant_role: 'You cannot grant that role', e_system_role: 'System roles cannot be changed', e_role_in_use: 'This role still has users', e_role_exists: 'That role already exists', e_cannot_edit_own_role: 'You cannot edit your own role', e_bad_password: 'Current password is wrong',
+      e_bad_value: 'Invalid discount value', e_scope_empty: 'No products or categories selected', e_code_taken: 'That code is already used', e_bad_dates: 'End date is before the start', e_otp_required: 'The login-code template cannot be disabled', e_customer_exists: 'Customer already exists',
       search: 'Search name or code…', allF: 'All', noPrice: 'No price', clearSel: 'Clear', bulkNone: 'No change selected', discard: 'Unsaved changes will be lost. Continue?', mainImg: 'Main image',
       bulkSel: 'selected', bulkApply: 'Apply', bulkKeep: '— no change —', bulkPublish: 'Active', bulkDraft: 'Draft', bulkDelete: 'Delete selected', bulkDone: 'Applied', badStock: 'Invalid stock', stockAll: 'Stock per size', selectAll: 'Select all', noPrice: 'No price', title: 'Armova Admin', dashboard: 'Dashboard', products: 'Products', categories: 'Categories', files: 'Files', orders: 'Orders', logout: 'Log out', login: 'Log in', password: 'Password', badLogin: 'Wrong password', tooMany: 'Too many attempts, try later',
       variants: 'Variants & properties', group: 'Color group (key)', groupHint: 'Products sharing a key are linked together on the product page', sku: 'Product code', colorFa: 'Color (Farsi)', colorEn: 'Color (English)', colorHex: 'Color hex', props: 'Properties', propLabelFa: 'Label (FA)', propLabelEn: 'Label (EN)', propValFa: 'Value (FA)', propValEn: 'Value (EN)', addProp: 'Add property', menu: 'Menu', more: 'More', allOrders: 'All',
@@ -34,43 +56,80 @@
     const o = { credentials: 'same-origin', ...opts };
     if (o.body && !(o.body instanceof FormData)) { o.headers = { 'Content-Type': 'application/json' }; o.body = JSON.stringify(o.body); }
     const r = await fetch('/api/admin' + path, o);
-    if (r.status === 401 && path !== '/login') { showLogin(); throw new Error('unauthorized'); }
+    if (r.status === 401 && !path.startsWith('/login') && !path.startsWith('/otp')) { showLogin(); throw new Error('unauthorized'); }
     const j = await r.json().catch(() => ({}));
     if (!r.ok) throw Object.assign(new Error(j.error || 'error'), { code: j.error });
     return j;
   }
-  const errMsg = (e) => ({ name_required: t('nameReq'), bad_price: t('badPrice'), bad_stock: t('badStock'), bad_category: t('badCategory'), category_in_use: t('catInUse'), file_in_use: t('fileInUse') }[e.code] || t('error'));
+  const errMsg = (e) => (D[lang]['e_' + (e && e.code)] || ({ name_required: t('nameReq'), bad_price: t('badPrice'), bad_stock: t('badStock'), bad_category: t('badCategory'), category_in_use: t('catInUse'), file_in_use: t('fileInUse') }[e && e.code]) || t('error'));
   const setLang = () => { document.documentElement.lang = lang; document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr'; document.title = t('title'); };
 
+  // ---------- session, permissions & extensions ----------
+  let session = null; // { user, role, permissions[], all }
+  const can = (...need) => !!session && (session.all || need.some((p) => session.permissions.includes(p)));
+  const flatTree = (cats, parent = null, depth = 0) => cats.filter((c) => (c.parentId || null) === parent).sort((a, b) => a.order - b.order || a.id - b.id)
+    .flatMap((c) => [{ c, depth }, ...flatTree(cats, c.id, depth + 1)]);
+  const catOptions = (cats, selected, exclude = new Set(), blank) => (blank ? `<option value="">${blank}</option>` : '') +
+    flatTree(cats).filter((x) => !exclude.has(x.c.id)).map(({ c, depth }) => `<option value="${c.id}" ${c.id === selected ? 'selected' : ''}>${'  '.repeat(depth)}${depth ? '└ ' : ''}${esc(nm(c.name))}</option>`).join('');
+  const st = (s) => t('st_' + s);
+  const money = (n) => `${num(n)} ${t('currency')}`;
+
   // ---------- login & shell ----------
-  function showLogin() {
-    setLang();
-    $('#root').innerHTML = `<form class="login" id="lf"><h1>${t('title')}</h1><label>${t('password')}<input type="password" id="pw" required autofocus></label><div id="le" style="color:var(--bad)"></div><button class="btn">${t('login')}</button></form>`;
+  function showLogin(mode = 'pw') {
+    setLang(); session = null;
+    const otp = mode === 'otp';
+    $('#root').innerHTML = `<form class="login" id="lf"><h1>${t('title')}</h1>
+      ${otp ? `<label>${t('phone')}<input id="ph" dir="ltr" inputmode="tel" placeholder="09xxxxxxxxx" required autofocus></label><label id="cw" hidden>${t('otpCode')}<input id="cd" dir="ltr" inputmode="numeric" autocomplete="one-time-code" maxlength="6"></label>`
+        : `<label>${t('username')}<input id="un" value="owner" autocomplete="username" required></label><label>${t('password')}<input type="password" id="pw" autocomplete="current-password" required autofocus></label>`}
+      <div id="le" style="color:var(--bad)"></div><button class="btn" id="lb">${otp ? t('sendCode') : t('login')}</button>
+      <button type="button" class="lnk" id="sw">${otp ? t('usePassword') : t('useSms')}</button><button type="button" class="lnk" id="lg0">${t('lang')}</button></form>`;
+    $('#sw').onclick = () => showLogin(otp ? 'pw' : 'otp');
+    $('#lg0').onclick = () => { lang = lang === 'fa' ? 'en' : 'fa'; try { localStorage.setItem('alang', lang); } catch {} showLogin(mode); };
+    let sent = false;
     $('#lf').onsubmit = async (e) => {
-      e.preventDefault();
-      try { await api('/login', { method: 'POST', body: { password: $('#pw').value } }); shell(); }
-      catch (er) { $('#le').textContent = er.code === 'too_many' ? t('tooMany') : t('badLogin'); }
+      e.preventDefault(); $('#le').textContent = '';
+      try {
+        if (!otp) { session = await api('/login', { method: 'POST', body: { username: $('#un').value, password: $('#pw').value } }); return shell(); }
+        if (!sent) { await api('/otp/request', { method: 'POST', body: { phone: $('#ph').value } }); sent = true; $('#cw').hidden = false; $('#cd').focus(); $('#lb').textContent = t('login'); $('#le').textContent = t('codeSent'); $('#le').style.color = 'var(--ok)'; return; }
+        session = await api('/otp/verify', { method: 'POST', body: { phone: $('#ph').value, code: $('#cd').value } }); shell();
+      } catch (er) { $('#le').style.color = 'var(--bad)'; $('#le').textContent = er.code === 'too_many' ? t('tooMany') : otp ? t('badCode') : t('badLogin'); }
     };
   }
-  const pages = { dashboard: dashboard, products: products, categories: categories, files: filesPage, orders: orders };
-  const ICON = { dashboard: '▦', products: '👕', categories: '☰', files: '🖼', orders: '🧾' };
+  // pages: key -> { fn, perm: [..any of..], icon }. Core pages first, extensions append more.
+  const pages = {
+    dashboard: { fn: () => dashboard(), perm: ['stats.view'], icon: '▦' },
+    products: { fn: () => products(), perm: ['products.view'], icon: '👕' },
+    categories: { fn: () => categories(), perm: ['categories.manage'], icon: '☰' },
+    files: { fn: () => filesPage(), perm: ['files.manage'], icon: '🖼' },
+    orders: { fn: () => orders(), perm: ['orders.view'], icon: '🧾' },
+  };
+  const hidden = { account: { fn: () => (window.AdminAccount || (() => Promise.resolve()))(), perm: [] } };
+  const allPages = () => ({ ...pages, ...hidden });
+  const ORDER = ['dashboard', 'products', 'categories', 'orders', 'discounts', 'customers', 'messages', 'files', 'team', 'settings'];
+  const visiblePages = () => Object.keys(pages).filter((k) => !pages[k].perm.length || can(...pages[k].perm)).sort((x, y) => (ORDER.indexOf(x) + 1 || 99) - (ORDER.indexOf(y) + 1 || 99));
   function shell() {
     setLang();
-    const cur = location.hash.slice(1) || 'dashboard';
-    const keys = Object.keys(pages);
+    const keys = visiblePages(), req = location.hash.slice(1).split('/')[0];
+    const cur = allPages()[req] && (!allPages()[req].perm.length || can(...allPages()[req].perm)) ? req : keys[0];
+    const u = session.user, role = session.role;
+    const item = (k, cls = '') => `<a href="#${k}" class="${k === cur ? 'on' : ''} ${cls}"><i>${pages[k].icon}</i><span>${t(k)}</span></a>`;
+    const tabs = keys.length > 5 ? keys.slice(0, 4) : keys, more = keys.length > 5 ? keys.slice(4) : [];
     $('#root').innerHTML = `<div class="layout"><nav class="side"><h2>${t('title')}</h2>
-      ${keys.map((k) => `<a href="#${k}" class="${k === cur ? 'on' : ''}">${t(k)}</a>`).join('')}<div class="sp"></div>
-      <button id="lg">${t('lang')}</button><a href="/" target="_blank">↗ Store</a><button id="lo">${t('logout')}</button></nav>
-      <header class="mtop"><b>${t('title')}</b><span><button id="lg2" class="btn sec sm">${t('lang')}</button><a class="btn sec sm" href="/" target="_blank">↗</a><button id="lo2" class="btn sec sm">${t('logout')}</button></span></header>
+      ${keys.map((k) => item(k)).join('')}<div class="sp"></div>
+      <a href="#account" class="who ${cur === 'account' ? 'on' : ''}"><b>${esc(u.name)}</b><small>${esc(role ? nm(role.name) : u.role)}</small></a>
+      <button id="lg">${t('lang')}</button><a href="/" target="_blank">↗ ${t('storeLink')}</a><button id="lo">${t('logout')}</button></nav>
+      <header class="mtop"><b>${t('title')}</b><span><a class="btn sec sm" href="#account">${esc(u.name)}</a><button id="lg2" class="btn sec sm">${t('lang')}</button><a class="btn sec sm" href="/" target="_blank">↗</a><button id="lo2" class="btn sec sm">${t('logout')}</button></span></header>
       <main class="main" id="main"><p class="muted loading">…</p></main>
-      <nav class="mtabs">${keys.map((k) => `<a href="#${k}" class="${k === cur ? 'on' : ''}"><i>${ICON[k]}</i><span>${t(k)}</span></a>`).join('')}</nav></div>`;
+      <nav class="mtabs" style="--n:${tabs.length + (more.length ? 1 : 0)}">${tabs.map((k) => item(k)).join('')}${more.length ? `<button id="more" class="${more.includes(cur) ? 'on' : ''}"><i>⋯</i><span>${t('more')}</span></button>` : ''}</nav></div>`;
     const toggle = () => { lang = lang === 'fa' ? 'en' : 'fa'; try { localStorage.setItem('alang', lang); } catch {} shell(); };
     const out = async () => { await api('/logout', { method: 'POST' }); showLogin(); };
     $('#lg').onclick = $('#lg2').onclick = toggle; $('#lo').onclick = $('#lo2').onclick = out;
+    if (more.length) $('#more').onclick = () => { modal(`<h1>${t('more')}</h1><div class="morelist">${more.map((k) => `<a class="btn sec" href="#${k}">${pages[k].icon} ${t(k)}</a>`).join('')}</div>`); $('#modal').onclick = (e) => { if (e.target.closest('a')) closeModal(true); }; };
     window.scrollTo(0, 0);
-    (pages[cur] || dashboard)().catch((e) => e.message !== 'unauthorized' && toast(t('error')));
+    if (session.user.mustChange && cur !== 'account') toast(t('changePwHint'));
+    (allPages()[cur].fn)().catch((e) => e.message !== 'unauthorized' && toast(errMsg(e)));
   }
-  addEventListener('hashchange', () => $('#main') && shell());
+  addEventListener('hashchange', () => $('#main') && session && shell());
 
   // ---------- modal ----------
   let dirtyFn = null;
@@ -101,39 +160,54 @@
   }
 
   // ---------- categories ----------
+  // ---------- categories (tree) ----------
   async function categories() {
     const list = await api('/categories');
-    $('#main').innerHTML = `<div class="head"><h1>${t('categories')}</h1><button class="btn" id="add">+ ${t('add')}</button></div>
-      <div class="scroll"><table class="rt"><tr><th>${t('nameFa')}</th><th>${t('nameEn')}</th><th>${t('order')}</th><th>${t('count')}</th><th></th></tr>
-      ${list.map((c) => `<tr><td class="c-name">${esc(c.name.fa)}</td><td data-label="${t('nameEn')}">${esc(c.name.en)}</td><td data-label="${t('order')}">${num(c.order)}</td><td data-label="${t('count')}">${num(c.count)}</td><td class="c-act"><div class="actions"><button class="btn sec sm" data-e="${c.id}">${t('edit')}</button><button class="btn danger sm" data-d="${c.id}">${t('del')}</button></div></td></tr>`).join('') || `<tr><td colspan="5">${t('empty')}</td></tr>`}</table></div>`;
-    const form = (c = { name: {}, order: list.length }) => {
+    const rows = flatTree(list);
+    $('#main').innerHTML = `<div class="head"><h1>${t('categories')} <small class="muted">(${num(list.length)})</small></h1><button class="btn" id="add">+ ${t('add')}</button></div>
+      <p class="muted hint">${t('treeHint')}</p>
+      <div class="tree">${rows.map(({ c, depth }) => `<div class="trow" style="--d:${depth}"><div class="tname"><span class="tline">${depth ? '└' : '●'}</span><div><b>${esc(nm(c.name))}</b><small class="muted"> ${esc(lang === 'fa' ? c.name.en : c.name.fa)} · /${esc(c.slug)}</small></div></div>
+        <div class="tcount"><span class="pill">${num(c.count)}</span>${c.children ? `<span class="pill" title="${t('total')}">Σ ${num(c.total)}</span>` : ''}</div>
+        <div class="actions"><button class="btn sec sm" data-mv="${c.id}:up" aria-label="up">↑</button><button class="btn sec sm" data-mv="${c.id}:down" aria-label="down">↓</button><button class="btn sec sm" data-sub="${c.id}">+ ${t('subcat')}</button><button class="btn sec sm" data-e="${c.id}">${t('edit')}</button><button class="btn danger sm" data-d="${c.id}">${t('del')}</button></div></div>`).join('') || `<p class="emptyrow">${t('empty')}</p>`}</div>`;
+    const form = (c = { name: {}, parentId: null }) => {
+      const exclude = new Set(); if (c.id) { const walk = (id) => { exclude.add(id); list.filter((x) => x.parentId === id).forEach((x) => walk(x.id)); }; walk(c.id); }
       modal(`<h1>${c.id ? t('edit') : t('add')}</h1><div class="grid2"><label><span>${t('nameFa')}</span><input id="cf" dir="rtl" value="${esc(c.name.fa)}"></label><label><span>${t('nameEn')}</span><input id="ce" dir="ltr" value="${esc(c.name.en)}"></label></div>
-        <label><span>${t('order')}</span><input id="co" type="number" value="${c.order}"></label><div class="actions"><button class="btn sec" id="x">${t('cancel')}</button><button class="btn" id="ok">${t('save')}</button></div>`);
-      $('#x').onclick = () => closeModal();
-      $('#ok').onclick = async () => { try { await api(c.id ? `/categories/${c.id}` : '/categories', { method: c.id ? 'PUT' : 'POST', body: { name: { fa: $('#cf').value, en: $('#ce').value }, order: $('#co').value } }); closeModal(true); toast(t('saved')); categories(); } catch (e) { toast(errMsg(e)); } };
+        <label><span>${t('parentCat')}</span><select id="cp">${catOptions(list, c.parentId, exclude, '— ' + t('rootCat') + ' —')}</select></label>
+        <div class="actions sticky"><button class="btn sec" id="x">${t('cancel')}</button><button class="btn" id="ok">${t('save')}</button></div>`);
+      $('#x').onclick = () => closeModal(); $('#cf').focus();
+      $('#ok').onclick = async () => {
+        const body = { name: { fa: $('#cf').value, en: $('#ce').value }, parentId: $('#cp').value ? Number($('#cp').value) : null };
+        try { await api(c.id ? `/categories/${c.id}` : '/categories', { method: c.id ? 'PUT' : 'POST', body }); closeModal(true); toast(t('saved')); categories(); } catch (e) { toast(errMsg(e)); }
+      };
     };
     $('#add').onclick = () => form();
-    document.querySelectorAll('[data-e]').forEach((b) => (b.onclick = () => form(list.find((c) => c.id == b.dataset.e))));
-    document.querySelectorAll('[data-d]').forEach((b) => (b.onclick = async () => { if (!confirmDel()) return; try { await api('/categories/' + b.dataset.d, { method: 'DELETE' }); toast(t('deleted')); categories(); } catch (e) { toast(errMsg(e)); } }));
+    $('.tree').onclick = async (e) => {
+      const b = e.target.closest('button'); if (!b) return;
+      if (b.dataset.e) form(list.find((c) => c.id == b.dataset.e));
+      else if (b.dataset.sub) form({ name: {}, parentId: Number(b.dataset.sub) });
+      else if (b.dataset.mv) { const [id, dir] = b.dataset.mv.split(':'); try { await api(`/categories/${id}/move`, { method: 'POST', body: { direction: dir } }); categories(); } catch (er) { toast(errMsg(er)); } }
+      else if (b.dataset.d) { if (!confirmDel()) return; try { await api('/categories/' + b.dataset.d, { method: 'DELETE' }); toast(t('deleted')); categories(); } catch (er) { toast(errMsg(er)); } }
+    };
   }
 
   // ---------- products ----------
   const pf = { q: '', cat: '', st: '' };
   async function products() {
     const [list, cats] = await Promise.all([api('/products'), api('/categories')]);
-    const catName = (id) => nm((cats.find((c) => c.id === id) || {}).name);
+    const catName = (id) => { const c = cats.find((x) => x.id === id); if (!c) return ''; const path = []; let n = c, g = 0; while (n && g++ < 6) { path.unshift(nm(n.name)); n = cats.find((x) => x.id === n.parentId); } return path.join(' › '); };
+    const canEdit = can('products.edit'), canBulk = can('products.bulk', 'products.edit'), canDel = can('products.delete');
     const sel = new Set();
     const stockOf = (p) => p.sizes.reduce((a, s) => a + s.stock, 0);
     $('#main').innerHTML = `<div class="head"><h1>${t('products')} <small class="muted" id="pcount"></small></h1><button class="btn" id="add">+ ${t('add')}</button></div>
       <div class="filters"><input id="fq" type="search" placeholder="${t('search')}" value="${esc(pf.q)}">
-        <select id="fc"><option value="">${t('category')}: ${t('allF')}</option>${cats.map((c) => `<option value="${c.id}" ${String(c.id) === String(pf.cat) ? 'selected' : ''}>${esc(nm(c.name))}</option>`).join('')}</select>
+        <select id="fc">${catOptions(cats, Number(pf.cat) || null, new Set(), t('category') + ': ' + t('allF'))}</select>
         <select id="fs">${[['', t('allF')], ['active', t('active')], ['draft', t('draft')], ['noprice', t('noPrice')], ['out', t('outStock')]].map(([v, l]) => `<option value="${v}" ${pf.st === v ? 'selected' : ''}>${t('status')}: ${l}</option>`).join('')}</select></div>
       <div id="bulk" class="bulkbar" hidden>
         <div class="bhead"><b><span id="bc">0</span> ${t('bulkSel')}</b><button class="btn sec sm" id="bclr">${t('clearSel')}</button></div>
         <select id="ba"><option value="">${t('status')}: ${t('bulkKeep')}</option><option value="1">${t('bulkPublish')}</option><option value="0">${t('bulkDraft')}</option></select>
-        <select id="bcat"><option value="">${t('category')}: ${t('bulkKeep')}</option>${cats.map((c) => `<option value="${c.id}">${esc(nm(c.name))}</option>`).join('')}</select>
-        <input id="bp" type="number" min="0" inputmode="numeric" placeholder="${t('price')}"><input id="bs" type="number" min="0" inputmode="numeric" placeholder="${t('stockAll')}">
-        <div class="bbtns"><button class="btn sm" id="bgo">${t('bulkApply')}</button><button class="btn danger sm" id="bdel">${t('bulkDelete')}</button></div></div>
+        <select id="bcat">${catOptions(cats, null, new Set(), t('category') + ': ' + t('bulkKeep'))}</select>
+        <input id="bp" type="number" min="0" inputmode="numeric" placeholder="${t('price')}"><input id="bs" type="number" min="0" inputmode="numeric" placeholder="${t('stockAll')}"><input id="bpct" type="number" step="1" inputmode="numeric" placeholder="${t('pricePct')}"><input id="bsa" type="number" step="1" inputmode="numeric" placeholder="${t('stockAdd')}">
+        <div class="bbtns"><button class="btn sm" id="bgo">${t('bulkApply')}</button>${can('discounts.manage') ? `<button class="btn sec sm" id="bdisc">🏷 ${t('makeDiscount')}</button>` : ''}${canDel ? `<button class="btn danger sm" id="bdel">${t('bulkDelete')}</button>` : ''}</div></div>
       <div class="scroll"><table class="rt"><thead><tr><th class="c-sel"><input type="checkbox" id="sa" title="${t('selectAll')}"></th><th></th><th>${t('name')}</th><th>${t('category')}</th><th>${t('price')}</th><th>${t('stock')}</th><th>${t('status')}</th><th>${t('views')}</th><th></th></tr></thead><tbody id="pb"></tbody></table></div>`;
     const view = () => {
       const q = pf.q.trim().toLowerCase();
@@ -152,10 +226,10 @@
         return `<tr class="${sel.has(p.id) ? 'on' : ''}"><td class="c-sel"><input type="checkbox" class="bk" value="${p.id}" ${sel.has(p.id) ? 'checked' : ''}></td>
         <td class="c-img">${p.images[0] ? `<img class="thumb" src="/uploads/t/${encodeURIComponent(p.images[0].file)}?w=480" alt="" loading="lazy">` : ''}</td>
         <td class="c-name"><button class="lnk" data-e="${p.id}">${esc(nm(p.name))}</button>${p.color && p.color.hex ? `<i class="dot" style="background:${esc(p.color.hex)}"></i>` : ''}</td><td data-label="${t('category')}">${esc(catName(p.categoryId))}</td>
-        <td data-label="${t('price')}"><input class="inl ${p.price ? '' : 'warn'}" type="number" min="0" inputmode="numeric" data-price="${p.id}" value="${p.price || ''}" placeholder="0"></td>
+        <td data-label="${t('price')}"><input class="inl ${p.price ? '' : 'warn'}" type="number" min="0" inputmode="numeric" data-price="${p.id}" value="${p.price || ''}" placeholder="0" ${canEdit ? '' : 'disabled'}></td>
         <td data-label="${t('stock')}"><span class="pill ${st === 0 ? 'bad' : st < 6 ? 'warn' : 'ok'}">${num(st)}</span></td>
-        <td data-label="${t('status')}"><label class="sw"><input type="checkbox" data-act="${p.id}" ${p.active ? 'checked' : ''}><i></i><span>${p.active ? t('active') : t('draft')}</span></label></td><td data-label="${t('views')}">${num(p.views)}</td>
-        <td class="c-act"><div class="actions"><button class="btn sec sm" data-e="${p.id}">${t('edit')}</button><button class="btn danger sm" data-d="${p.id}">${t('del')}</button></div></td></tr>`;
+        <td data-label="${t('status')}"><label class="sw"><input type="checkbox" data-act="${p.id}" ${p.active ? 'checked' : ''} ${canEdit ? '' : 'disabled'}><i></i><span>${p.active ? t('active') : t('draft')}</span></label></td><td data-label="${t('views')}">${num(p.views)}</td>
+        <td class="c-act"><div class="actions"><button class="btn sec sm" data-e="${p.id}">${canEdit ? t('edit') : t('view')}</button>${canDel ? `<button class="btn danger sm" data-d="${p.id}">${t('del')}</button>` : ''}<a class="btn sec sm" target="_blank" href="/product/${encodeURIComponent(p.slug)}">↗</a></div></td></tr>`;
       }).join('') || `<tr><td colspan="9" class="emptyrow">${t('empty')}</td></tr>`;
       syncBar(v);
     };
@@ -165,7 +239,8 @@
     let qt; $('#fq').oninput = (e) => { clearTimeout(qt); qt = setTimeout(() => { pf.q = e.target.value; paint(); }, 120); };
     $('#fc').onchange = (e) => { pf.cat = e.target.value; paint(); };
     $('#fs').onchange = (e) => { pf.st = e.target.value; paint(); };
-    $('#add').onclick = () => productForm(null, cats);
+    if (canEdit) $('#add').onclick = () => productForm(null, cats); else $('#add').hidden = true;
+    if (!canBulk) { $('#bulk').remove(); }
     $('#sa').onchange = (e) => { view().forEach((p) => (e.target.checked ? sel.add(p.id) : sel.delete(p.id))); paint(); };
     $('#bclr').onclick = () => { sel.clear(); paint(); };
     $('#bgo').onclick = () => {
@@ -174,10 +249,13 @@
       if ($('#bcat').value) body.categoryId = Number($('#bcat').value);
       if ($('#bp').value) body.price = Number($('#bp').value);
       if ($('#bs').value) body.stock = Number($('#bs').value);
+      if ($('#bpct').value) { body.priceAdjustPct = Number($('#bpct').value); body.roundTo = 1000; }
+      if ($('#bsa').value) body.stockAdd = Number($('#bsa').value);
       if (!Object.keys(body).length) return toast(t('bulkNone'));
       bulk(body);
     };
-    $('#bdel').onclick = () => { if (confirmDel()) bulk({ delete: true }); };
+    if ($('#bdel')) $('#bdel').onclick = () => { if (confirmDel()) bulk({ delete: true }); };
+    if ($('#bdisc')) $('#bdisc').onclick = () => window.AdminSales && window.AdminSales.fromProducts([...sel], list);
     const pb = $('#pb'), find = (id) => list.find((p) => p.id == id);
     pb.addEventListener('change', async (e) => {
       const el = e.target;
@@ -207,7 +285,7 @@
         <div class="grid2"><label><span>${t('nameFa')}</span><input id="nf" dir="rtl" value="${esc(m.name.fa)}"></label><label><span>${t('nameEn')}</span><input id="ne" dir="ltr" value="${esc(m.name.en)}"></label></div>
         <div class="grid2"><label><span>${t('descFa')}</span><textarea id="df" rows="3" dir="rtl">${esc(m.description.fa)}</textarea></label><label><span>${t('descEn')}</span><textarea id="de" rows="3" dir="ltr">${esc(m.description.en)}</textarea></label></div>
         <div class="grid2"><label><span>${t('detFa')}</span><textarea id="tf" rows="3" dir="rtl">${esc(m.details.fa)}</textarea></label><label><span>${t('detEn')}</span><textarea id="te" rows="3" dir="ltr">${esc(m.details.en)}</textarea></label></div>
-        <div class="grid2"><label><span>${t('category')}</span><select id="ct">${cats.map((c) => `<option value="${c.id}" ${c.id === m.categoryId ? 'selected' : ''}>${esc(nm(c.name))}</option>`).join('')}</select></label>
+        <div class="grid2"><label><span>${t('category')}</span><select id="ct">${catOptions(cats, m.categoryId)}</select></label>
           <label><span>${t('status')}</span><select id="ac"><option value="1" ${m.active ? 'selected' : ''}>${t('active')}</option><option value="0" ${m.active ? '' : 'selected'}>${t('draft')}</option></select></label></div>
         <div class="grid2"><label><span>${t('price')}</span><input id="pr" type="number" min="0" value="${m.price}"></label><label><span>${t('compare')}</span><input id="cp" type="number" min="0" value="${m.comparePrice || 0}"></label></div>
         <fieldset class="fs"><legend>${t('variants')}</legend>
@@ -272,27 +350,68 @@
   }
 
   // ---------- orders ----------
+  const ORDER_STATUSES = ['new', 'confirmed', 'processing', 'shipped', 'out_for_delivery', 'ready_pickup', 'delivered', 'cancelled', 'return_requested', 'return_approved', 'return_rejected', 'returned'];
+  const PAY_STATUSES = ['unpaid', 'paid', 'failed', 'refunded', 'refund_failed'];
+  const STATUS_CLS = { new: 'warn', delivered: 'ok', cancelled: 'bad', return_requested: 'warn', returned: 'bad', return_rejected: 'bad' };
   let ofilter = '';
   async function orders() {
-    const list = await api('/orders'), sts = ['new', 'processing', 'shipped', 'delivered', 'cancelled'];
-    const cnt = (s) => list.filter((o) => o.status === s).length;
-    $('#main').innerHTML = `<div class="head"><h1>${t('orders')}</h1></div>
-      <div class="chips">${[['', t('allOrders'), list.length], ...sts.map((s) => [s, t(s), cnt(s)])].map(([v, l, n]) => `<button class="chip ${ofilter === v ? 'on' : ''}" data-f="${v}">${l} <b>${num(n)}</b></button>`).join('')}</div>
-      <div class="scroll"><table class="rt"><thead><tr><th>#</th><th>${t('date')}</th><th>${t('customer')}</th><th>${t('items')}</th><th>${t('total')}</th><th>${t('status')}</th></tr></thead><tbody id="ob"></tbody></table></div>`;
+    const list = await api('/orders'), cnt = (s) => list.filter((o) => o.status === s).length;
+    const canManage = can('orders.manage'), canSms = can('crm.send');
+    $('#main').innerHTML = `<div class="head"><h1>${t('orders')} <small class="muted">(${num(list.length)})</small></h1></div>
+      <div class="chips scrollx">${[['', t('allOrders'), list.length], ...ORDER_STATUSES.filter((s) => cnt(s) || s === ofilter).map((s) => [s, st(s), cnt(s)])].map(([v, l, n]) => `<button class="chip ${ofilter === v ? 'on' : ''}" data-f="${v}">${l} <b>${num(n)}</b></button>`).join('')}</div>
+      <div class="scroll"><table class="rt"><thead><tr><th>#</th><th>${t('customer')}</th><th>${t('items')}</th><th>${t('total')}</th><th>${t('status')}</th><th>${t('payment')}</th><th></th></tr></thead><tbody id="ob"></tbody></table></div>`;
     const paint = () => {
       const v = list.filter((o) => !ofilter || o.status === ofilter);
-      $('#ob').innerHTML = v.map((o) => `<tr class="st-${o.status}"><td class="c-name">#${num(o.id)} <small class="muted">${fmtDate(o.createdAt)}</small></td><td data-label="${t('date')}">${fmtDate(o.createdAt)}</td>
-        <td data-label="${t('customer')}"><b>${esc(o.customer.name)}</b><br><a dir="ltr" href="tel:${esc(o.customer.phone)}">${esc(o.customer.phone)}</a><br><small>${esc(o.customer.address)}${o.customer.note ? '<br>— ' + esc(o.customer.note) : ''}</small></td>
-        <td data-label="${t('items')}">${o.items.map((i) => `${esc(nm(i.name))} (${esc(i.size)}) ×${num(i.qty)}`).join('<br>')}</td><td data-label="${t('total')}"><b>${num(o.total)}</b> ${t('currency')}</td>
-        <td data-label="${t('status')}"><select data-o="${o.id}">${sts.map((s) => `<option value="${s}" ${o.status === s ? 'selected' : ''}>${t(s)}</option>`).join('')}</select></td></tr>`).join('') || `<tr><td colspan="6" class="emptyrow">${t('empty')}</td></tr>`;
+      $('#ob').innerHTML = v.map((o) => `<tr class="st-${o.status}"><td class="c-name">#${num(o.id)} <small class="muted">${fmtDate(o.createdAt)}</small></td>
+        <td data-label="${t('customer')}"><span><b>${esc(o.customer.name)}</b><br><a dir="ltr" href="tel:${esc(o.customer.phone)}">${esc(o.customer.phone)}</a><br><small>${esc(o.customer.address)}${o.customer.note ? '<br>— ' + esc(o.customer.note) : ''}</small></span></td>
+        <td data-label="${t('items')}"><span>${o.items.map((i) => `${esc(nm(i.name))} (${esc(i.size)}) ×${num(i.qty)}`).join('<br>')}</span></td>
+        <td data-label="${t('total')}"><span><b>${num(o.total)}</b> ${t('currency')}${o.discount ? `<br><small class="muted">−${num(o.discount)}${o.coupon ? ' · ' + esc(o.coupon.code) : ''}</small>` : ''}</span></td>
+        <td data-label="${t('status')}"><select data-os="${o.id}" ${canManage ? '' : 'disabled'}>${ORDER_STATUSES.map((s) => `<option value="${s}" ${o.status === s ? 'selected' : ''}>${st(s)}</option>`).join('')}</select></td>
+        <td data-label="${t('payment')}"><select data-op="${o.id}" ${canManage ? '' : 'disabled'}>${PAY_STATUSES.map((s) => `<option value="${s}" ${(o.paymentStatus || 'unpaid') === s ? 'selected' : ''}>${t('pay_' + s)}</option>`).join('')}</select></td>
+        <td class="c-act"><div class="actions">${o.trackingCode ? `<span class="pill" dir="ltr">${esc(o.trackingCode)}</span>` : ''}
+          ${canManage ? `<button class="btn sec sm" data-tr="${o.id}">${t('tracking')}</button><button class="btn sec sm" data-dl="${o.id}">${t('notifyDelay')}</button>` : ''}${canSms && o.customerId ? `<button class="btn sec sm" data-sm="${o.id}">${t('sendSms')}</button>` : ''}</div></td></tr>`).join('') || `<tr><td colspan="7" class="emptyrow">${t('empty')}</td></tr>`;
     };
     paint();
+    const find = (id) => list.find((x) => x.id == id);
+    const save = async (o, body, msg) => { try { Object.assign(o, await api('/orders/' + o.id, { method: 'PUT', body })); toast(msg || t('saved')); orders(); } catch (er) { toast(errMsg(er)); paint(); } };
     document.querySelectorAll('[data-f]').forEach((b) => (b.onclick = () => { ofilter = b.dataset.f; document.querySelectorAll('[data-f]').forEach((x) => x.classList.toggle('on', x === b)); paint(); }));
-    $('#ob').addEventListener('change', async (e) => {
-      const s = e.target; if (!s.dataset.o) return; const o = list.find((x) => x.id == s.dataset.o), prev = o.status;
-      try { await api('/orders/' + o.id, { method: 'PUT', body: { status: s.value } }); o.status = s.value; toast(t('saved')); orders(); } catch { s.value = prev; toast(t('error')); }
+    const ob = $('#ob');
+    ob.addEventListener('change', (e) => {
+      const el = e.target, o = find(el.dataset.os || el.dataset.op); if (!o) return;
+      if (el.dataset.op) return save(o, { paymentStatus: el.value });
+      if (el.value === 'shipped') { // ask for the tracking code first
+        modal(`<h1>${t('st_shipped')} · #${num(o.id)}</h1><label><span>${t('trackingCode')}</span><input id="tc" dir="ltr" value="${esc(o.trackingCode || '')}" autofocus></label><p class="muted hint">${t('smsWillSend')}</p>
+          <div class="actions sticky"><button class="btn sec" id="x">${t('cancel')}</button><button class="btn" id="ok">${t('save')}</button></div>`);
+        $('#x').onclick = () => { closeModal(true); paint(); };
+        $('#ok').onclick = () => { const code = $('#tc').value; closeModal(true); save(o, { status: 'shipped', trackingCode: code }); };
+        return;
+      }
+      if (el.value === 'cancelled' && !confirm(t('confirmCancel'))) { el.value = o.status; return; }
+      save(o, { status: el.value });
+    });
+    ob.addEventListener('click', (e) => {
+      const b = e.target.closest('button'); if (!b) return;
+      if (b.dataset.tr) { const o = find(b.dataset.tr);
+        modal(`<h1>${t('tracking')} · #${num(o.id)}</h1><label><span>${t('trackingCode')}</span><input id="tc" dir="ltr" value="${esc(o.trackingCode || '')}" autofocus></label><p class="muted hint">${t('trackingHint')}</p><div class="actions sticky"><button class="btn sec" id="x">${t('cancel')}</button><button class="btn" id="ok">${t('save')}</button></div>`);
+        $('#x').onclick = () => closeModal(); $('#ok').onclick = () => { const code = $('#tc').value; closeModal(true); save(o, { trackingCode: code }); }; }
+      else if (b.dataset.dl) { if (confirm(t('confirmDelay'))) api(`/orders/${b.dataset.dl}/delay`, { method: 'POST' }).then(() => toast(t('smsQueued'))).catch((er) => toast(errMsg(er))); }
+      else if (b.dataset.sm) { const o = find(b.dataset.sm);
+        modal(`<h1>${t('sendSms')} · ${esc(o.customer.name)}</h1><label><span>${t('message')}</span><textarea id="mt" rows="4" maxlength="800"></textarea></label><div class="muted hint"><span id="mc">0</span></div>
+          <div class="actions sticky"><button class="btn sec" id="x">${t('cancel')}</button><button class="btn" id="ok">${t('send')}</button></div>`);
+        $('#mt').oninput = () => ($('#mc').textContent = smsInfo($('#mt').value)); $('#x').onclick = () => closeModal();
+        $('#ok').onclick = async () => { try { await api('/messages/send', { method: 'POST', body: { ids: [o.customerId], kind: 'info', text: $('#mt').value, name: 'Order #' + o.id } }); closeModal(true); toast(t('smsQueued')); } catch (er) { toast(errMsg(er)); } }; }
     });
   }
+  // characters / SMS parts (Persian uses UCS-2: 70 chars per part, 67 when multipart)
+  const smsInfo = (text) => { const n = [...text].length, uni = /[^\x00-\x7f]/.test(text), parts = !n ? 0 : uni ? (n <= 70 ? 1 : Math.ceil(n / 67)) : (n <= 160 ? 1 : Math.ceil(n / 153)); return `${num(n)} ${t('chars')} · ${num(parts)} ${t('smsParts')}`; };
 
-  api('/me').then(shell).catch(showLogin);
+  // ---------- extensions (public/admin/*.js register via window.AdminExt) ----------
+  const kit = { $, esc, t, api, toast, modal, closeModal, confirmDel, num, nm, fmtDate, money, can, errMsg, flatTree, catOptions, smsInfo, st, ORDER_STATUSES, get lang() { return lang; }, rerender: () => shell(), get session() { return session; }, setSession: (s) => { session = s; } };
+  (window.AdminExt || []).forEach((factory) => {
+    const x = factory(kit);
+    Object.entries(x.dict || {}).forEach(([l, d]) => Object.assign(D[l], d));
+    Object.entries(x.pages || {}).forEach(([k, v]) => (pages[k] = v));
+    Object.entries(x.hidden || {}).forEach(([k, v]) => (hidden[k] = v));
+  });
+  api('/me').then((s) => { session = s; shell(); }).catch(showLogin);
 })();
