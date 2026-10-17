@@ -1,5 +1,1157 @@
 [
  {
+  "slug": "scarf-grey",
+  "group": "scarf",
+  "color": {
+   "fa": "طوسی",
+   "en": "Grey",
+   "hex": "#7a7d80"
+  },
+  "name": {
+   "fa": "بلوز شال‌دار طوسی",
+   "en": "Scarf Blouse Grey"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "DSC01920.jpg"
+  ]
+ },
+ {
+  "slug": "scarf-red",
+  "group": "scarf",
+  "color": {
+   "fa": "قرمز",
+   "en": "Red",
+   "hex": "#c0272d"
+  },
+  "name": {
+   "fa": "بلوز شال‌دار قرمز",
+   "en": "Scarf Blouse Red"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "DSC01921.jpg",
+   "DSC01923.jpg"
+  ]
+ },
+ {
+  "slug": "scarf-yellow",
+  "group": "scarf",
+  "color": {
+   "fa": "زرد",
+   "en": "Yellow",
+   "hex": "#e5a912"
+  },
+  "name": {
+   "fa": "بلوز شال‌دار زرد",
+   "en": "Scarf Blouse Yellow"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "DSC01925.jpg"
+  ]
+ },
+ {
+  "slug": "scarf-pink",
+  "group": "scarf",
+  "color": {
+   "fa": "صورتی",
+   "en": "Pink",
+   "hex": "#e8a5b5"
+  },
+  "name": {
+   "fa": "بلوز شال‌دار صورتی",
+   "en": "Scarf Blouse Pink"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "DSC01926.jpg"
+  ]
+ },
+ {
+  "slug": "scarf-green",
+  "group": "scarf",
+  "color": {
+   "fa": "سبز",
+   "en": "Green",
+   "hex": "#3f9d85"
+  },
+  "name": {
+   "fa": "بلوز شال‌دار سبز",
+   "en": "Scarf Blouse Green"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "DSC01930.jpg"
+  ]
+ },
+ {
+  "slug": "scarf-beige",
+  "group": "scarf",
+  "color": {
+   "fa": "نسکافه‌ای",
+   "en": "Beige",
+   "hex": "#c8b49a"
+  },
+  "name": {
+   "fa": "بلوز شال‌دار نسکافه‌ای",
+   "en": "Scarf Blouse Beige"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "DSC01931.jpg"
+  ]
+ },
+ {
+  "slug": "gisu-pink",
+  "group": "gisu",
+  "color": {
+   "fa": "صورتی",
+   "en": "Pink",
+   "hex": "#e8a5b5"
+  },
+  "name": {
+   "fa": "بلوز شرت مدل گیسو صورتی",
+   "en": "Gisu Zip Blouse Pink"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "DSC01490.jpg",
+   "DSC01919.jpg"
+  ]
+ },
+ {
+  "slug": "gisu-green",
+  "group": "gisu",
+  "color": {
+   "fa": "سبز",
+   "en": "Green",
+   "hex": "#3f9d85"
+  },
+  "name": {
+   "fa": "بلوز شرت مدل گیسو سبز",
+   "en": "Gisu Zip Blouse Green"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "DSC01526.jpg",
+   "DSC01528.jpg",
+   "IMG_8989.JPG",
+   "DSC01912.jpg"
+  ]
+ },
+ {
+  "slug": "gisu-beige",
+  "group": "gisu",
+  "color": {
+   "fa": "نسکافه‌ای",
+   "en": "Beige",
+   "hex": "#c8b49a"
+  },
+  "name": {
+   "fa": "بلوز شرت مدل گیسو نسکافه‌ای",
+   "en": "Gisu Zip Blouse Beige"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "DSC01568.jpg",
+   "IMG_8990.JPG"
+  ]
+ },
+ {
+  "slug": "gisu-black",
+  "group": "gisu",
+  "color": {
+   "fa": "مشکی",
+   "en": "Black",
+   "hex": "#111111"
+  },
+  "name": {
+   "fa": "بلوز شرت مدل گیسو مشکی",
+   "en": "Gisu Zip Blouse Black"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "DSC01924.jpg"
+  ]
+ },
+ {
+  "slug": "gisu-grey",
+  "group": "gisu",
+  "color": {
+   "fa": "طوسی",
+   "en": "Grey",
+   "hex": "#7a7d80"
+  },
+  "name": {
+   "fa": "بلوز شرت مدل گیسو طوسی",
+   "en": "Gisu Zip Blouse Grey"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "DSC01928.jpg"
+  ]
+ },
+ {
+  "slug": "ny-yellow",
+  "group": "ny",
+  "color": {
+   "fa": "زرد",
+   "en": "Yellow",
+   "hex": "#e5a912"
+  },
+  "name": {
+   "fa": "بلوز ساده نیویورک زرد",
+   "en": "New York Blouse Yellow"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "DSC01587.jpg"
+  ]
+ },
+ {
+  "slug": "ny-grey",
+  "group": "ny",
+  "color": {
+   "fa": "طوسی",
+   "en": "Grey",
+   "hex": "#7a7d80"
+  },
+  "name": {
+   "fa": "بلوز ساده نیویورک طوسی",
+   "en": "New York Blouse Grey"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "DSC01616.jpg",
+   "IMG_8913.JPG"
+  ]
+ },
+ {
+  "slug": "ny-black",
+  "group": "ny",
+  "color": {
+   "fa": "مشکی",
+   "en": "Black",
+   "hex": "#111111"
+  },
+  "name": {
+   "fa": "بلوز ساده نیویورک مشکی",
+   "en": "New York Blouse Black"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "IMG_8901.JPG"
+  ]
+ },
+ {
+  "slug": "ny-beige",
+  "group": "ny",
+  "color": {
+   "fa": "نسکافه‌ای",
+   "en": "Beige",
+   "hex": "#c8b49a"
+  },
+  "name": {
+   "fa": "بلوز ساده نیویورک نسکافه‌ای",
+   "en": "New York Blouse Beige"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "IMG_8903.JPG"
+  ]
+ },
+ {
+  "slug": "ny-white",
+  "group": "ny",
+  "color": {
+   "fa": "سفید",
+   "en": "White",
+   "hex": "#f5f5f2"
+  },
+  "name": {
+   "fa": "بلوز ساده نیویورک سفید",
+   "en": "New York Blouse White"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "IMG_8904.JPG"
+  ]
+ },
+ {
+  "slug": "ny-pink",
+  "group": "ny",
+  "color": {
+   "fa": "صورتی",
+   "en": "Pink",
+   "hex": "#e8a5b5"
+  },
+  "name": {
+   "fa": "بلوز ساده نیویورک صورتی",
+   "en": "New York Blouse Pink"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "IMG_8906.JPG"
+  ]
+ },
+ {
+  "slug": "ny-green",
+  "group": "ny",
+  "color": {
+   "fa": "سبز",
+   "en": "Green",
+   "hex": "#3f9d85"
+  },
+  "name": {
+   "fa": "بلوز ساده نیویورک سبز",
+   "en": "New York Blouse Green"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "IMG_8910.JPG"
+  ]
+ },
+ {
+  "slug": "ny-red",
+  "group": "ny",
+  "color": {
+   "fa": "قرمز",
+   "en": "Red",
+   "hex": "#c0272d"
+  },
+  "name": {
+   "fa": "بلوز ساده نیویورک قرمز",
+   "en": "New York Blouse Red"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "IMG_8912.JPG"
+  ]
+ },
+ {
+  "slug": "flare-yellow",
+  "group": "flare",
+  "color": {
+   "fa": "زرد",
+   "en": "Yellow",
+   "hex": "#e5a912"
+  },
+  "name": {
+   "fa": "بلوز آستین شیپوری زرد",
+   "en": "Flared Sleeve Blouse Yellow"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "DSC01582.jpg"
+  ]
+ },
+ {
+  "slug": "flare-pink",
+  "group": "flare",
+  "color": {
+   "fa": "صورتی",
+   "en": "Pink",
+   "hex": "#e8a5b5"
+  },
+  "name": {
+   "fa": "بلوز آستین شیپوری صورتی",
+   "en": "Flared Sleeve Blouse Pink"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "DSC01615.jpg"
+  ]
+ },
+ {
+  "slug": "lace-grey",
+  "group": "lace",
+  "color": {
+   "fa": "طوسی",
+   "en": "Grey",
+   "hex": "#7a7d80"
+  },
+  "name": {
+   "fa": "بلوز مدل دانتل طوسی",
+   "en": "Lace Cuff Blouse Grey"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "DSC01934.jpg",
+   "DSC01935.jpg"
+  ]
+ },
+ {
+  "slug": "lace-beige",
+  "group": "lace",
+  "color": {
+   "fa": "نسکافه‌ای",
+   "en": "Beige",
+   "hex": "#c8b49a"
+  },
+  "name": {
+   "fa": "بلوز مدل دانتل نسکافه‌ای",
+   "en": "Lace Cuff Blouse Beige"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "DSC01937.jpg"
+  ]
+ },
+ {
+  "slug": "lace-green",
+  "group": "lace",
+  "color": {
+   "fa": "سبز",
+   "en": "Green",
+   "hex": "#3f9d85"
+  },
+  "name": {
+   "fa": "بلوز مدل دانتل سبز",
+   "en": "Lace Cuff Blouse Green"
+  },
+  "category": {
+   "fa": "بلوز",
+   "en": "Blouses",
+   "order": 0
+  },
+  "files": [
+   "DSC01941.jpg"
+  ]
+ },
+ {
+  "slug": "trim-green",
+  "group": "trim",
+  "color": {
+   "fa": "سبز",
+   "en": "Green",
+   "hex": "#3f9d85"
+  },
+  "name": {
+   "fa": "پولوشرت یقه‌زیپ سبز",
+   "en": "Zip Trim Polo Green"
+  },
+  "category": {
+   "fa": "پولوشرت",
+   "en": "Polo Shirts",
+   "order": 1
+  },
+  "files": [
+   "IMG_8993.JPG",
+   "DSC01746.jpg"
+  ]
+ },
+ {
+  "slug": "trim-red",
+  "group": "trim",
+  "color": {
+   "fa": "قرمز",
+   "en": "Red",
+   "hex": "#c0272d"
+  },
+  "name": {
+   "fa": "پولوشرت یقه‌زیپ قرمز",
+   "en": "Zip Trim Polo Red"
+  },
+  "category": {
+   "fa": "پولوشرت",
+   "en": "Polo Shirts",
+   "order": 1
+  },
+  "files": [
+   "IMG_8994.JPG"
+  ]
+ },
+ {
+  "slug": "trim-black",
+  "group": "trim",
+  "color": {
+   "fa": "مشکی",
+   "en": "Black",
+   "hex": "#111111"
+  },
+  "name": {
+   "fa": "پولوشرت یقه‌زیپ مشکی",
+   "en": "Zip Trim Polo Black"
+  },
+  "category": {
+   "fa": "پولوشرت",
+   "en": "Polo Shirts",
+   "order": 1
+  },
+  "files": [
+   "IMG_8995.JPG"
+  ]
+ },
+ {
+  "slug": "trim-grey",
+  "group": "trim",
+  "color": {
+   "fa": "طوسی",
+   "en": "Grey",
+   "hex": "#7a7d80"
+  },
+  "name": {
+   "fa": "پولوشرت یقه‌زیپ طوسی",
+   "en": "Zip Trim Polo Grey"
+  },
+  "category": {
+   "fa": "پولوشرت",
+   "en": "Polo Shirts",
+   "order": 1
+  },
+  "files": [
+   "IMG_8996.JPG"
+  ]
+ },
+ {
+  "slug": "trim-yellow",
+  "group": "trim",
+  "color": {
+   "fa": "زرد",
+   "en": "Yellow",
+   "hex": "#e5a912"
+  },
+  "name": {
+   "fa": "پولوشرت یقه‌زیپ زرد",
+   "en": "Zip Trim Polo Yellow"
+  },
+  "category": {
+   "fa": "پولوشرت",
+   "en": "Polo Shirts",
+   "order": 1
+  },
+  "files": [
+   "IMG_8997.JPG"
+  ]
+ },
+ {
+  "slug": "trim-white",
+  "group": "trim",
+  "color": {
+   "fa": "سفید",
+   "en": "White",
+   "hex": "#f5f5f2"
+  },
+  "name": {
+   "fa": "پولوشرت یقه‌زیپ سفید",
+   "en": "Zip Trim Polo White"
+  },
+  "category": {
+   "fa": "پولوشرت",
+   "en": "Polo Shirts",
+   "order": 1
+  },
+  "files": [
+   "IMG_8998.JPG"
+  ]
+ },
+ {
+  "slug": "ribpolo-blue",
+  "group": "ribpolo",
+  "color": {
+   "fa": "آبی",
+   "en": "Blue",
+   "hex": "#5bb7e8"
+  },
+  "name": {
+   "fa": "پولوشرت ریب آبی",
+   "en": "Ribbed Polo Blue"
+  },
+  "category": {
+   "fa": "پولوشرت",
+   "en": "Polo Shirts",
+   "order": 1
+  },
+  "files": [
+   "DSC01845.jpg"
+  ]
+ },
+ {
+  "slug": "ribpolo-purple",
+  "group": "ribpolo",
+  "color": {
+   "fa": "بنفش",
+   "en": "Purple",
+   "hex": "#8a5cc7"
+  },
+  "name": {
+   "fa": "پولوشرت ریب بنفش",
+   "en": "Ribbed Polo Purple"
+  },
+  "category": {
+   "fa": "پولوشرت",
+   "en": "Polo Shirts",
+   "order": 1
+  },
+  "files": [
+   "DSC01855.jpg",
+   "DSC01864.jpg"
+  ]
+ },
+ {
+  "slug": "ribpolo-green",
+  "group": "ribpolo",
+  "color": {
+   "fa": "سبز",
+   "en": "Green",
+   "hex": "#3f9d85"
+  },
+  "name": {
+   "fa": "پولوشرت ریب سبز",
+   "en": "Ribbed Polo Green"
+  },
+  "category": {
+   "fa": "پولوشرت",
+   "en": "Polo Shirts",
+   "order": 1
+  },
+  "files": [
+   "DSC01875.jpg"
+  ]
+ },
+ {
+  "slug": "scallop-green",
+  "group": "scallop",
+  "color": {
+   "fa": "سبز",
+   "en": "Green",
+   "hex": "#3f9d85"
+  },
+  "name": {
+   "fa": "پولوشرت مدل گیسو سبز",
+   "en": "Gisu Scallop Polo Green"
+  },
+  "category": {
+   "fa": "پولوشرت",
+   "en": "Polo Shirts",
+   "order": 1
+  },
+  "files": [
+   "DSC01895.jpg"
+  ]
+ },
+ {
+  "slug": "scallop-yellow",
+  "group": "scallop",
+  "color": {
+   "fa": "زرد",
+   "en": "Yellow",
+   "hex": "#e5a912"
+  },
+  "name": {
+   "fa": "پولوشرت مدل گیسو زرد",
+   "en": "Gisu Scallop Polo Yellow"
+  },
+  "category": {
+   "fa": "پولوشرت",
+   "en": "Polo Shirts",
+   "order": 1
+  },
+  "files": [
+   "DSC01904.jpg"
+  ]
+ },
+ {
+  "slug": "polo-red",
+  "group": "polo",
+  "color": {
+   "fa": "قرمز",
+   "en": "Red",
+   "hex": "#c0272d"
+  },
+  "name": {
+   "fa": "پولوشرت کلاسیک قرمز",
+   "en": "Classic Polo Red"
+  },
+  "category": {
+   "fa": "پولوشرت",
+   "en": "Polo Shirts",
+   "order": 1
+  },
+  "files": [
+   "DSC01411.jpg",
+   "DSC01409.jpg"
+  ]
+ },
+ {
+  "slug": "polo-blue",
+  "group": "polo",
+  "color": {
+   "fa": "آبی",
+   "en": "Blue",
+   "hex": "#5bb7e8"
+  },
+  "name": {
+   "fa": "پولوشرت کلاسیک آبی",
+   "en": "Classic Polo Blue"
+  },
+  "category": {
+   "fa": "پولوشرت",
+   "en": "Polo Shirts",
+   "order": 1
+  },
+  "files": [
+   "DSC01444.jpg"
+  ]
+ },
+ {
+  "slug": "polo-white",
+  "group": "polo",
+  "color": {
+   "fa": "سفید",
+   "en": "White",
+   "hex": "#f5f5f2"
+  },
+  "name": {
+   "fa": "پولوشرت کلاسیک سفید",
+   "en": "Classic Polo White"
+  },
+  "category": {
+   "fa": "پولوشرت",
+   "en": "Polo Shirts",
+   "order": 1
+  },
+  "files": [
+   "DSC01478.jpg"
+  ]
+ },
+ {
+  "slug": "polo-black",
+  "group": "polo",
+  "color": {
+   "fa": "مشکی",
+   "en": "Black",
+   "hex": "#111111"
+  },
+  "name": {
+   "fa": "پولوشرت کلاسیک مشکی",
+   "en": "Classic Polo Black"
+  },
+  "category": {
+   "fa": "پولوشرت",
+   "en": "Polo Shirts",
+   "order": 1
+  },
+  "files": [
+   "DSC01781.jpg"
+  ]
+ },
+ {
+  "slug": "tee-black",
+  "group": "tee",
+  "color": {
+   "fa": "مشکی",
+   "en": "Black",
+   "hex": "#111111"
+  },
+  "name": {
+   "fa": "تیشرت لانگ مشکی",
+   "en": "Long Tee Black"
+  },
+  "category": {
+   "fa": "تی‌شرت",
+   "en": "T-Shirts",
+   "order": 2
+  },
+  "files": [
+   "DSC01654.jpg",
+   "DSC01657.jpg",
+   "DSC01659.jpg"
+  ]
+ },
+ {
+  "slug": "tee-navy",
+  "group": "tee",
+  "color": {
+   "fa": "سرمه‌ای",
+   "en": "Navy",
+   "hex": "#1b2a4a"
+  },
+  "name": {
+   "fa": "تیشرت لانگ سرمه‌ای",
+   "en": "Long Tee Navy"
+  },
+  "category": {
+   "fa": "تی‌شرت",
+   "en": "T-Shirts",
+   "order": 2
+  },
+  "files": [
+   "DSC01670.jpg",
+   "DSC01671.jpg"
+  ]
+ },
+ {
+  "slug": "cb-black",
+  "group": "cb",
+  "color": {
+   "fa": "مشکی",
+   "en": "Black",
+   "hex": "#111111"
+  },
+  "name": {
+   "fa": "تی‌شرت رنگی مشکی",
+   "en": "Colorblock Tee Black"
+  },
+  "category": {
+   "fa": "تی‌شرت",
+   "en": "T-Shirts",
+   "order": 2
+  },
+  "files": [
+   "DSC01747.jpg"
+  ]
+ },
+ {
+  "slug": "heart-black",
+  "group": "heart",
+  "color": {
+   "fa": "مشکی",
+   "en": "Black",
+   "hex": "#111111"
+  },
+  "name": {
+   "fa": "یقه اسکی قلب مشکی",
+   "en": "Heart Turtleneck Black"
+  },
+  "category": {
+   "fa": "یقه اسکی",
+   "en": "Turtlenecks",
+   "order": 3
+  },
+  "files": [
+   "DSC01680.jpg",
+   "DSC01681.jpg"
+  ]
+ },
+ {
+  "slug": "heart-green",
+  "group": "heart",
+  "color": {
+   "fa": "سبز",
+   "en": "Green",
+   "hex": "#3f9d85"
+  },
+  "name": {
+   "fa": "یقه اسکی قلب سبز",
+   "en": "Heart Turtleneck Green"
+  },
+  "category": {
+   "fa": "یقه اسکی",
+   "en": "Turtlenecks",
+   "order": 3
+  },
+  "files": [
+   "DSC01686.jpg"
+  ]
+ },
+ {
+  "slug": "heart-yellow",
+  "group": "heart",
+  "color": {
+   "fa": "زرد",
+   "en": "Yellow",
+   "hex": "#e5a912"
+  },
+  "name": {
+   "fa": "یقه اسکی قلب زرد",
+   "en": "Heart Turtleneck Yellow"
+  },
+  "category": {
+   "fa": "یقه اسکی",
+   "en": "Turtlenecks",
+   "order": 3
+  },
+  "files": [
+   "DSC01861.jpg",
+   "DSC01687.jpg"
+  ]
+ },
+ {
+  "slug": "heart-pink",
+  "group": "heart",
+  "color": {
+   "fa": "صورتی",
+   "en": "Pink",
+   "hex": "#e8a5b5"
+  },
+  "name": {
+   "fa": "یقه اسکی قلب صورتی",
+   "en": "Heart Turtleneck Pink"
+  },
+  "category": {
+   "fa": "یقه اسکی",
+   "en": "Turtlenecks",
+   "order": 3
+  },
+  "files": [
+   "DSC01702.jpg"
+  ]
+ },
+ {
+  "slug": "heart-beige",
+  "group": "heart",
+  "color": {
+   "fa": "نسکافه‌ای",
+   "en": "Beige",
+   "hex": "#c8b49a"
+  },
+  "name": {
+   "fa": "یقه اسکی قلب نسکافه‌ای",
+   "en": "Heart Turtleneck Beige"
+  },
+  "category": {
+   "fa": "یقه اسکی",
+   "en": "Turtlenecks",
+   "order": 3
+  },
+  "files": [
+   "DSC01706.jpg",
+   "DSC01711.jpg",
+   "DSC01858.jpg"
+  ]
+ },
+ {
+  "slug": "heart-red",
+  "group": "heart",
+  "color": {
+   "fa": "قرمز",
+   "en": "Red",
+   "hex": "#c0272d"
+  },
+  "name": {
+   "fa": "یقه اسکی قلب قرمز",
+   "en": "Heart Turtleneck Red"
+  },
+  "category": {
+   "fa": "یقه اسکی",
+   "en": "Turtlenecks",
+   "order": 3
+  },
+  "files": [
+   "DSC01715.jpg"
+  ]
+ },
+ {
+  "slug": "heart-grey",
+  "group": "heart",
+  "color": {
+   "fa": "طوسی",
+   "en": "Grey",
+   "hex": "#7a7d80"
+  },
+  "name": {
+   "fa": "یقه اسکی قلب طوسی",
+   "en": "Heart Turtleneck Grey"
+  },
+  "category": {
+   "fa": "یقه اسکی",
+   "en": "Turtlenecks",
+   "order": 3
+  },
+  "files": [
+   "DSC01726.jpg"
+  ]
+ },
+ {
+  "slug": "vneck-white",
+  "group": "vneck",
+  "color": {
+   "fa": "سفید",
+   "en": "White",
+   "hex": "#f5f5f2"
+  },
+  "name": {
+   "fa": "وست بافت طرح‌دار سفید",
+   "en": "Patterned Knit Vest White"
+  },
+  "category": {
+   "fa": "وست",
+   "en": "Vests",
+   "order": 4
+  },
+  "files": [
+   "DSC01870.jpg"
+  ]
+ },
+ {
+  "slug": "vneck-grey",
+  "group": "vneck",
+  "color": {
+   "fa": "طوسی",
+   "en": "Grey",
+   "hex": "#7a7d80"
+  },
+  "name": {
+   "fa": "وست بافت طرح‌دار طوسی",
+   "en": "Patterned Knit Vest Grey"
+  },
+  "category": {
+   "fa": "وست",
+   "en": "Vests",
+   "order": 4
+  },
+  "files": [
+   "DSC01881.jpg"
+  ]
+ },
+ {
+  "slug": "vneck-green",
+  "group": "vneck",
+  "color": {
+   "fa": "سبز",
+   "en": "Green",
+   "hex": "#3f9d85"
+  },
+  "name": {
+   "fa": "وست بافت طرح‌دار سبز",
+   "en": "Patterned Knit Vest Green"
+  },
+  "category": {
+   "fa": "وست",
+   "en": "Vests",
+   "order": 4
+  },
+  "files": [
+   "DSC01886.jpg"
+  ]
+ },
+ {
+  "slug": "rib-red",
+  "group": "rib",
+  "color": {
+   "fa": "قرمز",
+   "en": "Red",
+   "hex": "#c0272d"
+  },
+  "name": {
+   "fa": "وست ریب قرمز",
+   "en": "Ribbed Vest Red"
+  },
+  "category": {
+   "fa": "وست",
+   "en": "Vests",
+   "order": 4
+  },
+  "files": [
+   "DSC01487.jpg"
+  ]
+ },
+ {
+  "slug": "rib-beige",
+  "group": "rib",
+  "color": {
+   "fa": "نسکافه‌ای",
+   "en": "Beige",
+   "hex": "#c8b49a"
+  },
+  "name": {
+   "fa": "وست ریب نسکافه‌ای",
+   "en": "Ribbed Vest Beige"
+  },
+  "category": {
+   "fa": "وست",
+   "en": "Vests",
+   "order": 4
+  },
+  "files": [
+   "DSC01491.jpg"
+  ]
+ },
+ {
   "slug": "pocket-white",
   "group": "pocket",
   "color": {
@@ -13,7 +1165,8 @@
   },
   "category": {
    "fa": "پیراهن",
-   "en": "Shirts"
+   "en": "Shirts",
+   "order": 5
   },
   "files": [
    "DSC01329.jpg",
@@ -36,1146 +1189,11 @@
   },
   "category": {
    "fa": "پیراهن",
-   "en": "Shirts"
+   "en": "Shirts",
+   "order": 5
   },
   "files": [
    "DSC01391.jpg"
-  ]
- },
- {
-  "slug": "polo-red",
-  "group": "polo",
-  "color": {
-   "fa": "قرمز",
-   "en": "Red",
-   "hex": "#c0272d"
-  },
-  "name": {
-   "fa": "پولو کلاسیک قرمز",
-   "en": "Classic Polo Red"
-  },
-  "category": {
-   "fa": "پولو",
-   "en": "Polos"
-  },
-  "files": [
-   "DSC01411.jpg",
-   "DSC01409.jpg"
-  ]
- },
- {
-  "slug": "polo-blue",
-  "group": "polo",
-  "color": {
-   "fa": "آبی",
-   "en": "Blue",
-   "hex": "#1f4fbf"
-  },
-  "name": {
-   "fa": "پولو کلاسیک آبی",
-   "en": "Classic Polo Blue"
-  },
-  "category": {
-   "fa": "پولو",
-   "en": "Polos"
-  },
-  "files": [
-   "DSC01444.jpg"
-  ]
- },
- {
-  "slug": "polo-white",
-  "group": "polo",
-  "color": {
-   "fa": "سفید",
-   "en": "White",
-   "hex": "#f5f5f2"
-  },
-  "name": {
-   "fa": "پولو کلاسیک سفید",
-   "en": "Classic Polo White"
-  },
-  "category": {
-   "fa": "پولو",
-   "en": "Polos"
-  },
-  "files": [
-   "DSC01478.jpg"
-  ]
- },
- {
-  "slug": "polo-black",
-  "group": "polo",
-  "color": {
-   "fa": "مشکی",
-   "en": "Black",
-   "hex": "#111111"
-  },
-  "name": {
-   "fa": "پولو کلاسیک مشکی",
-   "en": "Classic Polo Black"
-  },
-  "category": {
-   "fa": "پولو",
-   "en": "Polos"
-  },
-  "files": [
-   "DSC01781.jpg"
-  ]
- },
- {
-  "slug": "rib-red",
-  "group": "rib",
-  "color": {
-   "fa": "قرمز",
-   "en": "Red",
-   "hex": "#c0272d"
-  },
-  "name": {
-   "fa": "تاپ ریب قرمز",
-   "en": "Ribbed Top Red"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01487.jpg"
-  ]
- },
- {
-  "slug": "rib-beige",
-  "group": "rib",
-  "color": {
-   "fa": "بژ",
-   "en": "Beige",
-   "hex": "#c8b49a"
-  },
-  "name": {
-   "fa": "تاپ ریب بژ",
-   "en": "Ribbed Top Beige"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01491.jpg"
-  ]
- },
- {
-  "slug": "zip-pink",
-  "group": "zip",
-  "color": {
-   "fa": "صورتی",
-   "en": "Pink",
-   "hex": "#e8a5b5"
-  },
-  "name": {
-   "fa": "بافت یقه‌زیپ صورتی",
-   "en": "Zip Knit Pink"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01490.jpg"
-  ]
- },
- {
-  "slug": "zip-green",
-  "group": "zip",
-  "color": {
-   "fa": "سبز",
-   "en": "Green",
-   "hex": "#3f9d85"
-  },
-  "name": {
-   "fa": "بافت یقه‌زیپ سبز",
-   "en": "Zip Knit Green"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01526.jpg",
-   "DSC01528.jpg",
-   "IMG_8989.JPG"
-  ]
- },
- {
-  "slug": "zip-beige",
-  "group": "zip",
-  "color": {
-   "fa": "بژ",
-   "en": "Beige",
-   "hex": "#c8b49a"
-  },
-  "name": {
-   "fa": "بافت یقه‌زیپ بژ",
-   "en": "Zip Knit Beige"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01568.jpg",
-   "IMG_8990.JPG"
-  ]
- },
- {
-  "slug": "ruffle-yellow",
-  "group": "ruffle",
-  "color": {
-   "fa": "زرد",
-   "en": "Yellow",
-   "hex": "#e5a912"
-  },
-  "name": {
-   "fa": "بافت دامنی زرد",
-   "en": "Ruffle Hem Knit Yellow"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01582.jpg"
-  ]
- },
- {
-  "slug": "ruffle-pink",
-  "group": "ruffle",
-  "color": {
-   "fa": "صورتی",
-   "en": "Pink",
-   "hex": "#e8a5b5"
-  },
-  "name": {
-   "fa": "بافت دامنی صورتی",
-   "en": "Ruffle Hem Knit Pink"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01615.jpg"
-  ]
- },
- {
-  "slug": "ny-yellow",
-  "group": "ny",
-  "color": {
-   "fa": "زرد",
-   "en": "Yellow",
-   "hex": "#e5a912"
-  },
-  "name": {
-   "fa": "بافت نیویورک زرد",
-   "en": "New York Knit Yellow"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01587.jpg"
-  ]
- },
- {
-  "slug": "ny-grey",
-  "group": "ny",
-  "color": {
-   "fa": "طوسی",
-   "en": "Grey",
-   "hex": "#7a7d80"
-  },
-  "name": {
-   "fa": "بافت نیویورک طوسی",
-   "en": "New York Knit Grey"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01616.jpg",
-   "IMG_8913.JPG"
-  ]
- },
- {
-  "slug": "ny-black",
-  "group": "ny",
-  "color": {
-   "fa": "مشکی",
-   "en": "Black",
-   "hex": "#111111"
-  },
-  "name": {
-   "fa": "بافت نیویورک مشکی",
-   "en": "New York Knit Black"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "IMG_8901.JPG"
-  ]
- },
- {
-  "slug": "ny-beige",
-  "group": "ny",
-  "color": {
-   "fa": "بژ",
-   "en": "Beige",
-   "hex": "#c8b49a"
-  },
-  "name": {
-   "fa": "بافت نیویورک بژ",
-   "en": "New York Knit Beige"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "IMG_8903.JPG"
-  ]
- },
- {
-  "slug": "ny-white",
-  "group": "ny",
-  "color": {
-   "fa": "سفید",
-   "en": "White",
-   "hex": "#f5f5f2"
-  },
-  "name": {
-   "fa": "بافت نیویورک سفید",
-   "en": "New York Knit White"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "IMG_8904.JPG"
-  ]
- },
- {
-  "slug": "ny-pink",
-  "group": "ny",
-  "color": {
-   "fa": "صورتی",
-   "en": "Pink",
-   "hex": "#e8a5b5"
-  },
-  "name": {
-   "fa": "بافت نیویورک صورتی",
-   "en": "New York Knit Pink"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "IMG_8906.JPG"
-  ]
- },
- {
-  "slug": "ny-green",
-  "group": "ny",
-  "color": {
-   "fa": "سبز",
-   "en": "Green",
-   "hex": "#3f9d85"
-  },
-  "name": {
-   "fa": "بافت نیویورک سبز",
-   "en": "New York Knit Green"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "IMG_8910.JPG"
-  ]
- },
- {
-  "slug": "ny-red",
-  "group": "ny",
-  "color": {
-   "fa": "قرمز",
-   "en": "Red",
-   "hex": "#c0272d"
-  },
-  "name": {
-   "fa": "بافت نیویورک قرمز",
-   "en": "New York Knit Red"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "IMG_8912.JPG"
-  ]
- },
- {
-  "slug": "tee-black",
-  "group": "tee",
-  "color": {
-   "fa": "مشکی",
-   "en": "Black",
-   "hex": "#111111"
-  },
-  "name": {
-   "fa": "تی‌شرت اورسایز مشکی",
-   "en": "Oversized Tee Black"
-  },
-  "category": {
-   "fa": "تی‌شرت",
-   "en": "T-Shirts"
-  },
-  "files": [
-   "DSC01654.jpg",
-   "DSC01657.jpg",
-   "DSC01659.jpg"
-  ]
- },
- {
-  "slug": "tee-navy",
-  "group": "tee",
-  "color": {
-   "fa": "سرمه‌ای",
-   "en": "Navy",
-   "hex": "#1b2a4a"
-  },
-  "name": {
-   "fa": "تی‌شرت اورسایز سرمه‌ای",
-   "en": "Oversized Tee Navy"
-  },
-  "category": {
-   "fa": "تی‌شرت",
-   "en": "T-Shirts"
-  },
-  "files": [
-   "DSC01670.jpg",
-   "DSC01671.jpg"
-  ]
- },
- {
-  "slug": "heart-black",
-  "group": "heart",
-  "color": {
-   "fa": "مشکی",
-   "en": "Black",
-   "hex": "#111111"
-  },
-  "name": {
-   "fa": "بافت یقه‌اسکی قلب مشکی",
-   "en": "Heart Turtleneck Black"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01680.jpg",
-   "DSC01681.jpg"
-  ]
- },
- {
-  "slug": "heart-green",
-  "group": "heart",
-  "color": {
-   "fa": "سبز",
-   "en": "Green",
-   "hex": "#3f9d85"
-  },
-  "name": {
-   "fa": "بافت یقه‌اسکی قلب سبز",
-   "en": "Heart Turtleneck Green"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01686.jpg"
-  ]
- },
- {
-  "slug": "heart-yellow",
-  "group": "heart",
-  "color": {
-   "fa": "زرد",
-   "en": "Yellow",
-   "hex": "#e5a912"
-  },
-  "name": {
-   "fa": "بافت یقه‌اسکی قلب زرد",
-   "en": "Heart Turtleneck Yellow"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01861.jpg",
-   "DSC01687.jpg"
-  ]
- },
- {
-  "slug": "heart-pink",
-  "group": "heart",
-  "color": {
-   "fa": "صورتی",
-   "en": "Pink",
-   "hex": "#e8a5b5"
-  },
-  "name": {
-   "fa": "بافت یقه‌اسکی قلب صورتی",
-   "en": "Heart Turtleneck Pink"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01702.jpg"
-  ]
- },
- {
-  "slug": "heart-beige",
-  "group": "heart",
-  "color": {
-   "fa": "بژ",
-   "en": "Beige",
-   "hex": "#c8b49a"
-  },
-  "name": {
-   "fa": "بافت یقه‌اسکی قلب بژ",
-   "en": "Heart Turtleneck Beige"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01706.jpg",
-   "DSC01711.jpg",
-   "DSC01858.jpg"
-  ]
- },
- {
-  "slug": "heart-red",
-  "group": "heart",
-  "color": {
-   "fa": "قرمز",
-   "en": "Red",
-   "hex": "#c0272d"
-  },
-  "name": {
-   "fa": "بافت یقه‌اسکی قلب قرمز",
-   "en": "Heart Turtleneck Red"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01715.jpg"
-  ]
- },
- {
-  "slug": "heart-grey",
-  "group": "heart",
-  "color": {
-   "fa": "طوسی",
-   "en": "Grey",
-   "hex": "#7a7d80"
-  },
-  "name": {
-   "fa": "بافت یقه‌اسکی قلب طوسی",
-   "en": "Heart Turtleneck Grey"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01726.jpg"
-  ]
- },
- {
-  "slug": "trim-green",
-  "group": "trim",
-  "color": {
-   "fa": "سبز",
-   "en": "Green",
-   "hex": "#3f9d85"
-  },
-  "name": {
-   "fa": "تی‌شرت یقه‌زیپ سبز",
-   "en": "Zip Trim Tee Green"
-  },
-  "category": {
-   "fa": "تی‌شرت",
-   "en": "T-Shirts"
-  },
-  "files": [
-   "IMG_8993.JPG",
-   "DSC01746.jpg"
-  ]
- },
- {
-  "slug": "cb-black",
-  "group": "cb",
-  "color": {
-   "fa": "مشکی",
-   "en": "Black",
-   "hex": "#111111"
-  },
-  "name": {
-   "fa": "تی‌شرت رنگی مشکی",
-   "en": "Colorblock Tee Black"
-  },
-  "category": {
-   "fa": "تی‌شرت",
-   "en": "T-Shirts"
-  },
-  "files": [
-   "DSC01747.jpg"
-  ]
- },
- {
-  "slug": "trim-red",
-  "group": "trim",
-  "color": {
-   "fa": "قرمز",
-   "en": "Red",
-   "hex": "#c0272d"
-  },
-  "name": {
-   "fa": "تی‌شرت یقه‌زیپ قرمز",
-   "en": "Zip Trim Tee Red"
-  },
-  "category": {
-   "fa": "تی‌شرت",
-   "en": "T-Shirts"
-  },
-  "files": [
-   "IMG_8994.JPG"
-  ]
- },
- {
-  "slug": "trim-black",
-  "group": "trim",
-  "color": {
-   "fa": "مشکی",
-   "en": "Black",
-   "hex": "#111111"
-  },
-  "name": {
-   "fa": "تی‌شرت یقه‌زیپ مشکی",
-   "en": "Zip Trim Tee Black"
-  },
-  "category": {
-   "fa": "تی‌شرت",
-   "en": "T-Shirts"
-  },
-  "files": [
-   "IMG_8995.JPG"
-  ]
- },
- {
-  "slug": "trim-grey",
-  "group": "trim",
-  "color": {
-   "fa": "طوسی",
-   "en": "Grey",
-   "hex": "#7a7d80"
-  },
-  "name": {
-   "fa": "تی‌شرت یقه‌زیپ طوسی",
-   "en": "Zip Trim Tee Grey"
-  },
-  "category": {
-   "fa": "تی‌شرت",
-   "en": "T-Shirts"
-  },
-  "files": [
-   "IMG_8996.JPG"
-  ]
- },
- {
-  "slug": "trim-yellow",
-  "group": "trim",
-  "color": {
-   "fa": "زرد",
-   "en": "Yellow",
-   "hex": "#e5a912"
-  },
-  "name": {
-   "fa": "تی‌شرت یقه‌زیپ زرد",
-   "en": "Zip Trim Tee Yellow"
-  },
-  "category": {
-   "fa": "تی‌شرت",
-   "en": "T-Shirts"
-  },
-  "files": [
-   "IMG_8997.JPG"
-  ]
- },
- {
-  "slug": "trim-white",
-  "group": "trim",
-  "color": {
-   "fa": "سفید",
-   "en": "White",
-   "hex": "#f5f5f2"
-  },
-  "name": {
-   "fa": "تی‌شرت یقه‌زیپ سفید",
-   "en": "Zip Trim Tee White"
-  },
-  "category": {
-   "fa": "تی‌شرت",
-   "en": "T-Shirts"
-  },
-  "files": [
-   "IMG_8998.JPG"
-  ]
- },
- {
-  "slug": "ribpolo-lblue",
-  "group": "ribpolo",
-  "color": {
-   "fa": "آبی روشن",
-   "en": "Light Blue",
-   "hex": "#5bb7e8"
-  },
-  "name": {
-   "fa": "پولو ریب آبی روشن",
-   "en": "Ribbed Polo Light Blue"
-  },
-  "category": {
-   "fa": "پولو",
-   "en": "Polos"
-  },
-  "files": [
-   "DSC01845.jpg"
-  ]
- },
- {
-  "slug": "ribpolo-purple",
-  "group": "ribpolo",
-  "color": {
-   "fa": "بنفش",
-   "en": "Purple",
-   "hex": "#8a5cc7"
-  },
-  "name": {
-   "fa": "پولو ریب بنفش",
-   "en": "Ribbed Polo Purple"
-  },
-  "category": {
-   "fa": "پولو",
-   "en": "Polos"
-  },
-  "files": [
-   "DSC01855.jpg",
-   "DSC01864.jpg"
-  ]
- },
- {
-  "slug": "ribpolo-lime",
-  "group": "ribpolo",
-  "color": {
-   "fa": "سبز فسفری",
-   "en": "Neon Green",
-   "hex": "#8cd21a"
-  },
-  "name": {
-   "fa": "پولو ریب سبز فسفری",
-   "en": "Ribbed Polo Neon Green"
-  },
-  "category": {
-   "fa": "پولو",
-   "en": "Polos"
-  },
-  "files": [
-   "DSC01875.jpg"
-  ]
- },
- {
-  "slug": "vneck-white",
-  "group": "vneck",
-  "color": {
-   "fa": "سفید",
-   "en": "White",
-   "hex": "#f5f5f2"
-  },
-  "name": {
-   "fa": "تاپ یقه‌هفت سفید",
-   "en": "V-Neck Top White"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01870.jpg"
-  ]
- },
- {
-  "slug": "vneck-grey",
-  "group": "vneck",
-  "color": {
-   "fa": "طوسی",
-   "en": "Grey",
-   "hex": "#7a7d80"
-  },
-  "name": {
-   "fa": "تاپ یقه‌هفت طوسی",
-   "en": "V-Neck Top Grey"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01881.jpg"
-  ]
- },
- {
-  "slug": "vneck-green",
-  "group": "vneck",
-  "color": {
-   "fa": "سبز",
-   "en": "Green",
-   "hex": "#3f9d85"
-  },
-  "name": {
-   "fa": "تاپ یقه‌هفت سبز",
-   "en": "V-Neck Top Green"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01886.jpg"
-  ]
- },
- {
-  "slug": "scallop-green",
-  "group": "scallop",
-  "color": {
-   "fa": "سبز",
-   "en": "Green",
-   "hex": "#3f9d85"
-  },
-  "name": {
-   "fa": "تی‌شرت لبه‌دار سبز",
-   "en": "Scallop Tee Green"
-  },
-  "category": {
-   "fa": "تی‌شرت",
-   "en": "T-Shirts"
-  },
-  "files": [
-   "DSC01895.jpg"
-  ]
- },
- {
-  "slug": "scallop-yellow",
-  "group": "scallop",
-  "color": {
-   "fa": "زرد",
-   "en": "Yellow",
-   "hex": "#e5a912"
-  },
-  "name": {
-   "fa": "تی‌شرت لبه‌دار زرد",
-   "en": "Scallop Tee Yellow"
-  },
-  "category": {
-   "fa": "تی‌شرت",
-   "en": "T-Shirts"
-  },
-  "files": [
-   "DSC01904.jpg"
-  ]
- },
- {
-  "slug": "cable-green",
-  "group": "cable",
-  "color": {
-   "fa": "سبز",
-   "en": "Green",
-   "hex": "#3f9d85"
-  },
-  "name": {
-   "fa": "بافت طرح‌دار یقه‌زیپ سبز",
-   "en": "Cable Zip Knit Green"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01912.jpg"
-  ]
- },
- {
-  "slug": "cable-pink",
-  "group": "cable",
-  "color": {
-   "fa": "صورتی",
-   "en": "Pink",
-   "hex": "#e8a5b5"
-  },
-  "name": {
-   "fa": "بافت طرح‌دار یقه‌زیپ صورتی",
-   "en": "Cable Zip Knit Pink"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01919.jpg"
-  ]
- },
- {
-  "slug": "cable-black",
-  "group": "cable",
-  "color": {
-   "fa": "مشکی",
-   "en": "Black",
-   "hex": "#111111"
-  },
-  "name": {
-   "fa": "بافت طرح‌دار یقه‌زیپ مشکی",
-   "en": "Cable Zip Knit Black"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01924.jpg"
-  ]
- },
- {
-  "slug": "cable-grey",
-  "group": "cable",
-  "color": {
-   "fa": "طوسی",
-   "en": "Grey",
-   "hex": "#7a7d80"
-  },
-  "name": {
-   "fa": "بافت طرح‌دار یقه‌زیپ طوسی",
-   "en": "Cable Zip Knit Grey"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01928.jpg"
-  ]
- },
- {
-  "slug": "scarf-grey",
-  "group": "scarf",
-  "color": {
-   "fa": "طوسی",
-   "en": "Grey",
-   "hex": "#7a7d80"
-  },
-  "name": {
-   "fa": "بافت شالی طوسی",
-   "en": "Scarf Knit Grey"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01920.jpg"
-  ]
- },
- {
-  "slug": "scarf-red",
-  "group": "scarf",
-  "color": {
-   "fa": "قرمز",
-   "en": "Red",
-   "hex": "#c0272d"
-  },
-  "name": {
-   "fa": "بافت شالی قرمز",
-   "en": "Scarf Knit Red"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01921.jpg",
-   "DSC01923.jpg"
-  ]
- },
- {
-  "slug": "scarf-yellow",
-  "group": "scarf",
-  "color": {
-   "fa": "زرد",
-   "en": "Yellow",
-   "hex": "#e5a912"
-  },
-  "name": {
-   "fa": "بافت شالی زرد",
-   "en": "Scarf Knit Yellow"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01925.jpg"
-  ]
- },
- {
-  "slug": "scarf-pink",
-  "group": "scarf",
-  "color": {
-   "fa": "صورتی",
-   "en": "Pink",
-   "hex": "#e8a5b5"
-  },
-  "name": {
-   "fa": "بافت شالی صورتی",
-   "en": "Scarf Knit Pink"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01926.jpg"
-  ]
- },
- {
-  "slug": "scarf-green",
-  "group": "scarf",
-  "color": {
-   "fa": "سبز",
-   "en": "Green",
-   "hex": "#3f9d85"
-  },
-  "name": {
-   "fa": "بافت شالی سبز",
-   "en": "Scarf Knit Green"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01930.jpg"
-  ]
- },
- {
-  "slug": "scarf-beige",
-  "group": "scarf",
-  "color": {
-   "fa": "بژ",
-   "en": "Beige",
-   "hex": "#c8b49a"
-  },
-  "name": {
-   "fa": "بافت شالی بژ",
-   "en": "Scarf Knit Beige"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01931.jpg"
-  ]
- },
- {
-  "slug": "lace-grey",
-  "group": "lace",
-  "color": {
-   "fa": "طوسی",
-   "en": "Grey",
-   "hex": "#7a7d80"
-  },
-  "name": {
-   "fa": "بافت آستین توری طوسی",
-   "en": "Lace Cuff Knit Grey"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01934.jpg",
-   "DSC01935.jpg"
-  ]
- },
- {
-  "slug": "lace-beige",
-  "group": "lace",
-  "color": {
-   "fa": "بژ",
-   "en": "Beige",
-   "hex": "#c8b49a"
-  },
-  "name": {
-   "fa": "بافت آستین توری بژ",
-   "en": "Lace Cuff Knit Beige"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01937.jpg"
-  ]
- },
- {
-  "slug": "lace-green",
-  "group": "lace",
-  "color": {
-   "fa": "سبز",
-   "en": "Green",
-   "hex": "#3f9d85"
-  },
-  "name": {
-   "fa": "بافت آستین توری سبز",
-   "en": "Lace Cuff Knit Green"
-  },
-  "category": {
-   "fa": "بافت",
-   "en": "Knitwear"
-  },
-  "files": [
-   "DSC01941.jpg"
   ]
  }
 ]

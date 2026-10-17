@@ -33,9 +33,9 @@ const title = (x) => x.replace(/[-_]+/g, ' ').trim();
 const walk = (dir) => fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => e.isDirectory() ? walk(path.join(dir, e.name)) : [path.join(dir, e.name)]);
 
 function category(name) {
-  const nm = typeof name === 'string' ? { fa: name, en: name } : name;
+  const nm = typeof name === 'string' ? { fa: name, en: name } : { fa: name.fa, en: name.en };
   let c = s.categories.find((x) => x.name.en === nm.en || x.name.fa === nm.fa);
-  if (!c) { c = { id: db.nextId(), slug: slugify(nm.en), name: nm, order: s.categories.length }; s.categories.push(c); }
+  if (!c) { c = { id: db.nextId(), slug: slugify(nm.en), name: nm, order: Number.isInteger(name.order) ? name.order : s.categories.length }; s.categories.push(c); }
   return c.id;
 }
 const groups = new Map();
