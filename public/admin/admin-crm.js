@@ -13,7 +13,7 @@
       g_system: 'سیستم', g_order: 'سفارش', g_payment: 'پرداخت', g_shipping: 'ارسال و تحویل', g_returns: 'مرجوعی', g_marketing: 'بازاریابی و تعامل', g_admin: 'هشدار مدیران',
       p_essential: 'ضروری', p_recommended: 'پیشنهادی', p_conditional: 'شرطی', p_optional: 'اختیاری', p_marketing: 'بازاریابی', p_admin: 'مدیر',
       lStatus: 'وضعیت', lType: 'نوع', lTo: 'گیرنده', lText: 'متن', lTime: 'زمان', lAll: 'همه', ls_sent: 'ارسال شد', ls_failed: 'ناموفق', ls_dev: 'آزمایشی (ارسال نشد)', cpTotal: 'کل', cpSent: 'ارسال', cpFailed: 'ناموفق', cpSkipped: 'ردشده', cp_running: 'در حال ارسال…', cp_done: 'تمام شد', cp_error: 'خطا', cpNew: 'کمپین جدید',
-      devBanner: 'حالت آزمایشی: کلید API کاوه‌نگار تنظیم نشده و پیامک‌ها واقعا ارسال نمی‌شوند (فقط در گزارش ثبت می‌شوند).', liveBanner: 'اتصال به کاوه‌نگار فعال است.', goSettings: 'تنظیمات',
+      devBanner: 'حالت آزمایشی: توکن سرویس پیامک تنظیم یا فعال نیست و پیامک‌ها واقعا ارسال نمی‌شوند (فقط در گزارش ثبت می‌شوند).', liveBanner: 'سرویس پیامک متصل است؛ پیامک‌ها واقعا ارسال می‌شوند.', goSettings: 'تنظیمات',
     },
     en: {
       customers: 'Customers', messages: 'Messages', cName: 'Name', cPhone: 'Mobile', cOrders: 'Orders', cSpent: 'Total spent', cLast: 'Last order', cOptIn: 'Marketing consent', cTags: 'Tags', cNotes: 'Notes', cAddress: 'Address', cBlocked: 'Blocked', cAdd: 'Add customer', cSearch: 'Search name, mobile or tag…',
@@ -25,7 +25,7 @@
       g_system: 'System', g_order: 'Orders', g_payment: 'Payment', g_shipping: 'Shipping & delivery', g_returns: 'Returns', g_marketing: 'Marketing & engagement', g_admin: 'Admin alerts',
       p_essential: 'Essential', p_recommended: 'Recommended', p_conditional: 'Conditional', p_optional: 'Optional', p_marketing: 'Marketing', p_admin: 'Admin',
       lStatus: 'Status', lType: 'Type', lTo: 'To', lText: 'Text', lTime: 'Time', lAll: 'All', ls_sent: 'Sent', ls_failed: 'Failed', ls_dev: 'Dev (not sent)', cpTotal: 'Total', cpSent: 'Sent', cpFailed: 'Failed', cpSkipped: 'Skipped', cp_running: 'Sending…', cp_done: 'Done', cp_error: 'Error', cpNew: 'New campaign',
-      devBanner: 'Dev mode: no Kavenegar API key is set, so SMS are not really sent (they are only recorded in the log).', liveBanner: 'Kavenegar is connected.', goSettings: 'Settings',
+      devBanner: 'Dev mode: the SMS token is not set or sending is switched off, so SMS are not really sent (they are only recorded in the log).', liveBanner: 'The SMS service is connected; messages are really sent.', goSettings: 'Settings',
     },
   };
   const PCLS = { essential: 'ok', recommended: 'info', conditional: '', optional: '', marketing: 'mk', admin: 'ad' };

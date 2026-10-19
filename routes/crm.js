@@ -119,7 +119,7 @@ module.exports = function (admin) {
   // ----- settings -----
   const settingsView = () => {
     const s = db.get().settings || {}, c = sms.config();
-    return { sms: { configured: sms.configured(), enabled: c.enabled, sender: c.sender, otpTemplate: c.otpTemplate, apiKeyMasked: mask(c.apiKey), fromEnv: c.fromEnv },
+    return { sms: { provider: c.provider, configured: sms.configured(), enabled: c.enabled, sender: c.sender, otpTemplate: c.otpTemplate, apiKeyMasked: mask(c.apiKey), fromEnv: c.fromEnv },
       checkout: { requireLogin: false, ...(s.checkout || {}) }, alerts: orders.alerts(), automation: { abandonedHours: 3, reviewDays: 3, ...(s.automation || {}) },
       publicUrl: s.publicUrl || '', storeName: s.storeName || '', promoFooter: s.promoFooter || '' };
   };
@@ -129,10 +129,12 @@ module.exports = function (admin) {
     const s = db.get(), b = req.body || {}; s.settings ||= {};
     if (b.sms) {
       const cur = (s.settings.sms ||= {});
-      if (typeof b.sms.apiKey === 'string' && b.sms.apiKey.trim() && !b.sms.apiKey.includes('•')) cur.apiKey = b.sms.apiKey.trim().slice(0, 200);
-      if (b.sms.clearApiKey) cur.apiKey = '';
+      if (['apiir', 'kavenegar'].includes(b.sms.provider)) cur.provider = b.sms.provider;
+      const api = (cur.provider || 'apiir') === 'apiir', keyField = api ? 'apiirToken' : 'kavenegarKey';
+      if (typeof b.sms.apiKey === 'string' && b.sms.apiKey.trim() && !b.sms.apiKey.includes('•')) cur[keyField] = b.sms.apiKey.trim().replace(/^Bearer\s+/i, '').slice(0, 600);
+      if (b.sms.clearApiKey) cur[keyField] = '';
       if (b.sms.sender !== undefined) cur.sender = str(b.sms.sender, 30);
-      if (b.sms.otpTemplate !== undefined) cur.otpTemplate = str(b.sms.otpTemplate, 60);
+      if (b.sms.otpTemplate !== undefined) cur[api ? 'apiirOtpTemplate' : 'otpTemplate'] = str(b.sms.otpTemplate, 60);
       if (b.sms.enabled !== undefined) cur.enabled = !!b.sms.enabled;
     }
     if (b.checkout) s.settings.checkout = { requireLogin: !!b.checkout.requireLogin };
