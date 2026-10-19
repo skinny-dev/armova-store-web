@@ -204,3 +204,5 @@ body.lock { overflow: hidden; }
   .pdp .gallery img:only-child { grid-column: 1 / -1; max-width: 760px; margin: 0 auto; }
   .pdp .info { padding-inline: clamp(24px, 2.4vw, 44px); }
 }
+
+[hidden] { display: none !important; }

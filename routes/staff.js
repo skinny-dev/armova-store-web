@@ -38,7 +38,7 @@ module.exports = function (app, admin) {
     a.n++;
     const user = db.get().users.find((u) => u.active && sms.normPhone(u.phone) === phone);
     if (!user) return res.json({ ok: true }); // do not reveal whether the number belongs to staff
-    const r = await sms.requestOtp(phone, 'staff'); res.status(r.error ? 429 : 200).json(r.error ? r : sms.exposeDev(req, { ok: true, expiresIn: r.expiresIn, dev: r.dev, devCode: r.devCode }));
+    const r = await sms.requestOtp(phone, 'staff'); const [code, body] = sms.otpReply(req, r); res.status(code).json(body);
   });
   app.post('/api/admin/otp/verify', (req, res) => {
     const phone = sms.normPhone(req.body.phone), a = throttle(req.ip);

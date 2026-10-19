@@ -121,7 +121,7 @@ module.exports = function (admin) {
     const s = db.get().settings || {}, c = sms.config();
     return { sms: { provider: c.provider, configured: sms.configured(), enabled: c.enabled, sender: c.sender, otpTemplate: c.otpTemplate, apiKeyMasked: mask(c.apiKey), fromEnv: c.fromEnv },
       checkout: { requireLogin: false, ...(s.checkout || {}) }, alerts: orders.alerts(), automation: { abandonedHours: 3, reviewDays: 3, ...(s.automation || {}) },
-      publicUrl: s.publicUrl || '', storeName: s.storeName || '', promoFooter: s.promoFooter || '' };
+      lastFailure: sms.lastFailure(), publicUrl: s.publicUrl || '', storeName: s.storeName || '', promoFooter: s.promoFooter || '' };
   };
   admin.get('/settings/status', A.can('settings.manage', 'templates.edit', 'crm.send', 'sms.log'), (req, res) => res.json({ smsConfigured: sms.configured() }));
   admin.get('/settings', A.can('settings.manage'), (req, res) => res.json(settingsView()));

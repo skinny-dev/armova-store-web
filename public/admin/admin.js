@@ -3,7 +3,7 @@
   const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const D = {
     fa: {
-      e_wait: 'لطفا یک دقیقه صبر کنید و دوباره کد بگیرید', devCodeIs: 'حالت آزمایشی — کد ورود:', username: 'نام کاربری', otpCode: 'کد پیامک‌شده', sendCode: 'ارسال کد', usePassword: 'ورود با رمز عبور', useSms: 'ورود با پیامک', codeSent: 'کد ارسال شد', badCode: 'کد نادرست یا منقضی است', storeLink: 'فروشگاه', more: 'بیشتر', changePwHint: 'لطفا رمز عبور خود را تغییر دهید',
+      smsFailedLocal: 'پیامک ارسال نشد (جزئیات در تنظیمات)؛ فقط روی همین کامپیوتر — کد ورود:', smsFail_not_allowed: 'سطح حساب api.ir شما اجازه ارسال این پیامک را نمی‌دهد؛ از پشتیبانی api.ir ارتقای سطح بگیرید.', smsFail_network: 'اتصال به سرویس پیامک برقرار نشد؛ کمی بعد دوباره تلاش کنید.', smsFail_bad_token: 'توکن سرویس پیامک نامعتبر است.', smsFail_provider: 'ارسال پیامک ناموفق بود.', codeAlready: 'کد چند لحظه پیش ارسال شده؛ همان را وارد کنید.', e_wait: 'لطفا یک دقیقه صبر کنید و دوباره کد بگیرید', devCodeIs: 'حالت آزمایشی — کد ورود:', username: 'نام کاربری', otpCode: 'کد پیامک‌شده', sendCode: 'ارسال کد', usePassword: 'ورود با رمز عبور', useSms: 'ورود با پیامک', codeSent: 'کد ارسال شد', badCode: 'کد نادرست یا منقضی است', storeLink: 'فروشگاه', more: 'بیشتر', changePwHint: 'لطفا رمز عبور خود را تغییر دهید',
       treeHint: 'دسته‌ها درختی‌اند. دستگیره ⋮⋮ را بکشید: روی لبه بالا/پایین یک ردیف رها کنید تا ترتیب عوض شود، وسط ردیف رها کنید تا زیردسته آن شود.', expandAll: 'باز کردن همه', collapseAll: 'بستن همه', dragMove: 'برای جابه‌جایی بکشید', subcat: 'زیردسته', parentCat: 'دسته والد', rootCat: 'دسته اصلی',
       payment: 'پرداخت', tracking: 'رهگیری', trackingCode: 'کد رهگیری', trackingHint: 'اگر سفارش ارسال شده باشد، کد رهگیری برای مشتری پیامک می‌شود.', notifyDelay: 'اطلاع تاخیر', confirmDelay: 'پیامک تاخیر ارسال برای مشتری فرستاده شود؟', confirmCancel: 'سفارش لغو شود؟ موجودی به انبار برمی‌گردد و غیرقابل بازگشت است.',
       smsWillSend: 'در صورت فعال بودن قالب پیامک، به مشتری اطلاع داده می‌شود.', smsQueued: 'پیامک در صف ارسال قرار گرفت', sendSms: 'پیامک', message: 'متن پیام', send: 'ارسال', chars: 'نویسه', smsParts: 'پیامک', view: 'مشاهده', pricePct: 'تغییر قیمت ٪ (مثلا -10)', stockAdd: 'افزودن به موجودی', makeDiscount: 'ایجاد تخفیف',
@@ -23,7 +23,7 @@
       catInUse: 'این دسته محصول دارد.', fileInUse: 'این فایل در یک محصول استفاده شده است.', usedBy: 'استفاده در', unused: 'استفاده نشده', copyUrl: 'کپی لینک', copied: 'کپی شد', dropHere: 'تصاویر را اینجا رها کنید یا کلیک کنید (JPG, PNG, WebP, حداکثر ۱۰MB)', totalSize: 'حجم کل', empty: 'موردی وجود ندارد', done: 'تأیید', pick: 'انتخاب',
       customer: 'مشتری', total: 'جمع', date: 'تاریخ', phone: 'موبایل', address: 'آدرس', items: 'اقلام', new: 'جدید', processing: 'در حال پردازش', shipped: 'ارسال شد', delivered: 'تحویل شد', cancelled: 'لغو شد', currency: 'تومان', lang: 'EN', nameReq: 'نام الزامی است', badPrice: 'قیمت نامعتبر است', badCategory: 'دسته را انتخاب کنید' },
     en: {
-      e_wait: 'Please wait a minute before requesting another code', devCodeIs: 'Dev mode — login code:', username: 'Username', otpCode: 'SMS code', sendCode: 'Send code', usePassword: 'Log in with password', useSms: 'Log in with SMS', codeSent: 'Code sent', badCode: 'Wrong or expired code', storeLink: 'Store', more: 'More', changePwHint: 'Please change your password',
+      smsFailedLocal: 'SMS could not be sent (details in Settings); this computer only — login code:', smsFail_not_allowed: 'Your api.ir account level does not allow this SMS; ask api.ir support to upgrade it.', smsFail_network: 'Could not reach the SMS service; try again shortly.', smsFail_bad_token: 'The SMS service token is invalid.', smsFail_provider: 'The SMS could not be sent.', codeAlready: 'A code was sent a moment ago; enter that one.', e_wait: 'Please wait a minute before requesting another code', devCodeIs: 'Dev mode — login code:', username: 'Username', otpCode: 'SMS code', sendCode: 'Send code', usePassword: 'Log in with password', useSms: 'Log in with SMS', codeSent: 'Code sent', badCode: 'Wrong or expired code', storeLink: 'Store', more: 'More', changePwHint: 'Please change your password',
       treeHint: 'Categories form a tree. Drag the ⋮⋮ handle: drop on the top/bottom edge of a row to reorder, in the middle of a row to make it a sub-category.', expandAll: 'Expand all', collapseAll: 'Collapse all', dragMove: 'Drag to move', subcat: 'Sub-category', parentCat: 'Parent category', rootCat: 'Top level',
       payment: 'Payment', tracking: 'Tracking', trackingCode: 'Tracking code', trackingHint: 'If the order is already shipped, the customer gets the tracking code by SMS.', notifyDelay: 'Notify delay', confirmDelay: 'Send a shipping-delay SMS to the customer?', confirmCancel: 'Cancel this order? Stock is returned and this cannot be undone.',
       smsWillSend: 'The customer is notified by SMS if the template is enabled.', smsQueued: 'SMS queued', sendSms: 'SMS', message: 'Message', send: 'Send', chars: 'chars', smsParts: 'SMS', view: 'View', pricePct: 'Price change % (e.g. -10)', stockAdd: 'Add to stock', makeDiscount: 'Create discount',
@@ -58,7 +58,7 @@
     const r = await fetch('/api/admin' + path, o);
     if (r.status === 401 && !path.startsWith('/login') && !path.startsWith('/otp')) { showLogin(); throw new Error('unauthorized'); }
     const j = await r.json().catch(() => ({}));
-    if (!r.ok) throw Object.assign(new Error(j.error || 'error'), { code: j.error });
+    if (!r.ok) throw Object.assign(new Error(j.error || 'error'), { code: j.error, data: j });
     return j;
   }
   const errMsg = (e) => (D[lang]['e_' + (e && e.code)] || ({ name_required: t('nameReq'), bad_price: t('badPrice'), bad_stock: t('badStock'), bad_category: t('badCategory'), category_in_use: t('catInUse'), file_in_use: t('fileInUse') }[e && e.code]) || t('error'));
@@ -90,9 +90,11 @@
       e.preventDefault(); $('#le').textContent = '';
       try {
         if (!otp) { session = await api('/login', { method: 'POST', body: { username: $('#un').value, password: $('#pw').value } }); return shell(); }
-        if (!sent) { const r = await api('/otp/request', { method: 'POST', body: { phone: $('#ph').value } }); sent = true; $('#cw').hidden = false; $('#lb').textContent = t('login'); $('#le').style.color = 'var(--ok)'; $('#le').textContent = r.devCode ? `${t('devCodeIs')} ${r.devCode}` : t('codeSent'); if (r.devCode) $('#cd').value = r.devCode; $('#cd').focus(); return; }
+        if (!sent) { const r = await api('/otp/request', { method: 'POST', body: { phone: $('#ph').value } }); sent = true; $('#cw').hidden = false; $('#lb').textContent = t('login'); $('#le').style.color = r.smsFailed ? 'var(--warn)' : 'var(--ok)'; $('#le').textContent = r.smsFailed ? `${t('smsFailedLocal')} ${r.devCode}` : r.devCode ? `${t('devCodeIs')} ${r.devCode}` : t('codeSent'); if (r.devCode) $('#cd').value = r.devCode; $('#cd').focus(); return; }
         session = await api('/otp/verify', { method: 'POST', body: { phone: $('#ph').value, code: $('#cd').value } }); shell();
-      } catch (er) { $('#le').style.color = 'var(--bad)'; $('#le').textContent = er.code === 'too_many' ? t('tooMany') : er.code === 'wait' ? t('e_wait') : otp ? (sent ? t('badCode') : t('error')) : t('badLogin'); }
+      } catch (er) {
+        if (otp && !sent && er.code === 'wait') { sent = true; $('#cw').hidden = false; $('#lb').textContent = t('login'); $('#le').style.color = 'var(--ok)'; $('#le').textContent = t('codeAlready'); $('#cd').focus(); return; } // a code was just sent: go on to the code field
+        $('#le').style.color = 'var(--bad)'; $('#le').textContent = er.code === 'too_many' ? t('tooMany') : er.code === 'wait' ? t('e_wait') : er.code === 'sms_failed' ? t('smsFail_' + ((er.data || {}).reason || 'provider')) : otp ? (sent ? t('badCode') : t('error')) : t('badLogin'); }
     };
   }
   // pages: key -> { fn, perm: [..any of..], icon }. Core pages first, extensions append more.

@@ -32,7 +32,7 @@ module.exports = function (app) {
     if (!phone) return res.status(400).json({ error: 'invalid_phone' });
     if (ipLimit(req)) return res.status(429).json({ error: 'too_many' });
     const r = await sms.requestOtp(phone, 'cust');
-    res.status(r.error ? (r.error === 'sms_failed' ? 502 : 429) : 200).json(sms.exposeDev(req, r));
+    const [code, body] = sms.otpReply(req, r); res.status(code).json(body);
   });
   app.post('/api/auth/otp/verify', (req, res) => {
     const phone = sms.normPhone(req.body.phone);
