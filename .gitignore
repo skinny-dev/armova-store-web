@@ -3,3 +3,5 @@ data/db.json
 data/*.tmp
 data/thumbs
 data/.secret
+
+.claude/
