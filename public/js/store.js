@@ -103,10 +103,17 @@
     const cat = data.categories.find((c) => c.id === p.categoryId), cpath = catPath(p.categoryId);
     document.title = `${L(p.name)} | ${t('brand')}`;
     const sibs = p.group ? data.products.filter((x) => x.group === p.group).sort((a, b) => a.id - b.id) : [];
-    const swatches = sibs.length > 1 ? `<div class="colors"><div class="clabel">${t('color')}: <b>${esc(p.color ? L(p.color) : '')}</b></div><div class="sw-row">${sibs.map((x) =>
-      `<a class="swatch ${x.id === p.id ? 'on' : ''} ${soldOut(x) ? 'out' : ''}" data-link href="/product/${encodeURIComponent(x.slug)}" title="${esc(x.color ? L(x.color) : L(x.name))}" aria-label="${esc(x.color ? L(x.color) : L(x.name))}"><img src="${thumb(x, 120)}" alt="" loading="lazy"></a>`).join('')}</div></div>` : '';
-    const rows = (p.properties || []).map((r) => `<div><dt>${esc(L(r.label))}</dt><dd>${esc(L(r.value))}</dd></div>`).join('');
-    const sizeChips = p.sizes.length ? `<div class="chips">${p.sizes.map((s) => `<span class="chip ${s.stock <= 0 ? 'out' : ''}">${esc(s.name)}</span>`).join('')}</div>` : '';
+    const colorName = p.color ? L(p.color) : '';
+    const cdot = p.color && p.color.hex ? `<i class="cdot" style="background:${esc(p.color.hex)}"></i>` : '';
+    const swatches = sibs.length > 1
+      ? `<div class="og"><div class="olabel">${t('color')}: <b>${esc(colorName)}</b></div><div class="sw-row">${sibs.map((x) => `<a class="swatch ${x.id === p.id ? 'on' : ''} ${soldOut(x) ? 'out' : ''}" data-link href="/product/${encodeURIComponent(x.slug)}" title="${esc(x.color ? L(x.color) : L(x.name))}" aria-label="${esc(x.color ? L(x.color) : L(x.name))}"><img src="${thumb(x, 120)}" alt="" loading="lazy"></a>`).join('')}</div></div>`
+      : colorName ? `<div class="og"><div class="olabel">${t('color')}: <b>${esc(colorName)}</b>${cdot}</div></div>` : '';
+    const rows = (p.properties || []).filter((r) => !(colorName && (r.label.en === 'Color' || r.label.fa === 'رنگ'))).map((r) => `<div><dt>${esc(L(r.label))}</dt><dd>${esc(L(r.value))}</dd></div>`).join('');
+    const sizeChips = p.sizes.length
+      ? `<div class="og"><div class="olabel">${t('size')}: <b id="sizeLbl">—</b><span class="low" id="sizeHint"></span></div>
+          <div class="chips" role="radiogroup" aria-label="${t('size')}">${p.sizes.map((s) => `<button type="button" role="radio" aria-checked="false" class="chip ${s.stock <= 0 ? 'out' : ''}" data-size="${esc(s.name)}">${esc(s.name)}</button>`).join('')}</div>
+          <div class="notifybox" id="notifyBox" hidden><span id="notifyMsg"></span><button class="link" id="notifyBtn" type="button">${t('notifyMe')}</button></div></div>` : '';
+    const allOut = p.sizes.length === 0 || p.sizes.every((s) => s.stock <= 0);
     const peers = data.products.filter((x) => x.categoryId === p.categoryId && x.id !== p.id && (!p.group || x.group !== p.group));
     const start = peers.length ? p.id % peers.length : 0;
     const rel = [...peers.slice(start), ...peers.slice(0, start)].slice(0, 10);
@@ -120,8 +127,7 @@
         <h1 class="display">${esc(L(p.name))}</h1>
         ${p.sale ? `<div class="salebar"><b>−${num(p.sale.percent)}${lang === 'fa' ? '٪' : '%'}</b> ${t('onSale')}${p.sale.endsAt ? ` · ${t('until')} ${new Date(p.sale.endsAt).toLocaleDateString(lang === 'fa' ? 'fa-IR' : 'en-GB')}` : ''}</div>` : ''}
         ${swatches}${sizeChips}
-        <div class="buy"><button class="sizebtn" id="sizeBtn"><span id="sizeLbl">${t('selectSize')}</span><span>⌄</span></button>
-          <button class="addbtn" id="addBtn"><span>${t('addToCart')}</span><span>${p.sale ? `<s class="price-old">${num(p.price)}</s>` : p.comparePrice ? `<s class="price-old">${num(p.comparePrice)}</s>` : ''}${money(unit(p))}</span></button></div>
+        <div class="buy"><button class="addbtn needs" id="addBtn" ${allOut ? 'disabled' : ''}><span id="addLbl">${allOut ? t('soldOut') : t('selectSize')}</span><span>${p.sale ? `<s class="price-old">${num(p.price)}</s>` : p.comparePrice ? `<s class="price-old">${num(p.comparePrice)}</s>` : ''}${money(unit(p))}</span></button></div>
         <p class="desc">${esc(L(p.description))}</p>
         <div class="acc">${rows ? `<details open><summary>${t('props')}</summary><dl class="props">${rows}</dl></details>` : ''}${acc(t('specs'), L(p.details))}</div>
         ${pn ? `<div class="pn"><a data-link href="/product/${encodeURIComponent(pn[0].slug)}">‹ ${t('prev')}</a><a data-link href="/product/${encodeURIComponent(pn[1].slug)}">${t('next')} ›</a></div>` : ''}
@@ -129,22 +135,33 @@
       ${rel.length ? `<section class="related"><h2>${t('related')}</h2><div class="rrow">${rel.map((x) => `<a class="rcard" data-link href="/product/${encodeURIComponent(x.slug)}"><span class="rimg"><img src="${thumb(x)}" alt="${esc(L(x.name))}" loading="lazy" decoding="async"></span><span class="rn">${esc(L(x.name))}</span><span class="rp">${x.sale ? `<s class="price-old">${num(x.price)}</s>` : ''}${money(unit(x))}</span></a>`).join('')}</div></section>` : ''}`;
     const gal = $('#gal'), dots = document.querySelectorAll('#gdots i');
     if (dots.length) gal.addEventListener('scroll', () => { const i = Math.round(Math.abs(gal.scrollLeft) / gal.clientWidth); dots.forEach((d, k) => d.classList.toggle('on', k === i)); }, { passive: true });
-    $('#sizeBtn').onclick = () => sizeDrawer(p);
+    const chips = [...document.querySelectorAll('.chip[data-size]')], sizeOf = (n) => p.sizes.find((s) => s.name === n), nb = $('#notifyBox');
+    const refresh = () => {
+      chips.forEach((c) => { const on = c.dataset.size === pick; c.classList.toggle('on', on); c.setAttribute('aria-checked', String(on)); });
+      const s = pick && sizeOf(pick);
+      if ($('#sizeLbl')) $('#sizeLbl').textContent = pick || '—';
+      if ($('#sizeHint')) $('#sizeHint').textContent = s && s.stock <= 3 ? t('fewLeft') : '';
+      if (!allOut) { $('#addLbl').textContent = pick ? t('addToCart') : t('selectSize'); $('#addBtn').classList.toggle('needs', !pick); }
+    };
+    chips.forEach((c) => (c.onclick = () => {
+      const s = sizeOf(c.dataset.size);
+      if (s.stock <= 0) { pick = null; nb.hidden = false; nb.dataset.size = s.name; $('#notifyMsg').textContent = `${s.name} — ${t('soldOut')}`; refresh(); return; }
+      nb.hidden = true; pick = pick === s.name ? null : s.name; refresh();
+    }));
+    if ($('#notifyBtn')) $('#notifyBtn').onclick = async () => {
+      let phone; if (!me) { phone = prompt(t('notifyPhone')); if (!phone) return; }
+      try { await jsonApi('/api/stock-watch', { method: 'POST', body: { productId: p.id, size: nb.dataset.size, phone } }); $('#notifyBtn').textContent = t('notifyDone'); $('#notifyBtn').disabled = true; }
+      catch (er) { toast((er.data || {}).error === 'invalid_phone' ? t('invalidPhone') : t('errGeneric')); }
+    };
+    const avail = p.sizes.filter((s) => s.stock > 0); if (avail.length === 1) pick = avail[0].name; // only one size left: preselect it
+    refresh();
     $('#addBtn').onclick = () => {
-      if (!pick) return sizeDrawer(p);
+      if (!pick) { // guide the customer to the size row instead of opening another dialog
+        const g = $('.chips'); if (g) { g.classList.remove('need'); void g.offsetWidth; g.classList.add('need'); g.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+        return toast(t('pickSize'));
+      }
       addToCart(p, pick); openCart();
     };
-  }
-  function sizeDrawer(p) {
-    drawer(`<div class="dh"><b>${t('selectSize')}</b><button data-close>✕</button></div><div class="db">${p.sizes.map((s) => {
-      const out = s.stock <= 0;
-      return out ? `<div class="row"><span class="n" style="text-decoration:line-through;color:var(--muted)">${esc(s.name)}</span><button class="link" data-notify="${esc(s.name)}">${t('notifyMe')}</button></div>` : `<button class="row" data-size="${esc(s.name)}"><span class="n">${esc(s.name)}</span><span>${s.stock <= 3 ? t('fewLeft') : ''}</span></button>`;
-    }).join('')}</div>`, 'bottom');
-    document.querySelectorAll('[data-notify]').forEach((b) => (b.onclick = async () => {
-      let phone; if (!me) { phone = prompt(t('notifyPhone')); if (!phone) return; }
-      try { await jsonApi('/api/stock-watch', { method: 'POST', body: { productId: p.id, size: b.dataset.notify, phone } }); b.textContent = t('notifyDone'); b.disabled = true; } catch (er) { toast((er.data || {}).error === 'invalid_phone' ? t('invalidPhone') : t('errGeneric')); }
-    }));
-    document.querySelectorAll('[data-size]').forEach((b) => (b.onclick = () => { pick = b.dataset.size; $('#sizeLbl').textContent = `${t('size')}: ${pick}`; closeDrawer(); }));
   }
 
   // ---------- cart ----------
