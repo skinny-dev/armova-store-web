@@ -6,8 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const db = require('./lib/db');
 
-// PORT env wins; inside Kubernetes (Runflare) default to 80, which is the port the platform exposes; locally 4000.
-const PORT = process.env.PORT || (process.env.KUBERNETES_SERVICE_HOST ? 80 : 4000);
+const PORT = process.env.PORT || 4000; // set PORT in the environment (e.g. PORT=80 on Runflare)
 const UPLOADS = path.join(__dirname, 'uploads');
 fs.mkdirSync(UPLOADS, { recursive: true });
 const A = require('./lib/auth');
