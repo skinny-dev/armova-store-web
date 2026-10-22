@@ -19,6 +19,8 @@ sms.syncCustomersFromOrders();
 if (process.env.AUTO_SEED !== '0' && !db.get().categories.length && !db.get().products.length) require('./scripts/seed.js').main(); // demo data on first run
 
 const app = express();
+app.get('/healthz', (req, res) => res.type('text').send('ok'));
+app.use((req, res, next) => { const t = Date.now(); res.on('finish', () => { if (!req.path.startsWith('/uploads/')) console.log(`${req.method} ${req.originalUrl.slice(0, 120)} ${res.statusCode} ${Date.now() - t}ms`); }); next(); }); // request log (visible in Runflare logs)
 app.use(express.json({ limit: '1mb' }));
 app.use(cookieParser());
 
