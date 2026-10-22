@@ -4,8 +4,10 @@ const fs = require('fs');
 const path = require('path');
 const db = require('../lib/db');
 
+async function main() {
+await db.init();
 const s = db.get();
-if ((s.products.length || s.categories.length) && !process.argv.includes('--force')) { console.log('Data exists; use --force to reseed.'); process.exit(0); }
+if ((s.products.length || s.categories.length) && !process.argv.includes('--force')) { console.log('Data exists; use --force to reseed.'); return; }
 Object.assign(s, { seq: 1, categories: [], products: [], orders: [], daily: {} });
 const UP = path.join(__dirname, '..', 'uploads'); fs.mkdirSync(UP, { recursive: true });
 
@@ -44,3 +46,6 @@ for (const [fa, en, type, color, categoryId, price, dfa, den, st] of items) {
     images: [img(slug, type, color, false), img(slug, type, color, true)], active: true, createdAt: Date.now() - s.seq * 1000, views: 0 });
 }
 db.save(); console.log(`Seeded ${s.categories.length} categories, ${s.products.length} products.`);
+}
+module.exports = { main };
+if (require.main === module) main().then(() => db.flush()).catch((e) => { console.error(e); process.exit(1); });

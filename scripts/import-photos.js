@@ -26,6 +26,7 @@ const opt = (k, d) => { const a = flags.find((x) => x.startsWith('--' + k + '=')
 const PRICE = Math.max(0, parseInt(opt('price', '0'), 10) || 0), STOCK = Math.max(0, parseInt(opt('stock', '0'), 10) || 0);
 const SIZES = opt('sizes', 'S,M,L,XL').split(',').map((x) => x.trim()).filter(Boolean);
 const MAP = path.join(__dirname, 'photo-map.json');
+db.init().then(async () => {
 const s = db.get();
 if (flags.includes('--clear')) { s.products = []; s.categories = []; }
 const slugify = (x) => x.toLowerCase().replace(/[^a-z0-9؀-ۿ]+/g, '-').replace(/^-+|-+$/g, '') || 'item';
@@ -69,7 +70,7 @@ const meta = (g, categoryId, id) => {
     ...(cat ? [{ label: { fa: 'دسته', en: 'Category' }, value: cat.name }] : []),
     { label: { fa: 'کد محصول', en: 'Product code' }, value: { fa: sku, en: sku } }] };
 };
-(async () => {
+await (async () => {
 let n = 0;
 for (const g of groups.values()) {
   const slug = g.slug || slugify(g.base);
@@ -93,3 +94,5 @@ for (const g of groups.values()) {
 db.save();
 console.log(`Imported ${n} product(s). Open /admin to set names (Farsi), prices and stock${flags.includes('--publish') ? '' : ', then switch them to Active'}.`);
 })();
+await db.flush();
+}).catch((e) => { console.error(e); process.exit(1); });

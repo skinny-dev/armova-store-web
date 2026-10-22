@@ -11,7 +11,7 @@ ADMIN_PASSWORD='choose-a-password' npm start   # http://localhost:4000
 - Admin: `/admin` — dashboard stats, products CRUD (bilingual, sizes/stock, product/model images), categories CRUD, file manager (upload, usage, delete-protection for in-use files), orders with status.
 - First run auto-seeds demo data with placeholder images (`AUTO_SEED=0` to disable; `npm run seed -- --force` to reseed).
 - Env: `PORT`, `ADMIN_PASSWORD` (used only when the owner account is first created; default `admin123` — change it in *My account*), `SESSION_SECRET`, `APIIR_TOKEN` (api.ir Bearer token), `SMS_PROVIDER` (`apiir` default | `kavenegar`), `KAVENEGAR_API_KEY`, `KAVENEGAR_SENDER`, `PUBLIC_URL` (links inside SMS).
-- Data lives in `data/db.json`; images in `uploads/`. Back up both.
+- Storage: set `DATABASE_URL=postgres://USER:PASSWORD@HOST:5432/DBNAME` to use PostgreSQL (one JSONB document in table `armova_state`, created automatically; an existing `data/db.json` is imported on first run; `PG_SSL=1` enables SSL). Without it, data lives in `data/db.json`. Run a single app instance. Images always live in `uploads/` — mount that folder on persistent storage.
 - Import your own photos: `npm run import -- [folder] [--clear] [--publish]` (default folder `public/armova-products`; subfolders become categories; `name-1.jpg`, `name-2.jpg` group into one product; filenames with "model" become model shots).
 
 ## Accounts, roles & permissions
