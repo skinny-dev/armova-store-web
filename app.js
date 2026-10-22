@@ -270,6 +270,7 @@ admin.get('/stats', A.can('stats.view'), (req, res) => {
 });
 require('./routes/crm')(admin);
 require('./routes/discounts')(admin);
+require('./routes/backup')(admin, { UPLOADS });
 app.use('/api/admin', admin);
 app.use((err, req, res, next) => { console.error(err); res.status(err.status || 500).json({ error: err.code || 'server_error' }); });
 

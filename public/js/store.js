@@ -318,5 +318,5 @@
   async function load() {
     try { data = await (await fetch('/api/store')).json(); } catch { toast(t('errGeneric')); }
   }
-  (async () => { chrome(); await Promise.all([load(), loadMe()]); route(); track('view'); })();
+  (async () => { chrome(); if (window.UX) $('#app').innerHTML = `<div class="page-title display ux-skel" style="margin:70px 20px 60px;height:90px;width:40%"></div>${UX.skeletonGrid(8, ui.cols)}`; await Promise.all([load(), loadMe()]); route(); track('view'); })();
 })();

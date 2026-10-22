@@ -107,7 +107,7 @@
   };
   const hidden = { account: { fn: () => (window.AdminAccount || (() => Promise.resolve()))(), perm: [] } };
   const allPages = () => ({ ...pages, ...hidden });
-  const ORDER = ['dashboard', 'products', 'categories', 'orders', 'discounts', 'customers', 'messages', 'files', 'team', 'settings'];
+  const ORDER = ['dashboard', 'products', 'categories', 'orders', 'discounts', 'customers', 'messages', 'files', 'team', 'settings', 'backup'];
   const visiblePages = () => Object.keys(pages).filter((k) => !pages[k].perm.length || can(...pages[k].perm)).sort((x, y) => (ORDER.indexOf(x) + 1 || 99) - (ORDER.indexOf(y) + 1 || 99));
   function shell() {
     setLang();
@@ -121,7 +121,7 @@
       <a href="#account" class="who ${cur === 'account' ? 'on' : ''}"><b>${esc(u.name)}</b><small>${esc(role ? nm(role.name) : u.role)}</small></a>
       <button id="lg">${t('lang')}</button><a href="/" target="_blank">↗ ${t('storeLink')}</a><button id="lo">${t('logout')}</button></nav>
       <header class="mtop"><b>${t('title')}</b><span><a class="btn sec sm" href="#account">${esc(u.name)}</a><button id="lg2" class="btn sec sm">${t('lang')}</button><a class="btn sec sm" href="/" target="_blank">↗</a><button id="lo2" class="btn sec sm">${t('logout')}</button></span></header>
-      <main class="main" id="main"><p class="muted loading">…</p></main>
+      <main class="main" id="main">${window.UX ? UX.skeletonRows(6) : '<p class="muted loading">…</p>'}</main>
       <nav class="mtabs" style="--n:${tabs.length + (more.length ? 1 : 0)}">${tabs.map((k) => item(k)).join('')}${more.length ? `<button id="more" class="${more.includes(cur) ? 'on' : ''}"><i>⋯</i><span>${t('more')}</span></button>` : ''}</nav></div>`;
     const toggle = () => { lang = lang === 'fa' ? 'en' : 'fa'; try { localStorage.setItem('alang', lang); } catch {} shell(); };
     const out = async () => { await api('/logout', { method: 'POST' }); showLogin(); };

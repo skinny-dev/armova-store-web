@@ -160,3 +160,4 @@ a.btn { text-decoration: none; display: inline-block; }
 @media (max-width: 820px) { .trow .grip { padding: 10px 8px; font-size: 18px; } }
 
 [hidden] { display: none !important; }
+.bkp { height: 8px; background: #eee; border-radius: 4px; overflow: hidden; margin: 8px 0; } .bkp i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .2s; }
