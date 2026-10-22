@@ -6,7 +6,8 @@ const fs = require('fs');
 const path = require('path');
 const db = require('./lib/db');
 
-const PORT = process.env.PORT || 4000;
+// PORT env wins; inside Kubernetes (Runflare) default to 80, which is the port the platform exposes; locally 4000.
+const PORT = process.env.PORT || (process.env.KUBERNETES_SERVICE_HOST ? 80 : 4000);
 const UPLOADS = path.join(__dirname, 'uploads');
 fs.mkdirSync(UPLOADS, { recursive: true });
 const A = require('./lib/auth');
@@ -303,4 +304,4 @@ app.get('/api/*', (req, res) => res.status(404).json({ error: 'not_found' }));
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
 
 require('./lib/jobs').start();
-app.listen(PORT, () => console.log(`Armova running on http://localhost:${PORT}  (admin: /admin)`));
+app.listen(PORT, '0.0.0.0', () => console.log(`Armova running on port ${PORT}  (PORT env: ${process.env.PORT || 'not set'}, admin: /admin)`));
