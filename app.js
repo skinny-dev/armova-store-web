@@ -275,7 +275,7 @@ app.use((err, req, res, next) => { console.error(err); res.status(err.status || 
 
 // ---------- static ----------
 // On-demand cached WebP thumbnails: /uploads/t/<file>?w=480|720 (default 720). Falls back to the original.
-let sharp = null; try { sharp = require('sharp'); } catch {}
+let sharp = null; try { sharp = require('sharp'); sharp.cache(false); sharp.concurrency(1); } catch {} // low memory: no cache, one worker thread
 const THUMBS = path.join(__dirname, 'data', 'thumbs');
 app.get('/uploads/t/:file', async (req, res, next) => {
   const f = path.basename(req.params.file), src = path.join(UPLOADS, f);
@@ -297,12 +297,15 @@ async function warmThumbs() {
     if (!fs.existsSync(out)) await sharp(path.join(UPLOADS, f)).rotate().resize({ width: w, withoutEnlargement: true }).webp({ quality: 72 }).toFile(out).catch(() => {});
   }
 }
-setTimeout(() => warmThumbs().catch(() => {}), 500);
+if (process.env.WARM_THUMBS === '1') setTimeout(() => warmThumbs().catch(() => {}), 500); // opt-in: thumbnails are otherwise made on first request
 app.use('/uploads', express.static(UPLOADS, { maxAge: '365d', immutable: true, setHeaders: (r) => r.set('X-Content-Type-Options', 'nosniff') }));
 app.use('/admin', express.static(path.join(__dirname, 'public', 'admin')));
 app.use(express.static(path.join(__dirname, 'public'), { index: false }));
 app.get('/api/*', (req, res) => res.status(404).json({ error: 'not_found' }));
 app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
 
+process.on('SIGTERM', () => console.log('SIGTERM received (the platform is stopping this pod)'));
+process.on('unhandledRejection', (e) => console.error('unhandledRejection:', e));
+console.log(`Memory at start: ${Math.round(process.memoryUsage().rss / 1048576)} MB`);
 require('./lib/jobs').start();
 app.listen(PORT, '0.0.0.0', () => console.log(`Armova running on port ${PORT}  (PORT env: ${process.env.PORT || 'not set'}, admin: /admin)`));
