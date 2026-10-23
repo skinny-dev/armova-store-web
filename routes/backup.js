@@ -16,7 +16,15 @@ const run = (args) => new Promise((resolve, reject) => {
 const SAFE_NAME = /^[\w؀-ۿ.-]+$/;
 const rm = (p) => fs.rm(p, { recursive: true, force: true }, () => {});
 
+const { seedCatalog } = require('../scripts/seed-catalog');
+
 module.exports = (admin, { UPLOADS }) => {
+  // Runs inside the live app so its in-memory state is updated (a separate terminal process would be overwritten by the app).
+  admin.post('/seed-catalog', A.can('settings.manage'), async (req, res) => {
+    try { await seedCatalog(); const s = db.get(); res.json({ ok: true, products: s.products.length, categories: s.categories.length }); }
+    catch (e) { console.error('seed-catalog:', e.message); res.status(500).json({ error: 'seed_failed' }); }
+  });
+
   admin.get('/backup', A.can('settings.manage'), (req, res) => {
     const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'armova-bk-'));
     fs.writeFileSync(path.join(tmp, 'db.json'), JSON.stringify(db.get()));

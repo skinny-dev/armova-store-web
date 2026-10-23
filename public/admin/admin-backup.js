@@ -2,12 +2,12 @@
 (window.AdminExt = window.AdminExt || []).push((kit) => {
   const { $, t, toast, num, can } = kit;
   const dict = {
-    fa: { backup: 'پشتیبان‌گیری', bkTitle: 'پشتیبان‌گیری و بازیابی', bkDownload: 'دانلود پشتیبان کامل', bkDownloadHint: 'یک فایل فشرده شامل همه محصولات، دسته‌ها، سفارش‌ها، کاربران، تنظیمات و عکس‌ها. این فایل محرمانه است؛ آن را امن نگه دارید.',
+    fa: { bkSeedTitle: 'بارگذاری کاتالوگ آرموا', bkSeedHint: 'محصولات، دسته‌ها و عکس‌های آماده آرموا (۵۶ محصول) را بارگذاری می‌کند و محصولات و دسته‌های فعلی را جایگزین می‌کند. کاربران، سفارش‌ها و تنظیمات دست‌نخورده می‌مانند.', bkSeedBtn: 'بارگذاری کاتالوگ', bkSeedOk: 'کاتالوگ بارگذاری شد: {p} محصول، {c} دسته', e_seed_failed: 'بارگذاری ناموفق بود.', backup: 'پشتیبان‌گیری', bkTitle: 'پشتیبان‌گیری و بازیابی', bkDownload: 'دانلود پشتیبان کامل', bkDownloadHint: 'یک فایل فشرده شامل همه محصولات، دسته‌ها، سفارش‌ها، کاربران، تنظیمات و عکس‌ها. این فایل محرمانه است؛ آن را امن نگه دارید.',
       bkRestore: 'بازیابی از فایل پشتیبان', bkRestoreHint: 'بسته به نوع بازیابی، داده‌های فعلی با محتوای فایل جایگزین می‌شود. عکس‌های موجود حذف نمی‌شوند و عکس‌های فایل به آن‌ها اضافه می‌شود.',
       bkPick: 'انتخاب فایل پشتیبان (.tar.gz)', bkMode: 'نوع بازیابی', bkModeCatalog: 'فقط محصولات و دسته‌ها (کاربران، سفارش‌ها و تنظیمات دست‌نخورده می‌مانند)', bkModeFull: 'همه چیز (کاربران، سفارش‌ها، تنظیمات هم جایگزین می‌شود)', bkStart: 'بازیابی', bkConfirm: 'داده‌های فعلی جایگزین می‌شود. ادامه می‌دهید؟', bkUploading: 'در حال آپلود…', bkWorking: 'آپلود کامل شد؛ در حال بازیابی…',
       bkDone: 'بازیابی انجام شد', bkResult: 'محصول: {p} · دسته: {c} · سفارش: {o} · عکس: {f}', bkRelogin: 'کاربران و رمزها هم جایگزین شده‌اند؛ دوباره وارد شوید.', bkRelog: 'ورود دوباره',
       e_bad_archive: 'فایل پشتیبان معتبر نیست.', e_tar_missing: 'ابزار tar روی سرور در دسترس نیست.', e_no_file: 'فایلی انتخاب نشده.', bkNet: 'ارتباط قطع شد یا فایل برای سرور بزرگ است.' },
-    en: { backup: 'Backup', bkTitle: 'Backup & restore', bkDownload: 'Download full backup', bkDownloadHint: 'One compressed file with all products, categories, orders, users, settings and images. It is confidential — keep it safe.',
+    en: { bkSeedTitle: 'Load the Armova catalog', bkSeedHint: 'Loads the ready-made Armova products, categories and photos (56 products), replacing current products and categories. Users, orders and settings are kept.', bkSeedBtn: 'Load catalog', bkSeedOk: 'Catalog loaded: {p} products, {c} categories', e_seed_failed: 'Loading failed.', backup: 'Backup', bkTitle: 'Backup & restore', bkDownload: 'Download full backup', bkDownloadHint: 'One compressed file with all products, categories, orders, users, settings and images. It is confidential — keep it safe.',
       bkRestore: 'Restore from a backup file', bkRestoreHint: 'Depending on the restore type, current data is replaced by the file contents. Existing images are kept and the file’s images are added.',
       bkPick: 'Choose backup file (.tar.gz)', bkMode: 'Restore type', bkModeCatalog: 'Products and categories only (users, orders and settings are kept)', bkModeFull: 'Everything (users, orders and settings are replaced too)', bkStart: 'Restore', bkConfirm: 'Current data will be replaced. Continue?', bkUploading: 'Uploading…', bkWorking: 'Upload complete; restoring…',
       bkDone: 'Restore complete', bkResult: 'Products: {p} · Categories: {c} · Orders: {o} · Images: {f}', bkRelogin: 'Users and passwords were replaced too — please log in again.', bkRelog: 'Log in again',
@@ -18,11 +18,17 @@
     const lang = kit.lang;
     $('#main').innerHTML = `<div class="head"><h1>${t('bkTitle')}</h1></div>
       <div class="panel" style="margin-bottom:12px"><h3>${t('bkDownload')}</h3><p class="muted" style="margin-bottom:12px">${t('bkDownloadHint')}</p><a class="btn" id="bkd" href="/api/admin/backup" download>⬇ ${t('bkDownload')}</a></div>
+      <div class="panel" style="margin-bottom:12px"><h3>${t('bkSeedTitle')}</h3><p class="muted" style="margin-bottom:12px">${t('bkSeedHint')}</p><button class="btn" id="bks">${t('bkSeedBtn')}</button><p id="bksm" class="muted" aria-live="polite" style="margin-top:8px"></p></div>
       <div class="panel"><h3>${t('bkRestore')}</h3><p class="muted" style="margin-bottom:12px">${t('bkRestoreHint')}</p>
         <label style="margin-bottom:10px"><span>${t('bkPick')}</span><input type="file" id="bkf" accept=".gz,.tgz,application/gzip,application/x-gzip"></label>
         <label style="margin-bottom:10px"><span>${t('bkMode')}</span><select id="bkmode"><option value="catalog">${t('bkModeCatalog')}</option><option value="full">${t('bkModeFull')}</option></select></label>
         <div id="bkp" class="bkp" hidden><i></i></div><p id="bkm" class="muted" aria-live="polite"></p>
         <button class="btn danger" id="bkr" disabled>${t('bkStart')}</button></div>`;
+    $('#bks').onclick = async () => {
+      if (!confirm(t('bkConfirm'))) return; const m = $('#bksm'); m.textContent = '';
+      try { const j = await kit.api('/seed-catalog', { method: 'POST' }); m.style.color = 'var(--ok)'; m.textContent = t('bkSeedOk').replace('{p}', num(j.products)).replace('{c}', num(j.categories)); }
+      catch (e) { m.style.color = 'var(--bad)'; m.textContent = t('e_seed_failed'); }
+    };
     const file = $('#bkf'), btn = $('#bkr'), bar = $('#bkp'), msg = $('#bkm');
     file.onchange = () => { btn.disabled = !file.files.length; };
     btn.onclick = () => {
