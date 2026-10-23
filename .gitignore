@@ -6,3 +6,6 @@ data/.secret
 
 .claude/
 armova-catalog.tar.gz
+uploads/*.webp
+uploads/*.jpg
+uploads/*.png
