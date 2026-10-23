@@ -16,7 +16,7 @@ const pricing = require('./lib/pricing');
 const ordersLib = require('./lib/orders');
 sms.syncCustomersFromOrders();
 
-if (process.env.AUTO_SEED !== '0' && !db.get().categories.length && !db.get().products.length) require('./scripts/seed.js').main(); // demo data on first run
+if (process.env.AUTO_SEED !== '0' && !db.get().categories.length && !db.get().products.length) require('./scripts/seed-catalog').seedCatalog().catch((e) => console.error('catalog seed failed:', e.message)); // real catalog on first run
 
 const app = express();
 app.get('/healthz', (req, res) => res.type('text').send('ok'));

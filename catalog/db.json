@@ -1,0 +1,4905 @@
+{
+ "seq": 78,
+ "categories": [
+  {
+   "id": 17,
+   "slug": "blouses",
+   "name": {
+    "fa": "بلوز",
+    "en": "Blouses"
+   },
+   "order": 0
+  },
+  {
+   "id": 42,
+   "slug": "polo-shirts",
+   "name": {
+    "fa": "پولوشرت",
+    "en": "Polo Shirts"
+   },
+   "order": 1
+  },
+  {
+   "id": 58,
+   "slug": "t-shirts",
+   "name": {
+    "fa": "تی‌شرت",
+    "en": "T-Shirts"
+   },
+   "order": 2
+  },
+  {
+   "id": 62,
+   "slug": "turtlenecks",
+   "name": {
+    "fa": "یقه اسکی",
+    "en": "Turtlenecks"
+   },
+   "order": 3
+  },
+  {
+   "id": 70,
+   "slug": "vests",
+   "name": {
+    "fa": "وست",
+    "en": "Vests"
+   },
+   "order": 4
+  },
+  {
+   "id": 76,
+   "slug": "shirts",
+   "name": {
+    "fa": "پیراهن",
+    "en": "Shirts"
+   },
+   "order": 5
+  }
+ ],
+ "products": [
+  {
+   "id": 16,
+   "slug": "scarf-grey",
+   "group": "scarf",
+   "color": {
+    "fa": "طوسی",
+    "en": "Grey",
+    "hex": "#7a7d80"
+   },
+   "sku": "ARM-0016",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "طوسی",
+      "en": "Grey"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0016",
+      "en": "ARM-0016"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز شال‌دار طوسی",
+    "en": "Scarf Blouse Grey"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "scarf-grey-1b3c7b.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755284492,
+   "views": 0
+  },
+  {
+   "id": 18,
+   "slug": "scarf-red",
+   "group": "scarf",
+   "color": {
+    "fa": "قرمز",
+    "en": "Red",
+    "hex": "#c0272d"
+   },
+   "sku": "ARM-0018",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "قرمز",
+      "en": "Red"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0018",
+      "en": "ARM-0018"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز شال‌دار قرمز",
+    "en": "Scarf Blouse Red"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "scarf-red-505c82.webp",
+     "kind": "product"
+    },
+    {
+     "file": "scarf-red-5473cf.webp",
+     "kind": "model"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755285823,
+   "views": 0
+  },
+  {
+   "id": 19,
+   "slug": "scarf-yellow",
+   "group": "scarf",
+   "color": {
+    "fa": "زرد",
+    "en": "Yellow",
+    "hex": "#e5a912"
+   },
+   "sku": "ARM-0019",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "زرد",
+      "en": "Yellow"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0019",
+      "en": "ARM-0019"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز شال‌دار زرد",
+    "en": "Scarf Blouse Yellow"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "scarf-yellow-937af2.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755287199,
+   "views": 0
+  },
+  {
+   "id": 20,
+   "slug": "scarf-pink",
+   "group": "scarf",
+   "color": {
+    "fa": "صورتی",
+    "en": "Pink",
+    "hex": "#e8a5b5"
+   },
+   "sku": "ARM-0020",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "صورتی",
+      "en": "Pink"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0020",
+      "en": "ARM-0020"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز شال‌دار صورتی",
+    "en": "Scarf Blouse Pink"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "scarf-pink-d79c28.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755288147,
+   "views": 0
+  },
+  {
+   "id": 21,
+   "slug": "scarf-green",
+   "group": "scarf",
+   "color": {
+    "fa": "سبز",
+    "en": "Green",
+    "hex": "#3f9d85"
+   },
+   "sku": "ARM-0021",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "سبز",
+      "en": "Green"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0021",
+      "en": "ARM-0021"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز شال‌دار سبز",
+    "en": "Scarf Blouse Green"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "scarf-green-00ec0b.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755289264,
+   "views": 0
+  },
+  {
+   "id": 22,
+   "slug": "scarf-beige",
+   "group": "scarf",
+   "color": {
+    "fa": "نسکافه‌ای",
+    "en": "Beige",
+    "hex": "#c8b49a"
+   },
+   "sku": "ARM-0022",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "نسکافه‌ای",
+      "en": "Beige"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0022",
+      "en": "ARM-0022"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز شال‌دار نسکافه‌ای",
+    "en": "Scarf Blouse Beige"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "scarf-beige-d06c2d.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755290377,
+   "views": 0
+  },
+  {
+   "id": 23,
+   "slug": "gisu-pink",
+   "group": "gisu",
+   "color": {
+    "fa": "صورتی",
+    "en": "Pink",
+    "hex": "#e8a5b5"
+   },
+   "sku": "ARM-0023",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "صورتی",
+      "en": "Pink"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0023",
+      "en": "ARM-0023"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز شرت مدل گیسو صورتی",
+    "en": "Gisu Zip Blouse Pink"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "gisu-pink-f3407c.webp",
+     "kind": "product"
+    },
+    {
+     "file": "gisu-pink-d7e9cf.webp",
+     "kind": "model"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755292269,
+   "views": 0
+  },
+  {
+   "id": 24,
+   "slug": "gisu-green",
+   "group": "gisu",
+   "color": {
+    "fa": "سبز",
+    "en": "Green",
+    "hex": "#3f9d85"
+   },
+   "sku": "ARM-0024",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "سبز",
+      "en": "Green"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0024",
+      "en": "ARM-0024"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز شرت مدل گیسو سبز",
+    "en": "Gisu Zip Blouse Green"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "gisu-green-5ef2de.webp",
+     "kind": "product"
+    },
+    {
+     "file": "gisu-green-308567.webp",
+     "kind": "model"
+    },
+    {
+     "file": "gisu-green-fb3906.webp",
+     "kind": "model"
+    },
+    {
+     "file": "gisu-green-171b82.webp",
+     "kind": "model"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755294275,
+   "views": 0
+  },
+  {
+   "id": 25,
+   "slug": "gisu-beige",
+   "group": "gisu",
+   "color": {
+    "fa": "نسکافه‌ای",
+    "en": "Beige",
+    "hex": "#c8b49a"
+   },
+   "sku": "ARM-0025",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "نسکافه‌ای",
+      "en": "Beige"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0025",
+      "en": "ARM-0025"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز شرت مدل گیسو نسکافه‌ای",
+    "en": "Gisu Zip Blouse Beige"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "gisu-beige-95b67f.webp",
+     "kind": "product"
+    },
+    {
+     "file": "gisu-beige-364559.webp",
+     "kind": "model"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755295940,
+   "views": 0
+  },
+  {
+   "id": 26,
+   "slug": "gisu-black",
+   "group": "gisu",
+   "color": {
+    "fa": "مشکی",
+    "en": "Black",
+    "hex": "#111111"
+   },
+   "sku": "ARM-0026",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "مشکی",
+      "en": "Black"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0026",
+      "en": "ARM-0026"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز شرت مدل گیسو مشکی",
+    "en": "Gisu Zip Blouse Black"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "gisu-black-29f171.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755296876,
+   "views": 0
+  },
+  {
+   "id": 27,
+   "slug": "gisu-grey",
+   "group": "gisu",
+   "color": {
+    "fa": "طوسی",
+    "en": "Grey",
+    "hex": "#7a7d80"
+   },
+   "sku": "ARM-0027",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "طوسی",
+      "en": "Grey"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0027",
+      "en": "ARM-0027"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز شرت مدل گیسو طوسی",
+    "en": "Gisu Zip Blouse Grey"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "gisu-grey-a5404a.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755297776,
+   "views": 0
+  },
+  {
+   "id": 28,
+   "slug": "ny-yellow",
+   "group": "ny",
+   "color": {
+    "fa": "زرد",
+    "en": "Yellow",
+    "hex": "#e5a912"
+   },
+   "sku": "ARM-0028",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "زرد",
+      "en": "Yellow"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0028",
+      "en": "ARM-0028"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز ساده نیویورک زرد",
+    "en": "New York Blouse Yellow"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "ny-yellow-787382.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755299024,
+   "views": 0
+  },
+  {
+   "id": 29,
+   "slug": "ny-grey",
+   "group": "ny",
+   "color": {
+    "fa": "طوسی",
+    "en": "Grey",
+    "hex": "#7a7d80"
+   },
+   "sku": "ARM-0029",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "طوسی",
+      "en": "Grey"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0029",
+      "en": "ARM-0029"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز ساده نیویورک طوسی",
+    "en": "New York Blouse Grey"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "ny-grey-d950ae.webp",
+     "kind": "product"
+    },
+    {
+     "file": "ny-grey-a88fc3.webp",
+     "kind": "model"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755300286,
+   "views": 0
+  },
+  {
+   "id": 30,
+   "slug": "ny-black",
+   "group": "ny",
+   "color": {
+    "fa": "مشکی",
+    "en": "Black",
+    "hex": "#111111"
+   },
+   "sku": "ARM-0030",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "مشکی",
+      "en": "Black"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0030",
+      "en": "ARM-0030"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز ساده نیویورک مشکی",
+    "en": "New York Blouse Black"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "ny-black-4eb40d.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755301310,
+   "views": 0
+  },
+  {
+   "id": 31,
+   "slug": "ny-beige",
+   "group": "ny",
+   "color": {
+    "fa": "نسکافه‌ای",
+    "en": "Beige",
+    "hex": "#c8b49a"
+   },
+   "sku": "ARM-0031",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "نسکافه‌ای",
+      "en": "Beige"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0031",
+      "en": "ARM-0031"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز ساده نیویورک نسکافه‌ای",
+    "en": "New York Blouse Beige"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "ny-beige-997b07.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755302502,
+   "views": 0
+  },
+  {
+   "id": 32,
+   "slug": "ny-white",
+   "group": "ny",
+   "color": {
+    "fa": "سفید",
+    "en": "White",
+    "hex": "#f5f5f2"
+   },
+   "sku": "ARM-0032",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "سفید",
+      "en": "White"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0032",
+      "en": "ARM-0032"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز ساده نیویورک سفید",
+    "en": "New York Blouse White"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "ny-white-59aea1.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755303536,
+   "views": 0
+  },
+  {
+   "id": 33,
+   "slug": "ny-pink",
+   "group": "ny",
+   "color": {
+    "fa": "صورتی",
+    "en": "Pink",
+    "hex": "#e8a5b5"
+   },
+   "sku": "ARM-0033",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "صورتی",
+      "en": "Pink"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0033",
+      "en": "ARM-0033"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز ساده نیویورک صورتی",
+    "en": "New York Blouse Pink"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "ny-pink-b771cb.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755304634,
+   "views": 0
+  },
+  {
+   "id": 34,
+   "slug": "ny-green",
+   "group": "ny",
+   "color": {
+    "fa": "سبز",
+    "en": "Green",
+    "hex": "#3f9d85"
+   },
+   "sku": "ARM-0034",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "سبز",
+      "en": "Green"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0034",
+      "en": "ARM-0034"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز ساده نیویورک سبز",
+    "en": "New York Blouse Green"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "ny-green-f7d1da.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755305492,
+   "views": 0
+  },
+  {
+   "id": 35,
+   "slug": "ny-red",
+   "group": "ny",
+   "color": {
+    "fa": "قرمز",
+    "en": "Red",
+    "hex": "#c0272d"
+   },
+   "sku": "ARM-0035",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "قرمز",
+      "en": "Red"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0035",
+      "en": "ARM-0035"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز ساده نیویورک قرمز",
+    "en": "New York Blouse Red"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "ny-red-f16045.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755306458,
+   "views": 0
+  },
+  {
+   "id": 36,
+   "slug": "flare-yellow",
+   "group": "flare",
+   "color": {
+    "fa": "زرد",
+    "en": "Yellow",
+    "hex": "#e5a912"
+   },
+   "sku": "ARM-0036",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "زرد",
+      "en": "Yellow"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0036",
+      "en": "ARM-0036"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز آستین شیپوری زرد",
+    "en": "Flared Sleeve Blouse Yellow"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "flare-yellow-f31e37.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755307430,
+   "views": 0
+  },
+  {
+   "id": 37,
+   "slug": "flare-pink",
+   "group": "flare",
+   "color": {
+    "fa": "صورتی",
+    "en": "Pink",
+    "hex": "#e8a5b5"
+   },
+   "sku": "ARM-0037",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "صورتی",
+      "en": "Pink"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0037",
+      "en": "ARM-0037"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز آستین شیپوری صورتی",
+    "en": "Flared Sleeve Blouse Pink"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "flare-pink-c0a7fd.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755308376,
+   "views": 0
+  },
+  {
+   "id": 38,
+   "slug": "lace-grey",
+   "group": "lace",
+   "color": {
+    "fa": "طوسی",
+    "en": "Grey",
+    "hex": "#7a7d80"
+   },
+   "sku": "ARM-0038",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "طوسی",
+      "en": "Grey"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0038",
+      "en": "ARM-0038"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز مدل دانتل طوسی",
+    "en": "Lace Cuff Blouse Grey"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "lace-grey-4d6407.webp",
+     "kind": "product"
+    },
+    {
+     "file": "lace-grey-6d1cf0.webp",
+     "kind": "model"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755309827,
+   "views": 0
+  },
+  {
+   "id": 39,
+   "slug": "lace-beige",
+   "group": "lace",
+   "color": {
+    "fa": "نسکافه‌ای",
+    "en": "Beige",
+    "hex": "#c8b49a"
+   },
+   "sku": "ARM-0039",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "نسکافه‌ای",
+      "en": "Beige"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0039",
+      "en": "ARM-0039"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز مدل دانتل نسکافه‌ای",
+    "en": "Lace Cuff Blouse Beige"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "lace-beige-dfa1c1.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755310772,
+   "views": 0
+  },
+  {
+   "id": 40,
+   "slug": "lace-green",
+   "group": "lace",
+   "color": {
+    "fa": "سبز",
+    "en": "Green",
+    "hex": "#3f9d85"
+   },
+   "sku": "ARM-0040",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "سبز",
+      "en": "Green"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "بلوز",
+      "en": "Blouses"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0040",
+      "en": "ARM-0040"
+     }
+    }
+   ],
+   "name": {
+    "fa": "بلوز مدل دانتل سبز",
+    "en": "Lace Cuff Blouse Green"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 17,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "lace-green-5ed18c.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755311742,
+   "views": 0
+  },
+  {
+   "id": 41,
+   "slug": "trim-green",
+   "group": "trim",
+   "color": {
+    "fa": "سبز",
+    "en": "Green",
+    "hex": "#3f9d85"
+   },
+   "sku": "ARM-0041",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "سبز",
+      "en": "Green"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "پولوشرت",
+      "en": "Polo Shirts"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0041",
+      "en": "ARM-0041"
+     }
+    }
+   ],
+   "name": {
+    "fa": "پولوشرت یقه‌زیپ سبز",
+    "en": "Zip Trim Polo Green"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 42,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "trim-green-cc5d57.webp",
+     "kind": "product"
+    },
+    {
+     "file": "trim-green-009440.webp",
+     "kind": "model"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755313045,
+   "views": 0
+  },
+  {
+   "id": 43,
+   "slug": "trim-red",
+   "group": "trim",
+   "color": {
+    "fa": "قرمز",
+    "en": "Red",
+    "hex": "#c0272d"
+   },
+   "sku": "ARM-0043",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "قرمز",
+      "en": "Red"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "پولوشرت",
+      "en": "Polo Shirts"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0043",
+      "en": "ARM-0043"
+     }
+    }
+   ],
+   "name": {
+    "fa": "پولوشرت یقه‌زیپ قرمز",
+    "en": "Zip Trim Polo Red"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 42,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "trim-red-556618.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755314094,
+   "views": 0
+  },
+  {
+   "id": 44,
+   "slug": "trim-black",
+   "group": "trim",
+   "color": {
+    "fa": "مشکی",
+    "en": "Black",
+    "hex": "#111111"
+   },
+   "sku": "ARM-0044",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "مشکی",
+      "en": "Black"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "پولوشرت",
+      "en": "Polo Shirts"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0044",
+      "en": "ARM-0044"
+     }
+    }
+   ],
+   "name": {
+    "fa": "پولوشرت یقه‌زیپ مشکی",
+    "en": "Zip Trim Polo Black"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 42,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "trim-black-3ff703.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755315072,
+   "views": 0
+  },
+  {
+   "id": 45,
+   "slug": "trim-grey",
+   "group": "trim",
+   "color": {
+    "fa": "طوسی",
+    "en": "Grey",
+    "hex": "#7a7d80"
+   },
+   "sku": "ARM-0045",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "طوسی",
+      "en": "Grey"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "پولوشرت",
+      "en": "Polo Shirts"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0045",
+      "en": "ARM-0045"
+     }
+    }
+   ],
+   "name": {
+    "fa": "پولوشرت یقه‌زیپ طوسی",
+    "en": "Zip Trim Polo Grey"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 42,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "trim-grey-cab057.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755315968,
+   "views": 0
+  },
+  {
+   "id": 46,
+   "slug": "trim-yellow",
+   "group": "trim",
+   "color": {
+    "fa": "زرد",
+    "en": "Yellow",
+    "hex": "#e5a912"
+   },
+   "sku": "ARM-0046",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "زرد",
+      "en": "Yellow"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "پولوشرت",
+      "en": "Polo Shirts"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0046",
+      "en": "ARM-0046"
+     }
+    }
+   ],
+   "name": {
+    "fa": "پولوشرت یقه‌زیپ زرد",
+    "en": "Zip Trim Polo Yellow"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 42,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "trim-yellow-2561e2.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755316930,
+   "views": 0
+  },
+  {
+   "id": 47,
+   "slug": "trim-white",
+   "group": "trim",
+   "color": {
+    "fa": "سفید",
+    "en": "White",
+    "hex": "#f5f5f2"
+   },
+   "sku": "ARM-0047",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "سفید",
+      "en": "White"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "پولوشرت",
+      "en": "Polo Shirts"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0047",
+      "en": "ARM-0047"
+     }
+    }
+   ],
+   "name": {
+    "fa": "پولوشرت یقه‌زیپ سفید",
+    "en": "Zip Trim Polo White"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 42,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "trim-white-06e8eb.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755317849,
+   "views": 0
+  },
+  {
+   "id": 48,
+   "slug": "ribpolo-blue",
+   "group": "ribpolo",
+   "color": {
+    "fa": "آبی",
+    "en": "Blue",
+    "hex": "#5bb7e8"
+   },
+   "sku": "ARM-0048",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "آبی",
+      "en": "Blue"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "پولوشرت",
+      "en": "Polo Shirts"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0048",
+      "en": "ARM-0048"
+     }
+    }
+   ],
+   "name": {
+    "fa": "پولوشرت ریب آبی",
+    "en": "Ribbed Polo Blue"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 42,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "ribpolo-blue-57d683.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755318980,
+   "views": 0
+  },
+  {
+   "id": 49,
+   "slug": "ribpolo-purple",
+   "group": "ribpolo",
+   "color": {
+    "fa": "بنفش",
+    "en": "Purple",
+    "hex": "#8a5cc7"
+   },
+   "sku": "ARM-0049",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "بنفش",
+      "en": "Purple"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "پولوشرت",
+      "en": "Polo Shirts"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0049",
+      "en": "ARM-0049"
+     }
+    }
+   ],
+   "name": {
+    "fa": "پولوشرت ریب بنفش",
+    "en": "Ribbed Polo Purple"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 42,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "ribpolo-purple-47c88c.webp",
+     "kind": "product"
+    },
+    {
+     "file": "ribpolo-purple-285a9a.webp",
+     "kind": "model"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755320182,
+   "views": 0
+  },
+  {
+   "id": 50,
+   "slug": "ribpolo-green",
+   "group": "ribpolo",
+   "color": {
+    "fa": "سبز",
+    "en": "Green",
+    "hex": "#3f9d85"
+   },
+   "sku": "ARM-0050",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "سبز",
+      "en": "Green"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "پولوشرت",
+      "en": "Polo Shirts"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0050",
+      "en": "ARM-0050"
+     }
+    }
+   ],
+   "name": {
+    "fa": "پولوشرت ریب سبز",
+    "en": "Ribbed Polo Green"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 42,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "ribpolo-green-3e9a0a.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755321234,
+   "views": 0
+  },
+  {
+   "id": 51,
+   "slug": "scallop-green",
+   "group": "scallop",
+   "color": {
+    "fa": "سبز",
+    "en": "Green",
+    "hex": "#3f9d85"
+   },
+   "sku": "ARM-0051",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "سبز",
+      "en": "Green"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "پولوشرت",
+      "en": "Polo Shirts"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0051",
+      "en": "ARM-0051"
+     }
+    }
+   ],
+   "name": {
+    "fa": "پولوشرت مدل گیسو سبز",
+    "en": "Gisu Scallop Polo Green"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 42,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "scallop-green-6cb839.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755322225,
+   "views": 0
+  },
+  {
+   "id": 52,
+   "slug": "scallop-yellow",
+   "group": "scallop",
+   "color": {
+    "fa": "زرد",
+    "en": "Yellow",
+    "hex": "#e5a912"
+   },
+   "sku": "ARM-0052",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "زرد",
+      "en": "Yellow"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "پولوشرت",
+      "en": "Polo Shirts"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0052",
+      "en": "ARM-0052"
+     }
+    }
+   ],
+   "name": {
+    "fa": "پولوشرت مدل گیسو زرد",
+    "en": "Gisu Scallop Polo Yellow"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 42,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "scallop-yellow-dca2f9.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755323065,
+   "views": 0
+  },
+  {
+   "id": 53,
+   "slug": "polo-red",
+   "group": "polo",
+   "color": {
+    "fa": "قرمز",
+    "en": "Red",
+    "hex": "#c0272d"
+   },
+   "sku": "ARM-0053",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "قرمز",
+      "en": "Red"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "پولوشرت",
+      "en": "Polo Shirts"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0053",
+      "en": "ARM-0053"
+     }
+    }
+   ],
+   "name": {
+    "fa": "پولوشرت کلاسیک قرمز",
+    "en": "Classic Polo Red"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 42,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "polo-red-572968.webp",
+     "kind": "product"
+    },
+    {
+     "file": "polo-red-9f3b20.webp",
+     "kind": "model"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755324663,
+   "views": 0
+  },
+  {
+   "id": 54,
+   "slug": "polo-blue",
+   "group": "polo",
+   "color": {
+    "fa": "آبی",
+    "en": "Blue",
+    "hex": "#5bb7e8"
+   },
+   "sku": "ARM-0054",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "آبی",
+      "en": "Blue"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "پولوشرت",
+      "en": "Polo Shirts"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0054",
+      "en": "ARM-0054"
+     }
+    }
+   ],
+   "name": {
+    "fa": "پولوشرت کلاسیک آبی",
+    "en": "Classic Polo Blue"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 42,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "polo-blue-4186f2.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755325728,
+   "views": 0
+  },
+  {
+   "id": 55,
+   "slug": "polo-white",
+   "group": "polo",
+   "color": {
+    "fa": "سفید",
+    "en": "White",
+    "hex": "#f5f5f2"
+   },
+   "sku": "ARM-0055",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "سفید",
+      "en": "White"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "پولوشرت",
+      "en": "Polo Shirts"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0055",
+      "en": "ARM-0055"
+     }
+    }
+   ],
+   "name": {
+    "fa": "پولوشرت کلاسیک سفید",
+    "en": "Classic Polo White"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 42,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "polo-white-7402d1.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755326645,
+   "views": 0
+  },
+  {
+   "id": 56,
+   "slug": "polo-black",
+   "group": "polo",
+   "color": {
+    "fa": "مشکی",
+    "en": "Black",
+    "hex": "#111111"
+   },
+   "sku": "ARM-0056",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "مشکی",
+      "en": "Black"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "پولوشرت",
+      "en": "Polo Shirts"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0056",
+      "en": "ARM-0056"
+     }
+    }
+   ],
+   "name": {
+    "fa": "پولوشرت کلاسیک مشکی",
+    "en": "Classic Polo Black"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 42,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "polo-black-ff6c27.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755327757,
+   "views": 0
+  },
+  {
+   "id": 57,
+   "slug": "tee-black",
+   "group": "tee",
+   "color": {
+    "fa": "مشکی",
+    "en": "Black",
+    "hex": "#111111"
+   },
+   "sku": "ARM-0057",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "مشکی",
+      "en": "Black"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "تی‌شرت",
+      "en": "T-Shirts"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0057",
+      "en": "ARM-0057"
+     }
+    }
+   ],
+   "name": {
+    "fa": "تیشرت لانگ مشکی",
+    "en": "Long Tee Black"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 58,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "tee-black-c29d7f.webp",
+     "kind": "product"
+    },
+    {
+     "file": "tee-black-b12a60.webp",
+     "kind": "model"
+    },
+    {
+     "file": "tee-black-063643.webp",
+     "kind": "model"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755329233,
+   "views": 0
+  },
+  {
+   "id": 59,
+   "slug": "tee-navy",
+   "group": "tee",
+   "color": {
+    "fa": "سرمه‌ای",
+    "en": "Navy",
+    "hex": "#1b2a4a"
+   },
+   "sku": "ARM-0059",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "سرمه‌ای",
+      "en": "Navy"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "تی‌شرت",
+      "en": "T-Shirts"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0059",
+      "en": "ARM-0059"
+     }
+    }
+   ],
+   "name": {
+    "fa": "تیشرت لانگ سرمه‌ای",
+    "en": "Long Tee Navy"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 58,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "tee-navy-39be93.webp",
+     "kind": "product"
+    },
+    {
+     "file": "tee-navy-c38694.webp",
+     "kind": "model"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755330248,
+   "views": 0
+  },
+  {
+   "id": 60,
+   "slug": "cb-black",
+   "group": "cb",
+   "color": {
+    "fa": "مشکی",
+    "en": "Black",
+    "hex": "#111111"
+   },
+   "sku": "ARM-0060",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "مشکی",
+      "en": "Black"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "تی‌شرت",
+      "en": "T-Shirts"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0060",
+      "en": "ARM-0060"
+     }
+    }
+   ],
+   "name": {
+    "fa": "تی‌شرت رنگی مشکی",
+    "en": "Colorblock Tee Black"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 58,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "cb-black-013c95.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755331144,
+   "views": 0
+  },
+  {
+   "id": 61,
+   "slug": "heart-black",
+   "group": "heart",
+   "color": {
+    "fa": "مشکی",
+    "en": "Black",
+    "hex": "#111111"
+   },
+   "sku": "ARM-0061",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "مشکی",
+      "en": "Black"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "یقه اسکی",
+      "en": "Turtlenecks"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0061",
+      "en": "ARM-0061"
+     }
+    }
+   ],
+   "name": {
+    "fa": "یقه اسکی قلب مشکی",
+    "en": "Heart Turtleneck Black"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 62,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "heart-black-a53355.webp",
+     "kind": "product"
+    },
+    {
+     "file": "heart-black-16dc91.webp",
+     "kind": "model"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755332346,
+   "views": 0
+  },
+  {
+   "id": 63,
+   "slug": "heart-green",
+   "group": "heart",
+   "color": {
+    "fa": "سبز",
+    "en": "Green",
+    "hex": "#3f9d85"
+   },
+   "sku": "ARM-0063",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "سبز",
+      "en": "Green"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "یقه اسکی",
+      "en": "Turtlenecks"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0063",
+      "en": "ARM-0063"
+     }
+    }
+   ],
+   "name": {
+    "fa": "یقه اسکی قلب سبز",
+    "en": "Heart Turtleneck Green"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 62,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "heart-green-70563e.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755333254,
+   "views": 0
+  },
+  {
+   "id": 64,
+   "slug": "heart-yellow",
+   "group": "heart",
+   "color": {
+    "fa": "زرد",
+    "en": "Yellow",
+    "hex": "#e5a912"
+   },
+   "sku": "ARM-0064",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "زرد",
+      "en": "Yellow"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "یقه اسکی",
+      "en": "Turtlenecks"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0064",
+      "en": "ARM-0064"
+     }
+    }
+   ],
+   "name": {
+    "fa": "یقه اسکی قلب زرد",
+    "en": "Heart Turtleneck Yellow"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 62,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "heart-yellow-ffd35e.webp",
+     "kind": "product"
+    },
+    {
+     "file": "heart-yellow-6f515c.webp",
+     "kind": "model"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755334605,
+   "views": 0
+  },
+  {
+   "id": 65,
+   "slug": "heart-pink",
+   "group": "heart",
+   "color": {
+    "fa": "صورتی",
+    "en": "Pink",
+    "hex": "#e8a5b5"
+   },
+   "sku": "ARM-0065",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "صورتی",
+      "en": "Pink"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "یقه اسکی",
+      "en": "Turtlenecks"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0065",
+      "en": "ARM-0065"
+     }
+    }
+   ],
+   "name": {
+    "fa": "یقه اسکی قلب صورتی",
+    "en": "Heart Turtleneck Pink"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 62,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "heart-pink-4c9895.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755335521,
+   "views": 0
+  },
+  {
+   "id": 66,
+   "slug": "heart-beige",
+   "group": "heart",
+   "color": {
+    "fa": "نسکافه‌ای",
+    "en": "Beige",
+    "hex": "#c8b49a"
+   },
+   "sku": "ARM-0066",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "نسکافه‌ای",
+      "en": "Beige"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "یقه اسکی",
+      "en": "Turtlenecks"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0066",
+      "en": "ARM-0066"
+     }
+    }
+   ],
+   "name": {
+    "fa": "یقه اسکی قلب نسکافه‌ای",
+    "en": "Heart Turtleneck Beige"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 62,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "heart-beige-6956af.webp",
+     "kind": "product"
+    },
+    {
+     "file": "heart-beige-062e6f.webp",
+     "kind": "model"
+    },
+    {
+     "file": "heart-beige-496b0e.webp",
+     "kind": "model"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755336941,
+   "views": 0
+  },
+  {
+   "id": 67,
+   "slug": "heart-red",
+   "group": "heart",
+   "color": {
+    "fa": "قرمز",
+    "en": "Red",
+    "hex": "#c0272d"
+   },
+   "sku": "ARM-0067",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "قرمز",
+      "en": "Red"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "یقه اسکی",
+      "en": "Turtlenecks"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0067",
+      "en": "ARM-0067"
+     }
+    }
+   ],
+   "name": {
+    "fa": "یقه اسکی قلب قرمز",
+    "en": "Heart Turtleneck Red"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 62,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "heart-red-aa39f5.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755337890,
+   "views": 0
+  },
+  {
+   "id": 68,
+   "slug": "heart-grey",
+   "group": "heart",
+   "color": {
+    "fa": "طوسی",
+    "en": "Grey",
+    "hex": "#7a7d80"
+   },
+   "sku": "ARM-0068",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "طوسی",
+      "en": "Grey"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "یقه اسکی",
+      "en": "Turtlenecks"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0068",
+      "en": "ARM-0068"
+     }
+    }
+   ],
+   "name": {
+    "fa": "یقه اسکی قلب طوسی",
+    "en": "Heart Turtleneck Grey"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 62,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "heart-grey-f441f0.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755338853,
+   "views": 0
+  },
+  {
+   "id": 69,
+   "slug": "vneck-white",
+   "group": "vneck",
+   "color": {
+    "fa": "سفید",
+    "en": "White",
+    "hex": "#f5f5f2"
+   },
+   "sku": "ARM-0069",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "سفید",
+      "en": "White"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "وست",
+      "en": "Vests"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0069",
+      "en": "ARM-0069"
+     }
+    }
+   ],
+   "name": {
+    "fa": "وست بافت طرح‌دار سفید",
+    "en": "Patterned Knit Vest White"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 70,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "vneck-white-498dcf.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755339677,
+   "views": 0
+  },
+  {
+   "id": 71,
+   "slug": "vneck-grey",
+   "group": "vneck",
+   "color": {
+    "fa": "طوسی",
+    "en": "Grey",
+    "hex": "#7a7d80"
+   },
+   "sku": "ARM-0071",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "طوسی",
+      "en": "Grey"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "وست",
+      "en": "Vests"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0071",
+      "en": "ARM-0071"
+     }
+    }
+   ],
+   "name": {
+    "fa": "وست بافت طرح‌دار طوسی",
+    "en": "Patterned Knit Vest Grey"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 70,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "vneck-grey-9788cf.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755340844,
+   "views": 0
+  },
+  {
+   "id": 72,
+   "slug": "vneck-green",
+   "group": "vneck",
+   "color": {
+    "fa": "سبز",
+    "en": "Green",
+    "hex": "#3f9d85"
+   },
+   "sku": "ARM-0072",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "سبز",
+      "en": "Green"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "وست",
+      "en": "Vests"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0072",
+      "en": "ARM-0072"
+     }
+    }
+   ],
+   "name": {
+    "fa": "وست بافت طرح‌دار سبز",
+    "en": "Patterned Knit Vest Green"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 70,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "vneck-green-cbca4f.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755341852,
+   "views": 0
+  },
+  {
+   "id": 73,
+   "slug": "rib-red",
+   "group": "rib",
+   "color": {
+    "fa": "قرمز",
+    "en": "Red",
+    "hex": "#c0272d"
+   },
+   "sku": "ARM-0073",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "قرمز",
+      "en": "Red"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "وست",
+      "en": "Vests"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0073",
+      "en": "ARM-0073"
+     }
+    }
+   ],
+   "name": {
+    "fa": "وست ریب قرمز",
+    "en": "Ribbed Vest Red"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 70,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "rib-red-e400b8.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755342730,
+   "views": 0
+  },
+  {
+   "id": 74,
+   "slug": "rib-beige",
+   "group": "rib",
+   "color": {
+    "fa": "نسکافه‌ای",
+    "en": "Beige",
+    "hex": "#c8b49a"
+   },
+   "sku": "ARM-0074",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "نسکافه‌ای",
+      "en": "Beige"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "وست",
+      "en": "Vests"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0074",
+      "en": "ARM-0074"
+     }
+    }
+   ],
+   "name": {
+    "fa": "وست ریب نسکافه‌ای",
+    "en": "Ribbed Vest Beige"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 70,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "rib-beige-52f35c.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755343627,
+   "views": 0
+  },
+  {
+   "id": 75,
+   "slug": "pocket-white",
+   "group": "pocket",
+   "color": {
+    "fa": "سفید",
+    "en": "White",
+    "hex": "#f5f5f2"
+   },
+   "sku": "ARM-0075",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "سفید",
+      "en": "White"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "پیراهن",
+      "en": "Shirts"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0075",
+      "en": "ARM-0075"
+     }
+    }
+   ],
+   "name": {
+    "fa": "پیراهن جیب‌دار سفید",
+    "en": "Pocket Shirt White"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 76,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "pocket-white-45d84f.webp",
+     "kind": "product"
+    },
+    {
+     "file": "pocket-white-f4ddef.webp",
+     "kind": "model"
+    },
+    {
+     "file": "pocket-white-e4483d.webp",
+     "kind": "model"
+    },
+    {
+     "file": "pocket-white-1f9b91.webp",
+     "kind": "model"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755345179,
+   "views": 0
+  },
+  {
+   "id": 77,
+   "slug": "pocket-brown",
+   "group": "pocket",
+   "color": {
+    "fa": "قهوه‌ای",
+    "en": "Brown",
+    "hex": "#6b4a3a"
+   },
+   "sku": "ARM-0077",
+   "properties": [
+    {
+     "label": {
+      "fa": "رنگ",
+      "en": "Color"
+     },
+     "value": {
+      "fa": "قهوه‌ای",
+      "en": "Brown"
+     }
+    },
+    {
+     "label": {
+      "fa": "دسته",
+      "en": "Category"
+     },
+     "value": {
+      "fa": "پیراهن",
+      "en": "Shirts"
+     }
+    },
+    {
+     "label": {
+      "fa": "کد محصول",
+      "en": "Product code"
+     },
+     "value": {
+      "fa": "ARM-0077",
+      "en": "ARM-0077"
+     }
+    }
+   ],
+   "name": {
+    "fa": "پیراهن جیب‌دار قهوه‌ای",
+    "en": "Pocket Shirt Brown"
+   },
+   "description": {
+    "fa": "",
+    "en": ""
+   },
+   "details": {
+    "fa": "",
+    "en": ""
+   },
+   "categoryId": 76,
+   "price": 0,
+   "comparePrice": 0,
+   "sizes": [
+    {
+     "name": "S",
+     "stock": 0
+    },
+    {
+     "name": "M",
+     "stock": 0
+    },
+    {
+     "name": "L",
+     "stock": 0
+    },
+    {
+     "name": "XL",
+     "stock": 0
+    }
+   ],
+   "images": [
+    {
+     "file": "pocket-brown-3e3646.webp",
+     "kind": "product"
+    }
+   ],
+   "active": true,
+   "createdAt": 1792755346111,
+   "views": 0
+  }
+ ]
+}
