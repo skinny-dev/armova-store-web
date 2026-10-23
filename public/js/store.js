@@ -23,7 +23,7 @@
   // ---------- chrome ----------
   function chrome() {
     document.documentElement.lang = lang; document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
-    document.title = t('brand');
+    if (!document.querySelector('meta[name=x-fixed-title]')) document.title = t('brand');
     $('#logo').textContent = t('brand');
     $('#nav').innerHTML = `<button class="menubtn" id="menuBtn" aria-label="${t('menu')}">☰</button><a href="/" data-link>${t('shop')}</a><a href="/about" data-link>${t('about')}</a><a href="/contact" data-link>${t('contact')}</a>`;
     $('#menuBtn').onclick = () => drawer(`<div class="dh"><b>${t('menu')}</b><button data-close aria-label="${t('close')}">✕</button></div><div class="db"><a class="row" data-link href="/">${t('shop')}</a>${(function walk(pid, depth) { return kids(pid).map((c) => `<a class="row sub" style="padding-inline-start:${20 + depth * 18}px" data-link href="/?cat=${encodeURIComponent(c.slug)}">${depth ? '└ ' : ''}${esc(L(c.name))}</a>${walk(c.id, depth + 1)}`).join(''); })(null, 0)}<a class="row" data-link href="/account">${me ? esc(me.name || t('account')) : t('login')}</a><a class="row" data-link href="/about">${t('about')}</a><a class="row" data-link href="/contact">${t('contact')}</a></div>`, 'side');
@@ -101,7 +101,7 @@
     if (!p) return staticPage('404', t('notFound'));
     pick = null; track('product', p.id);
     const cat = data.categories.find((c) => c.id === p.categoryId), cpath = catPath(p.categoryId);
-    document.title = `${L(p.name)} | ${t('brand')}`;
+    if (!document.querySelector('meta[name=x-fixed-title]')) document.title = `${L(p.name)} | ${t('brand')}`;
     const sibs = p.group ? data.products.filter((x) => x.group === p.group).sort((a, b) => a.id - b.id) : [];
     const colorName = p.color ? L(p.color) : '';
     const cdot = p.color && p.color.hex ? `<i class="cdot" style="background:${esc(p.color.hex)}"></i>` : '';

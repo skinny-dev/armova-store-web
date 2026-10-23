@@ -303,7 +303,13 @@ app.use('/uploads', express.static(UPLOADS, { maxAge: '365d', immutable: true, s
 app.use('/admin', express.static(path.join(__dirname, 'public', 'admin')));
 app.use(express.static(path.join(__dirname, 'public'), { index: false }));
 app.get('/api/*', (req, res) => res.status(404).json({ error: 'not_found' }));
-app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'public', 'index.html')));
+// Storefront shell. ENAMAD_TITLE (temporary) replaces the page <title> in the raw HTML for domain-verification checks (e.g. Enamad).
+const INDEX = path.join(__dirname, 'public', 'index.html');
+app.get('*', (req, res) => {
+  const t = (process.env.ENAMAD_TITLE || '').replace(/[^\w\u0600-\u06ff .-]/g, '');
+  if (!t) return res.sendFile(INDEX);
+  res.type('html').send(fs.readFileSync(INDEX, 'utf8').replace(/<title>[^<]*<\/title>/, `<title>${t}</title><meta name="x-fixed-title" content="1">`));
+});
 
 process.on('SIGTERM', () => console.log('SIGTERM received (the platform is stopping this pod)'));
 process.on('unhandledRejection', (e) => console.error('unhandledRejection:', e));
