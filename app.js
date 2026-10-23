@@ -299,6 +299,8 @@ async function warmThumbs() {
   }
 }
 if (process.env.WARM_THUMBS === '1') setTimeout(() => warmThumbs().catch(() => {}), 500); // opt-in: thumbnails are otherwise made on first request
+// Enamad verification page: <title> and <body> are both the code.
+app.get('/23289698.txt', (req, res) => res.type('html').send('<!doctype html><html><head><meta charset="utf-8"><title>23289698</title></head><body>23289698</body></html>'));
 app.use('/uploads', express.static(UPLOADS, { maxAge: '365d', immutable: true, setHeaders: (r) => r.set('X-Content-Type-Options', 'nosniff') }));
 app.use('/admin', express.static(path.join(__dirname, 'public', 'admin')));
 app.use(express.static(path.join(__dirname, 'public'), { index: false }));
