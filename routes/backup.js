@@ -56,10 +56,13 @@ module.exports = (admin, { UPLOADS }) => {
           fs.copyFileSync(path.join(src, name), path.join(UPLOADS, name)); files++;
         }
       }
-      db.replace(next);
-      try { A.ensure(); } catch {}
+      if (req.body && req.body.mode === 'catalog') { // products + categories + images only; users, orders, settings stay as they are
+        const cur = db.get();
+        cur.products = next.products; cur.categories = next.categories; cur.seq = Math.max(cur.seq || 1, next.seq);
+        db.save();
+      } else { db.replace(next); try { A.ensure(); } catch {} }
       await db.flush();
-      res.json({ ok: true, products: next.products.length, categories: next.categories.length, orders: (next.orders || []).length, files });
+      res.json({ ok: true, mode: req.body && req.body.mode === 'catalog' ? 'catalog' : 'full', products: next.products.length, categories: next.categories.length, orders: (next.orders || []).length, files });
     } catch (e) {
       res.status(e.code === 'tar_missing' ? 500 : 400).json({ error: e.code || 'bad_archive' });
     } finally { rm(dir); rm(f.path); }
