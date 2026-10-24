@@ -29,3 +29,11 @@ ADMIN_PASSWORD='choose-a-password' npm start   # http://localhost:4000
 ## Discounts & categories
 - **Discounts**: automatic sales (change the shown price) or coupon codes, percent or fixed, scoped to everything / categories (including sub-categories) / chosen products, with schedule, minimum order, usage limits. Create one from selected products on the Products page; Products bulk edit also supports price % change, add stock and more.
 - **Categories** are a tree (sub-categories up to 4 levels); parent pages list products of all descendants.
+
+## Pushing the catalog to your live site (Runflare or any host)
+Moves **categories, products and their photos** from your computer to the live site. Orders, customers, users, discounts and settings on the live site are never touched.
+1. Deploy the latest code to the host and set these environment variables there: `SYNC_TOKEN` (a long random secret, 24+ chars; sync is switched off if it is not set), and, if the host has a persistent volume, `DATA_DIR` and `UPLOADS_DIR` pointing into it (otherwise the database and photos are lost on every redeploy).
+2. Locally run `node scripts/push-catalog.js --init https://your-live-site` — it saves the URL and creates a token in `data/sync.json` (git-ignored). Copy that `token` value into `SYNC_TOKEN` on the host and redeploy.
+3. `node scripts/push-catalog.js --dry` shows what would change; `node scripts/push-catalog.js` pushes (only missing photos are uploaded; categories/products are matched by slug, so it is safe to re-run).
+   - Existing live products keep their **live stock and visibility** by default; add `--stock` and/or `--active` to overwrite them too.
+4. Remove `SYNC_TOKEN` from the host when you are done to switch the endpoint off.

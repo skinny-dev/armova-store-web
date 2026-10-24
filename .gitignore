@@ -9,3 +9,5 @@ armova-catalog.tar.gz
 uploads/*.webp
 uploads/*.jpg
 uploads/*.png
+
+data/sync.json

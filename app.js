@@ -7,7 +7,7 @@ const path = require('path');
 const db = require('./lib/db');
 
 const PORT = process.env.PORT || 4000; // set PORT in the environment (e.g. PORT=80 on Runflare)
-const UPLOADS = path.join(__dirname, 'uploads');
+const UPLOADS = process.env.UPLOADS_DIR || path.join(__dirname, 'uploads'); // UPLOADS_DIR: persistent volume for product photos
 fs.mkdirSync(UPLOADS, { recursive: true });
 const A = require('./lib/auth');
 A.ensure();
@@ -19,6 +19,7 @@ sms.syncCustomersFromOrders();
 if (process.env.AUTO_SEED !== '0' && !db.get().categories.length && !db.get().products.length) require('./scripts/seed-catalog').seedCatalog().catch((e) => console.error('catalog seed failed:', e.message)); // real catalog on first run
 
 const app = express();
+require('./routes/sync')(app, express, UPLOADS); // token-protected catalog sync (off unless SYNC_TOKEN is set)
 app.get('/healthz', (req, res) => res.type('text').send('ok'));
 app.use((req, res, next) => { const t = Date.now(); res.on('finish', () => { if (!req.path.startsWith('/uploads/')) console.log(`${req.method} ${req.originalUrl.slice(0, 120)} ${res.statusCode} ${Date.now() - t}ms`); }); next(); }); // request log (visible in Runflare logs)
 app.use(express.json({ limit: '1mb' }));
@@ -277,7 +278,7 @@ app.use((err, req, res, next) => { console.error(err); res.status(err.status || 
 // ---------- static ----------
 // On-demand cached WebP thumbnails: /uploads/t/<file>?w=480|720 (default 720). Falls back to the original.
 let sharp = null; try { sharp = require('sharp'); sharp.cache(false); sharp.concurrency(1); } catch {} // low memory: no cache, one worker thread
-const THUMBS = path.join(__dirname, 'data', 'thumbs');
+const THUMBS = path.join(process.env.DATA_DIR || path.join(__dirname, 'data'), 'thumbs');
 app.get('/uploads/t/:file', async (req, res, next) => {
   const f = path.basename(req.params.file), src = path.join(UPLOADS, f);
   if (!sharp || !fs.existsSync(src) || /\.(gif|svg)$/i.test(f)) return res.redirect('/uploads/' + encodeURIComponent(f));
