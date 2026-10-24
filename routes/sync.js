@@ -105,5 +105,17 @@ module.exports = function (app, express, UPLOADS) {
     db.save(); res.json({ ok: true, ...report });
   });
 
+  // remove products (and categories that end up empty) by explicit slug, e.g. leftover demo data. Never removes anything not named.
+  r.post('/remove', express.json({ limit: '100kb' }), (req, res) => {
+    const s = db.get(), b = req.body || {}, dry = req.query.dry === '1';
+    const ps = new Set((Array.isArray(b.products) ? b.products : []).filter(slugOk)), cs = new Set((Array.isArray(b.categories) ? b.categories : []).filter(slugOk));
+    const gone = s.products.filter((p) => ps.has(p.slug)), goneIds = new Set(gone.map((p) => p.id));
+    const left = s.products.filter((p) => !goneIds.has(p.id));
+    const cats = s.categories.filter((c) => cs.has(c.slug) && !left.some((p) => p.categoryId === c.id) && !s.categories.some((k) => k.parentId === c.id && !cs.has(k.slug)));
+    const kept = [...cs].filter((sl) => !cats.some((c) => c.slug === sl) && s.categories.some((c) => c.slug === sl));
+    if (!dry) { s.products = left; s.categories = s.categories.filter((c) => !cats.includes(c)); db.save(); }
+    res.json({ ok: true, dry, products: gone.map((p) => p.slug), categories: cats.map((c) => c.slug), categoriesKept: kept });
+  });
+
   app.use('/api/sync', r);
 };

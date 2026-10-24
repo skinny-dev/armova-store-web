@@ -51,8 +51,15 @@ async function call(method, p, body, headers = {}, tries = 4) {
   }
 }
 
-(async () => {
-  const db = JSON.parse(fs.readFileSync(path.join(DATA, 'db.json'), 'utf8'));
+if (has('--remove')) { // node scripts/push-catalog.js --remove product-slug,other-slug [--cats cat-slug,...] [--dry]
+  const list = (f) => (args.includes(f) ? String(args[args.indexOf(f) + 1] || '').split(',').filter(Boolean) : []);
+  call('POST', '/api/sync/remove' + (dry ? '?dry=1' : ''), JSON.stringify({ products: list('--remove'), categories: list('--cats') }), { 'Content-Type': 'application/json' }).then((r) => {
+    console.log(`${dry ? 'Would remove' : 'Removed'} ${r.products.length} product(s): ${r.products.join(', ')}`);
+    console.log(`${dry ? 'Would remove' : 'Removed'} ${r.categories.length} empty categor${r.categories.length === 1 ? 'y' : 'ies'}: ${r.categories.join(', ')}`);
+    if (r.categoriesKept.length) console.log('Kept (not empty): ' + r.categoriesKept.join(', '));
+  }).catch((e) => { console.error('Failed: ' + e.message); process.exit(1); });
+} else (async () => {
+  const db =JSON.parse(fs.readFileSync(path.join(DATA, 'db.json'), 'utf8'));
   const slugOf = (id) => (db.categories.find((c) => c.id === id) || {}).slug;
   const categories = db.categories.map((c) => ({ slug: c.slug, name: c.name, order: c.order, parentSlug: slugOf(c.parentId) || null }));
   const products = db.products.map((p) => ({ slug: p.slug, name: p.name, description: p.description, details: p.details, categorySlug: slugOf(p.categoryId), price: p.price, comparePrice: p.comparePrice,
