@@ -88,6 +88,19 @@
           <button data-kind="product" class="${ui.kind === 'product' ? 'on' : ''}">${t('product')}</button><button data-kind="model" class="${ui.kind === 'model' ? 'on' : ''}">${t('model')}</button></span>
       </div>
       ${list.length ? `<div class="grid ${ui.cols >= 8 ? 'dense' : ''}" style="--cols:${ui.cols}">${cards}</div>` : `<p class="empty">${t('noProducts')}</p>`}`;
+    // touch: hold a card to see the other photo (product <-> model); letting go goes back, and the hold does not open the product
+    document.querySelectorAll('.card').forEach((c) => {
+      const a = c.querySelector('img.alt'); if (!a) return; let timer, held = false, x0 = 0, y0 = 0;
+      const end = () => { clearTimeout(timer); c.classList.remove('peek'); };
+      c.addEventListener('pointerdown', (e) => {
+        if (e.pointerType === 'mouse') return; held = false; x0 = e.clientX; y0 = e.clientY;
+        timer = setTimeout(() => { if (a.dataset.src) { a.src = a.dataset.src; delete a.dataset.src; } held = true; c.classList.add('peek'); if (navigator.vibrate) navigator.vibrate(8); }, 220);
+      });
+      c.addEventListener('pointermove', (e) => { if (!held && Math.hypot(e.clientX - x0, e.clientY - y0) > 10) end(); });
+      ['pointerup', 'pointercancel', 'pointerleave'].forEach((n) => c.addEventListener(n, () => { clearTimeout(timer); if (held) setTimeout(() => { held = false; }, 350); c.classList.remove('peek'); }));
+      c.addEventListener('click', (e) => { if (held) { e.preventDefault(); e.stopImmediatePropagation(); } }, true);
+      c.addEventListener('contextmenu', (e) => { if (held || c.classList.contains('peek')) e.preventDefault(); });
+    });
     document.querySelectorAll('.card').forEach((c) => { const a = c.querySelector('img.alt'); if (a) c.addEventListener('pointerenter', () => { if (a.dataset.src) { a.src = a.dataset.src; delete a.dataset.src; } }, { once: true }); });
     $('#sort').onchange = (e) => { ui.sort = e.target.value; shopPage(catSlug); };
     document.querySelectorAll('[data-cols]').forEach((b) => (b.onclick = () => { ui.cols = +b.dataset.cols; shopPage(catSlug); }));
