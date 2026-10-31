@@ -14,6 +14,7 @@
   };
   const dict = {
     fa: {
+      sPayment: 'پرداخت آنلاین (زیبال)', sZibalOn: 'فعال‌سازی پرداخت آنلاین', sZibalOnHint: 'در تسویه حساب گزینه «پرداخت آنلاین» نمایش داده می‌شود. سفارش فقط پس از تایید زیبال «پرداخت‌شده» می‌شود.', sMerchant: 'شناسه پذیرنده (Merchant ID)', sMerchantDemo: 'استفاده از پذیرنده آزمایشی', sMerchantHint: 'شناسه آزمایشی «zibal» است و پول واقعی جابه‌جا نمی‌کند. برای پرداخت واقعی شناسه پذیرنده خودتان را وارد کنید.', sZibalSandbox: 'حالت آزمایشی', sZibalLive: 'حالت واقعی', sZibalEnv: 'از متغیر محیطی ZIBAL_MERCHANT خوانده می‌شود.', sBalance: 'اعتبار', sBalanceCheck: 'نمایش اعتبار', sSenderHint: 'خالی = خط آزمایشی کاوه‌نگار (0018018949161). برای خط خودتان شماره را وارد کنید.',
       team: 'تیم و دسترسی', settings: 'تنظیمات', account: 'حساب من', tUsers: 'کاربران', tRoles: 'نقش‌ها و دسترسی‌ها', uAdd: 'افزودن کاربر', uUsername: 'نام کاربری', uName: 'نام', uPhone: 'موبایل (برای ورود با پیامک)', uRole: 'نقش', uPass: 'رمز عبور', uNewPass: 'رمز جدید (اختیاری)', uGen: 'تولید', uLast: 'آخرین ورود', uActive: 'فعال', uNever: 'هنوز وارد نشده', uMust: 'باید رمز را عوض کند',
       uPassHint: 'حداقل ۸ نویسه. کاربر در اولین ورود باید رمز را تغییر دهد.', rAdd: 'نقش جدید', rKey: 'کلید (انگلیسی)', rUsers: 'کاربر', rAll: 'همه دسترسی‌ها', rLocked: 'نقش مالک همیشه همه دسترسی‌ها را دارد و قابل ویرایش نیست.', rMatrixHint: 'با تیک زدن، دسترسی همان لحظه ذخیره می‌شود. کاربران آن نقش باید دوباره وارد شوند.', rCopy: 'کپی دسترسی‌ها از', rDelete: 'حذف نقش',
       grp_general: 'عمومی', grp_catalog: 'کاتالوگ', grp_sales: 'فروش', grp_crm: 'مشتریان و پیام‌ها', grp_system: 'سیستم', perm: 'دسترسی',
@@ -24,6 +25,7 @@
       aProfile: 'پروفایل', aPassword: 'تغییر رمز عبور', aCurrent: 'رمز فعلی', aNew: 'رمز جدید', aRole: 'نقش من',
     },
     en: {
+      sPayment: 'Online payment (Zibal)', sZibalOn: 'Enable online payment', sZibalOnHint: 'Checkout offers "Pay online". An order becomes "paid" only after Zibal confirms it.', sMerchant: 'Merchant ID', sMerchantDemo: 'Use the demo merchant', sMerchantHint: 'The demo ID is "zibal"; it moves no real money. Enter your own merchant ID for real payments.', sZibalSandbox: 'Test mode', sZibalLive: 'Live mode', sZibalEnv: 'Read from the ZIBAL_MERCHANT environment variable.', sBalance: 'Credit', sBalanceCheck: 'Show credit', sSenderHint: 'Empty = Kavenegar demo line (0018018949161). Enter your own line number for production.',
       team: 'Team & access', settings: 'Settings', account: 'My account', tUsers: 'Users', tRoles: 'Roles & permissions', uAdd: 'Add user', uUsername: 'Username', uName: 'Name', uPhone: 'Mobile (for SMS login)', uRole: 'Role', uPass: 'Password', uNewPass: 'New password (optional)', uGen: 'Generate', uLast: 'Last login', uActive: 'Active', uNever: 'Never logged in', uMust: 'Must change password',
       uPassHint: 'At least 8 characters. The user must change it on first login.', rAdd: 'New role', rKey: 'Key (letters)', rUsers: 'users', rAll: 'All permissions', rLocked: 'The Owner role always has every permission and cannot be edited.', rMatrixHint: 'Ticking saves instantly. Users with that role must log in again.', rCopy: 'Copy permissions from', rDelete: 'Delete role',
       grp_general: 'General', grp_catalog: 'Catalog', grp_sales: 'Sales', grp_crm: 'Customers & messages', grp_system: 'System', perm: 'Permission',
@@ -125,9 +127,15 @@
       <div class="grid2"><label><span>${t('sProvider')}</span><select id="pv"><option value="apiir" ${s.sms.provider === 'apiir' ? 'selected' : ''}>api.ir</option><option value="kavenegar" ${s.sms.provider === 'kavenegar' ? 'selected' : ''}>Kavenegar</option></select></label>
         <label><span>${t('sApiKey')} — <b>${s.sms.apiKeyMasked ? t('sApiKeySet') + ' (' + esc(s.sms.apiKeyMasked) + ')' : t('sApiKeyNone')}</b></span><input id="ak" dir="ltr" type="password" autocomplete="off" placeholder="${s.sms.apiKeyMasked ? '••••••••' : ''}" ${s.sms.fromEnv ? 'disabled' : ''}><small class="muted">${s.sms.provider === 'apiir' ? t('sApiirHint') : t('sApiKeyHint')}</small></label></div>
       ${s.sms.provider === 'apiir' ? `<label><span>${t('sOtpLine')}</span><select id="ot">${[0, 1, 2, 3, 4].map((n) => `<option value="${n}" ${String(s.sms.otpTemplate) === String(n) ? 'selected' : ''}>${n} — ${t('otpT' + n)}</option>`).join('')}</select><small class="muted">${t('sOtpLineHint')}</small></label>`
-        : `<div class="grid2"><label><span>${t('sSender')}</span><input id="sd" dir="ltr" value="${esc(s.sms.sender)}" placeholder="10008663"></label><label><span>${t('sOtpTpl')}</span><input id="ot" dir="ltr" value="${esc(s.sms.otpTemplate)}"><small class="muted">${t('sOtpTplHint')}</small></label></div>`}
+        : `<div class="grid2"><label><span>${t('sSender')}</span><input id="sd" dir="ltr" value="${esc(s.sms.sender)}" placeholder="0018018949161"><small class="muted">${t('sSenderHint')}</small></label><label><span>${t('sOtpTpl')}</span><input id="ot" dir="ltr" value="${esc(s.sms.otpTemplate)}"><small class="muted">${t('sOtpTplHint')}</small></label></div>`}
       ${sw('se', t('sEnabled'), s.sms.enabled, t('sEnabledHint'))}
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px"><input id="tp" dir="ltr" inputmode="tel" placeholder="${t('sTestPhone')}" style="max-width:260px"><button class="btn sec" id="tst">${t('sTest')}</button>${s.sms.apiKeyMasked && !s.sms.fromEnv ? `<button class="btn danger" id="clr">${t('sClear')}</button>` : ''}</div>
+      ${s.sms.provider === 'kavenegar' && s.sms.apiKeyMasked ? `<p class="muted hint"><button class="btn sec sm" id="bal" type="button">${t('sBalanceCheck')}</button> <b id="balv"></b></p>` : ''}
+      <h3 style="margin:18px 0 8px">${t('sPayment')}</h3>
+      <div class="banner ${s.payment.zibal.enabled ? 'ok' : ''}">${s.payment.zibal.enabled ? (s.payment.zibal.sandbox ? t('sZibalSandbox') : t('sZibalLive')) : t('sPayment') + ': —'}</div>
+      ${sw('ze', t('sZibalOn'), s.payment.zibal.enabled, t('sZibalOnHint'))}
+      <label><span>${t('sMerchant')}</span><input id="zm" dir="ltr" value="${esc(s.payment.zibal.merchant)}" placeholder="zibal" ${s.payment.zibal.fromEnv ? 'disabled' : ''}><small class="muted">${s.payment.zibal.fromEnv ? t('sZibalEnv') : t('sMerchantHint')}</small></label>
+      ${s.payment.zibal.fromEnv ? '' : `<p><button class="btn sec sm" id="zdemo" type="button">${t('sMerchantDemo')}</button></p>`}
       <h3 style="margin:18px 0 8px">${t('sStore')}</h3>
       <div class="grid2"><label><span>${t('sStoreName')}</span><input id="sn" value="${esc(s.storeName)}" placeholder="آرموا"></label><label><span>${t('sPublicUrl')}</span><input id="pu" dir="ltr" value="${esc(s.publicUrl)}" placeholder="https://armova.example"></label></div>
       <label><span>${t('sPromoFooter')}</span><input id="pf" value="${esc(s.promoFooter)}" placeholder="لغو۱۱"></label>
@@ -141,11 +149,14 @@
     const put = async (body, msg) => { try { await api('/settings', { method: 'PUT', body }); toast(msg || t('saved')); settings(); } catch (e) { toast(errMsg(e)); } };
     $('#save').onclick = () => put({
       sms: { provider: $('#pv').value, ...($('#ak').value ? { apiKey: $('#ak').value } : {}), ...($('#sd') ? { sender: $('#sd').value } : {}), otpTemplate: $('#ot').value, enabled: $('#se').checked },
+      payment: { zibal: { enabled: $('#ze').checked, ...($('#zm').disabled ? {} : { merchant: $('#zm').value }) } },
       storeName: $('#sn').value, publicUrl: $('#pu').value, promoFooter: $('#pf').value, checkout: { requireLogin: $('#rl').checked },
       alerts: { phones: $('#ap').value, newOrder: $('#an').checked, lowStock: $('#al').checked, highValue: $('#ah').checked, lowStockThreshold: $('#lt').value, highValueThreshold: $('#ht').value, bigQty: $('#bq').value },
       automation: { abandonedHours: $('#ah2').value, reviewDays: $('#rv').value },
     });
     $('#pv').onchange = () => put({ sms: { provider: $('#pv').value } });
+    if ($('#zdemo')) $('#zdemo').onclick = () => { $('#zm').value = 'zibal'; $('#ze').checked = true; };
+    if ($('#bal')) $('#bal').onclick = async () => { try { const r = await api('/settings/sms/balance'); $('#balv').textContent = r.balance ? t('sBalance') + ': ' + num(r.balance.credit) : '—'; } catch (e) { toast(errMsg(e)); } };
     if ($('#clr')) $('#clr').onclick = () => confirmDel() && put({ sms: { provider: $('#pv').value, clearApiKey: true } });
     $('#tst').onclick = async () => { try { const r = await api('/settings/sms/test', { method: 'POST', body: { phone: $('#tp').value } }); toast(r.ok ? (r.status === 'dev' ? t('devBanner').slice(0, 40) + '…' : t('smsQueued')) : (r.error || t('error'))); } catch (e) { toast(errMsg(e)); } };
   }

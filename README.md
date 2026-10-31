@@ -37,3 +37,9 @@ Moves **categories, products and their photos** from your computer to the live s
 3. `node scripts/push-catalog.js --dry` shows what would change; `node scripts/push-catalog.js` pushes (only missing photos are uploaded; categories/products are matched by slug, so it is safe to re-run).
    - Existing live products keep their **live stock and visibility** by default; add `--stock` and/or `--active` to overwrite them too.
 4. Remove `SYNC_TOKEN` from the host when you are done to switch the endpoint off.
+
+## Online payment (Zibal) and Kavenegar templates / delivery reports
+
+- **Zibal:** Admin → Settings → Online payment. Merchant `zibal` is Zibal's public demo (no real money); use your own merchant ID for real payments (or env `ZIBAL_MERCHANT`). When on, checkout offers "Pay online"; the order is marked paid only after the server verifies it with Zibal (`/pay/zibal/callback`). Unpaid orders can be paid again from the result screen, and admins can re-check a payment from the Orders page.
+- **Kavenegar:** choose it as the provider in Settings and paste the API key. Without a sender line the demo line `0018018949161` is used. In Messages → Templates each message can name a template registered in the Kavenegar panel; it is then sent with `verify/lookup` (variables fill `%token`, `%token2`, `%token3`, `%token10`, `%token20` in the order you choose), otherwise as a normal SMS.
+- **Reports:** with Kavenegar, delivery states (delivered / not delivered / pending) are fetched every 5 minutes or with the "Refresh delivery status" button; each campaign has a report with a CSV export, and the SMS log shows the credit balance. api.ir does not provide delivery reports here.

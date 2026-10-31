@@ -4,6 +4,7 @@ const A = require('../lib/auth');
 const sms = require('../lib/sms');
 const orders = require('../lib/orders');
 const campaign = require('../lib/campaign');
+const zibal = require('../lib/zibal');
 
 const str = (v, max = 500) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -88,7 +89,25 @@ module.exports = function (admin) {
     const camp = campaign.start({ name: str(b.name, 80) || (kind === 'promo' ? 'Campaign' : 'Message'), kind, text, recipients: r.send, skipped: r.skipped, by: req.user.id });
     res.json({ ok: true, campaignId: camp.id, total: camp.total, skipped: r.skipped });
   });
-  admin.get('/campaigns', A.can('crm.send', 'sms.log'), (req, res) => res.json([...db.get().campaigns].sort((a, b) => b.createdAt - a.createdAt).slice(0, 100)));
+  const logOf = (id) => db.get().smsLog.filter((m) => m.campaignId === id);
+  admin.get('/campaigns', A.can('crm.send', 'sms.log'), (req, res) => res.json([...db.get().campaigns].sort((a, b) => b.createdAt - a.createdAt).slice(0, 100).map((c) => ({ ...c, report: sms.breakdown(logOf(c.id)) }))));
+  admin.get('/campaigns/:id', A.can('crm.send', 'sms.log'), (req, res) => {
+    const c = db.get().campaigns.find((x) => x.id === Number(req.params.id)); if (!c) return res.status(404).end();
+    const msgs = logOf(c.id); res.json({ campaign: c, report: sms.breakdown(msgs), messages: msgs.slice(-1000).reverse().map((m) => ({ id: m.id, at: m.at, to: m.to, status: m.status, error: m.error, delivery: m.delivery || null })) });
+  });
+  admin.get('/campaigns/:id/export', A.can('crm.send', 'sms.log'), (req, res) => {
+    const c = db.get().campaigns.find((x) => x.id === Number(req.params.id)); if (!c) return res.status(404).end();
+    const rows = [['to', 'time', 'status', 'delivery', 'error'], ...logOf(c.id).map((m) => [m.to, new Date(m.at).toISOString(), m.status, m.delivery ? m.delivery.state : '', m.error || ''])];
+    const csv = '\ufeff' + rows.map((r) => r.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(',')).join('\r\n');
+    res.set({ 'Content-Type': 'text/csv; charset=utf-8', 'Content-Disposition': `attachment; filename="campaign-${c.id}.csv"` }).send(csv);
+  });
+  // ask Kavenegar for the delivery state of recent messages (also runs by itself every few minutes)
+  admin.post('/messages/refresh', A.can('sms.log', 'crm.send'), async (req, res) => {
+    try { res.json({ ok: true, ...(await sms.refreshDelivery()) }); } catch (e) { res.status(502).json({ error: 'provider', message: String(e.message).slice(0, 200) }); }
+  });
+  admin.get('/settings/sms/balance', A.can('settings.manage', 'sms.log'), async (req, res) => {
+    try { res.json({ provider: sms.config().provider, balance: await sms.balance() }); } catch (e) { res.status(502).json({ error: 'provider', message: String(e.message).slice(0, 200) }); }
+  });
   admin.get('/messages/log', A.can('sms.log'), (req, res) => {
     const q = str(req.query.q, 40), st = str(req.query.status, 10), type = str(req.query.type, 40), limit = Math.min(500, Number(req.query.limit) || 200);
     res.json(db.get().smsLog.filter((m) => (!q || (m.to || '').includes(q) || (m.text || '').includes(q)) && (!st || m.status === st) && (!type || m.type === type)).slice(-limit).reverse());
@@ -101,6 +120,8 @@ module.exports = function (admin) {
     if (!t) return res.status(404).end();
     if (b.text !== undefined) { const text = str(b.text, 600); if (!text) return res.status(400).json({ error: 'text_required' }); t.text = text; }
     if (b.enabled !== undefined) { if (t.key === 'otp' && !b.enabled) return res.status(409).json({ error: 'otp_required' }); t.enabled = !!b.enabled; }
+    if (b.kvTemplate !== undefined) { const n = str(b.kvTemplate, 60); if (n && !/^[\w.-]+$/.test(n)) return res.status(400).json({ error: 'bad_template_name' }); t.kvTemplate = n; }
+    if (b.kvTokens !== undefined) t.kvTokens = (Array.isArray(b.kvTokens) ? b.kvTokens : String(b.kvTokens || '').split(/[\s,،]+/)).filter((v) => t.vars.includes(v)).slice(0, 5);
     t.updatedAt = Date.now(); t.updatedBy = req.user.id; db.save(); res.json(t);
   });
   admin.post('/templates/:key/reset', A.can('templates.edit'), (req, res) => {
@@ -112,18 +133,26 @@ module.exports = function (admin) {
     const t = sms.templates().find((x) => x.key === req.params.key), phone = sms.normPhone(req.body.phone);
     if (!t) return res.status(404).end(); if (!phone) return res.status(400).json({ error: 'invalid_phone' });
     const sample = { name: 'علی', orderId: '۱۲۳', total: '۱٬۲۵۰٬۰۰۰', tracking: '123456789', code: '123456', store: sms.storeName(), product: 'بلوز شال‌دار', size: 'M', link: orders.baseUrl() || 'https://example.com', customer: 'علی 09120000000', reason: 'مبلغ بالا', stock: '2', discount: '۲۰٪', endsAt: '۱۴۰۵/۰۸/۳۰', ...(req.body.vars || {}) };
-    const e = await sms.send(phone, sms.render(t.text, sample), { type: 'test:' + t.key, by: req.user.id });
-    res.json({ ok: e && e.status !== 'failed', status: e && e.status, error: e && e.error });
+    const e = await sms.sendTemplate(t.key, phone, sample, { by: req.user.id, test: true }, { force: true });
+    res.json({ ok: e && e.status !== 'failed', status: e && e.status, error: e && e.error, via: e && e.via });
+  });
+
+  // ----- Zibal: re-check an order's payment with the gateway (e.g. the customer never came back) -----
+  admin.post('/orders/:id/zibal-check', A.can('orders.manage'), async (req, res) => {
+    const o = db.get().orders.find((x) => x.id === Number(req.params.id)); if (!o) return res.status(404).end();
+    const r = await zibal.settle(o); db.save(); res.json({ ...r, paymentStatus: o.paymentStatus, payment: o.payment });
   });
 
   // ----- settings -----
   const settingsView = () => {
     const s = db.get().settings || {}, c = sms.config();
-    return { sms: { provider: c.provider, configured: sms.configured(), enabled: c.enabled, sender: c.sender, otpTemplate: c.otpTemplate, apiKeyMasked: mask(c.apiKey), fromEnv: c.fromEnv },
+    const z = zibal.cfg();
+    return { payment: { zibal: { enabled: z.enabled, merchant: z.merchant, sandbox: z.sandbox, fromEnv: z.fromEnv } },
+      sms: { provider: c.provider, configured: sms.configured(), enabled: c.enabled, sender: c.sender, otpTemplate: c.otpTemplate, apiKeyMasked: mask(c.apiKey), fromEnv: c.fromEnv },
       checkout: { requireLogin: false, ...(s.checkout || {}) }, alerts: orders.alerts(), automation: { abandonedHours: 3, reviewDays: 3, ...(s.automation || {}) },
       lastFailure: sms.lastFailure(), publicUrl: s.publicUrl || '', storeName: s.storeName || '', promoFooter: s.promoFooter || '' };
   };
-  admin.get('/settings/status', A.can('settings.manage', 'templates.edit', 'crm.send', 'sms.log'), (req, res) => res.json({ smsConfigured: sms.configured() }));
+  admin.get('/settings/status', A.can('settings.manage', 'templates.edit', 'crm.send', 'sms.log'), (req, res) => res.json({ smsConfigured: sms.configured(), provider: sms.config().provider }));
   admin.get('/settings', A.can('settings.manage'), (req, res) => res.json(settingsView()));
   admin.put('/settings', A.can('settings.manage'), (req, res) => {
     const s = db.get(), b = req.body || {}; s.settings ||= {};
@@ -136,6 +165,11 @@ module.exports = function (admin) {
       if (b.sms.sender !== undefined) cur.sender = str(b.sms.sender, 30);
       if (b.sms.otpTemplate !== undefined) cur[api ? 'apiirOtpTemplate' : 'otpTemplate'] = str(b.sms.otpTemplate, 60);
       if (b.sms.enabled !== undefined) cur.enabled = !!b.sms.enabled;
+    }
+    if (b.payment && b.payment.zibal) {
+      const z = ((s.settings.payment ||= {}).zibal ||= {}), n = b.payment.zibal;
+      if (n.merchant !== undefined) z.merchant = str(n.merchant, 60).replace(/[^\w-]/g, '');
+      if (n.enabled !== undefined) z.enabled = !!n.enabled;
     }
     if (b.checkout) s.settings.checkout = { requireLogin: !!b.checkout.requireLogin };
     if (b.alerts) {

@@ -161,3 +161,7 @@ a.btn { text-decoration: none; display: inline-block; }
 
 [hidden] { display: none !important; }
 .bkp { height: 8px; background: #eee; border-radius: 4px; overflow: hidden; margin: 8px 0; } .bkp i { display: block; height: 100%; width: 0; background: var(--accent); transition: width .2s; }
+
+.repbar { display: flex; height: 10px; border-radius: 5px; overflow: hidden; background: var(--line, #eee); margin: 10px 0; } .repbar i { display: block; height: 100%; } .repbar .ok { background: var(--ok, #2e9e5b); } .repbar .warn { background: #e0a526; } .repbar .bad { background: var(--bad, #d64545); } .repbar .dev { background: #bbb; }
+.kvbox { margin: 8px 0; padding: 10px; border: 1px dashed var(--line, #ddd); border-radius: 8px; }
+.stat { padding: 8px 10px; border: 1px solid var(--line, #e5e5e5); border-radius: 8px; } .stat b { display: block; font-size: 18px; } .stat small { color: var(--muted, #777); }

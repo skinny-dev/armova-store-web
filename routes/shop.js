@@ -4,11 +4,13 @@ const A = require('../lib/auth');
 const sms = require('../lib/sms');
 const pricing = require('../lib/pricing');
 const orders = require('../lib/orders');
+const zibal = require('../lib/zibal');
 
 const str = (v, max = 500) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
 const CUST_MS = 30 * 864e5;
 const pubCustomer = (c) => c && ({ id: c.id, phone: c.phone, name: c.name || '', address: c.address || '', marketingOptIn: !!c.marketingOptIn });
-const checkout = () => ({ requireLogin: false, ...((db.get().settings || {}).checkout || {}) });
+const checkout = () => ({ requireLogin: false, ...((db.get().settings || {}).checkout || {}), online: zibal.enabled(), sandbox: zibal.cfg().sandbox });
+const origin = (req) => orders.baseUrl() || `${req.protocol}://${req.get('host')}`;
 
 function startCustomerSession(res, c) {
   c.lastLoginAt = Date.now(); db.save();
@@ -104,7 +106,7 @@ module.exports = function (app) {
       lines: q.lines.map((l) => ({ productId: l.product.id, size: l.size, qty: l.qty, price: l.price, base: l.base, onSale: l.onSale })) });
   });
 
-  app.post('/api/orders', (req, res) => {
+  app.post('/api/orders', async (req, res) => {
     const s = db.get(), b = req.body || {};
     if (checkout().requireLogin && !req.customer) return res.status(401).json({ error: 'login_required' });
     const phone = req.customer ? req.customer.phone : sms.normPhone(b.phone);
@@ -122,6 +124,39 @@ module.exports = function (app) {
     if (q.coupon) { const d = s.discounts.find((x) => x.id === q.coupon.id); if (d) d.uses = (d.uses || 0) + 1; }
     s.orders.push(order); db.bump('orders'); db.bump('revenue', order.total); db.save();
     orders.onCreated(order);
-    res.json({ ok: true, orderId: order.id, total: order.total });
+    const out = { ok: true, orderId: order.id, total: order.total };
+    if (b.payOnline === true && zibal.enabled()) { // customer chose to pay online: open a Zibal payment; the order stays unpaid until it is verified
+      const p = await zibal.start(order, origin(req) + '/pay/zibal/callback'); db.save();
+      if (p.payUrl) out.payUrl = p.payUrl; else out.payError = p.error;
+      out.payKey = zibal.payToken(order);
+    }
+    res.json(out);
+  });
+
+  // pay (again) for an unpaid order: the signed key from checkout, or the logged-in owner of the order
+  app.post('/api/orders/:id/pay', async (req, res) => {
+    const o = db.get().orders.find((x) => x.id === Number(req.params.id));
+    const mine = o && req.customer && (o.customerId === req.customer.id || sms.normPhone(o.customer.phone) === req.customer.phone);
+    if (!o || !(mine || zibal.tokenOk(o, (req.body || {}).key))) return res.status(404).json({ error: 'not_found' });
+    if (!zibal.enabled()) return res.status(409).json({ error: 'gateway_off' });
+    if (o.paymentStatus === 'paid') return res.status(409).json({ error: 'already_paid' });
+    if (['cancelled', 'returned'].includes(o.status)) return res.status(409).json({ error: 'order_closed' });
+    const p = await zibal.start(o, origin(req) + '/pay/zibal/callback'); db.save();
+    p.payUrl ? res.json({ ok: true, payUrl: p.payUrl }) : res.status(502).json({ error: p.error });
+  });
+
+  // the customer comes back from Zibal (success=1&status=2 means paid; it is always verified server-side before the order is marked paid)
+  app.get('/pay/zibal/callback', async (req, res) => {
+    const track = String(req.query.trackId || ''), o = db.get().orders.find((x) => x.payment && x.payment.gateway === 'zibal' && x.payment.trackId === track);
+    if (!o) return res.redirect('/');
+    const r = await zibal.settle(o); db.save();
+    const state = r.state === 'paid' ? 'paid' : r.state === 'pending' ? 'pending' : 'failed';
+    res.redirect(`/?pay=${state}&order=${o.id}&k=${zibal.payToken(o)}`);
+  });
+  // lets the result screen read the outcome without exposing the order
+  app.get('/api/orders/:id/pay-state', (req, res) => {
+    const o = db.get().orders.find((x) => x.id === Number(req.params.id));
+    if (!o || !zibal.tokenOk(o, req.query.k)) return res.status(404).json({ error: 'not_found' });
+    res.json({ orderId: o.id, total: o.total, paymentStatus: o.paymentStatus || 'unpaid', online: zibal.enabled() });
   });
 };

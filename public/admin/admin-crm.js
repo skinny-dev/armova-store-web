@@ -13,6 +13,7 @@
       g_system: 'سیستم', g_order: 'سفارش', g_payment: 'پرداخت', g_shipping: 'ارسال و تحویل', g_returns: 'مرجوعی', g_marketing: 'بازاریابی و تعامل', g_admin: 'هشدار مدیران',
       p_essential: 'ضروری', p_recommended: 'پیشنهادی', p_conditional: 'شرطی', p_optional: 'اختیاری', p_marketing: 'بازاریابی', p_admin: 'مدیر',
       lStatus: 'وضعیت', lType: 'نوع', lTo: 'گیرنده', lText: 'متن', lTime: 'زمان', lAll: 'همه', ls_sent: 'ارسال شد', ls_failed: 'ناموفق', ls_dev: 'آزمایشی (ارسال نشد)', cpTotal: 'کل', cpSent: 'ارسال', cpFailed: 'ناموفق', cpSkipped: 'ردشده', cp_running: 'در حال ارسال…', cp_done: 'تمام شد', cp_error: 'خطا', cpNew: 'کمپین جدید',
+      cpDelivered: 'تحویل‌شده', cpPending: 'در انتظار', cpUndelivered: 'تحویل نشده', cpReport: 'گزارش', cpExport: 'خروجی CSV', cpRefresh: 'به‌روزرسانی وضعیت تحویل', cpDevNote: 'پیام‌های حالت آزمایشی ارسال واقعی نشده‌اند.', cpMsgs: 'پیام‌ها', lDelivery: 'تحویل', lRefreshed: 'به‌روزرسانی شد', lBalance: 'اعتبار کاوه‌نگار', ds_delivered: 'تحویل شد', ds_undelivered: 'تحویل نشد', ds_failed: 'ناموفق', ds_transit: 'در مسیر', ds_queued: 'در صف', ds_unknown: 'نامشخص', kvTemplate: 'نام قالب کاوه‌نگار', kvTokens: 'ترتیب متغیرها (token، token2، token3، token10، token20)', kvHint: 'اگر نام قالب ثبت‌شده در پنل کاوه‌نگار را بنویسید، این پیام با سرویس قالب (verify/lookup) ارسال می‌شود؛ در غیر این صورت پیامک عادی است.', via_lookup: 'قالب کاوه‌نگار',
       devBanner: 'حالت آزمایشی: توکن سرویس پیامک تنظیم یا فعال نیست و پیامک‌ها واقعا ارسال نمی‌شوند (فقط در گزارش ثبت می‌شوند).', liveBanner: 'سرویس پیامک متصل است؛ پیامک‌ها واقعا ارسال می‌شوند.', goSettings: 'تنظیمات',
     },
     en: {
@@ -25,6 +26,7 @@
       g_system: 'System', g_order: 'Orders', g_payment: 'Payment', g_shipping: 'Shipping & delivery', g_returns: 'Returns', g_marketing: 'Marketing & engagement', g_admin: 'Admin alerts',
       p_essential: 'Essential', p_recommended: 'Recommended', p_conditional: 'Conditional', p_optional: 'Optional', p_marketing: 'Marketing', p_admin: 'Admin',
       lStatus: 'Status', lType: 'Type', lTo: 'To', lText: 'Text', lTime: 'Time', lAll: 'All', ls_sent: 'Sent', ls_failed: 'Failed', ls_dev: 'Dev (not sent)', cpTotal: 'Total', cpSent: 'Sent', cpFailed: 'Failed', cpSkipped: 'Skipped', cp_running: 'Sending…', cp_done: 'Done', cp_error: 'Error', cpNew: 'New campaign',
+      cpDelivered: 'Delivered', cpPending: 'Pending', cpUndelivered: 'Not delivered', cpReport: 'Report', cpExport: 'Export CSV', cpRefresh: 'Refresh delivery status', cpDevNote: 'Dev-mode messages were not really sent.', cpMsgs: 'Messages', lDelivery: 'Delivery', lRefreshed: 'Updated', lBalance: 'Kavenegar credit', ds_delivered: 'Delivered', ds_undelivered: 'Not delivered', ds_failed: 'Failed', ds_transit: 'In transit', ds_queued: 'Queued', ds_unknown: 'Unknown', kvTemplate: 'Kavenegar template name', kvTokens: 'Variable order (token, token2, token3, token10, token20)', kvHint: 'If you enter the template name registered in your Kavenegar panel, this message goes out through the template service (verify/lookup); otherwise it is a normal SMS.', via_lookup: 'Kavenegar template',
       devBanner: 'Dev mode: the SMS token is not set or sending is switched off, so SMS are not really sent (they are only recorded in the log).', liveBanner: 'The SMS service is connected; messages are really sent.', goSettings: 'Settings',
     },
   };
@@ -147,7 +149,7 @@
   }
 
   async function templatesTab() {
-    const list = await api('/templates'), editable = can('templates.edit'), groups = ['system', 'order', 'payment', 'shipping', 'returns', 'marketing', 'admin'];
+    const list = await api('/templates'), editable = can('templates.edit'), kv = ((await api('/settings/status').catch(() => ({}))).provider === 'kavenegar'), groups = ['system', 'order', 'payment', 'shipping', 'returns', 'marketing', 'admin'];
     const sample = { name: 'علی', orderId: '۱۲۳', total: '۱٬۲۵۰٬۰۰۰', tracking: '123456789', code: '123456', store: 'آرموا', product: 'بلوز شال‌دار', size: 'M', link: 'https://…', customer: 'علی ۰۹۱۲…', reason: 'مبلغ بالا', stock: '۲', discount: '۲۰٪', endsAt: '۱۴۰۵/۰۸/۳۰' };
     const preview = (text) => { const val = (k) => sample[k] ?? ''; return text.split('\n').filter((l) => [...l.matchAll(/\{(\w+)\}/g)].every((m) => val(m[1]) !== '')).map((l) => l.replace(/\{(\w+)\}/g, (_, k) => val(k))).join('\n'); };
     $('#mb').innerHTML = groups.map((g) => { const items = list.filter((x) => x.group === g); return items.length ? `<h3 style="margin:16px 0 8px">${t('g_' + g)}</h3>` + items.map((x) => `<div class="tpl ${x.enabled ? '' : 'off'}" data-k="${x.key}">
@@ -155,6 +157,7 @@
         <small class="muted">${t('tWhen')}: ${esc(nm(x.when))}</small>
         <textarea rows="3" maxlength="600" ${editable ? '' : 'disabled'}>${esc(x.text)}</textarea>
         <div class="vars">${x.vars.map((v) => `<button type="button" data-ins="{${v}}" ${editable ? '' : 'disabled'}>{${v}}</button>`).join('')}</div>
+        ${kv ? `<div class="grid2 kvbox"><label><span>${t('kvTemplate')}</span><input class="kvt" dir="ltr" maxlength="60" value="${esc(x.kvTemplate || '')}" ${editable ? '' : 'disabled'}></label><label><span>${t('kvTokens')}</span><input class="kvk" dir="ltr" value="${esc((x.kvTokens && x.kvTokens.length ? x.kvTokens : x.vars).join(', '))}" ${editable ? '' : 'disabled'}></label><small class="muted" style="grid-column:1/-1">${t('kvHint')}</small></div>` : ''}
         <div class="muted hint"><span class="inf">${smsInfo(x.text)}</span></div><div class="preview">${esc(preview(x.text))}</div>
         ${editable ? `<div class="actions" style="justify-content:flex-start"><button class="btn sm sv">${t('tSave')}</button><button class="btn sec sm ts">${t('tTest')}</button><button class="btn sec sm rs">${t('tReset')}</button></div>` : `<small class="muted">${t('tReadOnly')}</small>`}</div>`).join('') : ''; }).join('');
     $('#mb').addEventListener('input', (e) => { const card = e.target.closest('.tpl'); if (!card || e.target.tagName !== 'TEXTAREA') return; card.querySelector('.inf').textContent = smsInfo(e.target.value); card.querySelector('.preview').textContent = preview(e.target.value); });
@@ -163,9 +166,9 @@
       const key = card.dataset.k, ta = card.querySelector('textarea');
       try {
         if (b.dataset.ins) { const s = ta.selectionStart; ta.value = ta.value.slice(0, s) + b.dataset.ins + ta.value.slice(ta.selectionEnd); ta.focus(); ta.selectionStart = ta.selectionEnd = s + b.dataset.ins.length; ta.dispatchEvent(new Event('input', { bubbles: true })); }
-        else if (b.classList.contains('sv')) { await api('/templates/' + key, { method: 'PUT', body: { text: ta.value, enabled: card.querySelector('.en').checked } }); toast(t('tSaved')); }
+        else if (b.classList.contains('sv')) { await api('/templates/' + key, { method: 'PUT', body: { text: ta.value, enabled: card.querySelector('.en').checked, ...(card.querySelector('.kvt') ? { kvTemplate: card.querySelector('.kvt').value, kvTokens: card.querySelector('.kvk').value } : {}) } }); toast(t('tSaved')); }
         else if (b.classList.contains('rs')) { if (!confirm(t('tResetAsk'))) return; await api(`/templates/${key}/reset`, { method: 'POST' }); templatesTab(); }
-        else if (b.classList.contains('ts')) { const phone = prompt(t('tTestPrompt')); if (!phone) return; const r = await api(`/templates/${key}/test`, { method: 'POST', body: { phone } }); toast(r.ok ? t('smsQueued') : t('error')); }
+        else if (b.classList.contains('ts')) { const phone = prompt(t('tTestPrompt')); if (!phone) return; const r = await api(`/templates/${key}/test`, { method: 'POST', body: { phone } }); toast(r.ok ? (r.via === 'lookup' ? t('smsQueued') + ' · ' + t('via_lookup') : t('smsQueued')) : (r.error || t('error'))); }
       } catch (er) { toast(errMsg(er)); }
     });
     $('#mb').addEventListener('change', async (e) => {
@@ -176,23 +179,44 @@
 
   async function campaignsTab() {
     const list = await api('/campaigns');
-    $('#mb').innerHTML = `<div class="scroll"><table class="rt"><thead><tr><th>${t('name')}</th><th>${t('lTime')}</th><th>${t('cpTotal')}</th><th>${t('cpSent')}</th><th>${t('cpFailed')}</th><th>${t('cpSkipped')}</th><th>${t('status')}</th></tr></thead><tbody>
+    $('#mb').innerHTML = `<div class="scroll"><table class="rt"><thead><tr><th>${t('name')}</th><th>${t('lTime')}</th><th>${t('cpTotal')}</th><th>${t('cpSent')}</th><th>${t('cpFailed')}</th><th>${t('cpDelivered')}</th><th>${t('cpSkipped')}</th><th>${t('status')}</th><th></th></tr></thead><tbody>
       ${list.map((c) => `<tr><td class="c-name"><b>${esc(c.name)}</b> <span class="pill ${c.kind === 'promo' ? 'mk' : ''}">${t(c.kind === 'promo' ? 'mPromo' : 'mInfo')}</span><br><small class="muted">${esc((c.text || '').slice(0, 90))}</small></td><td data-label="${t('lTime')}">${fmtDate(c.createdAt)}</td>
-        <td data-label="${t('cpTotal')}">${num(c.total)}</td><td data-label="${t('cpSent')}">${num(c.sent)}</td><td data-label="${t('cpFailed')}">${num(c.failed)}</td><td data-label="${t('cpSkipped')}">${num(c.skipped)}</td><td data-label="${t('status')}"><span class="pill ${c.status === 'done' ? 'ok' : c.status === 'error' ? 'bad' : 'warn'}">${t('cp_' + c.status)}</span></td></tr>`).join('') || `<tr><td colspan="7" class="emptyrow">${t('empty')}</td></tr>`}</tbody></table></div>`;
+        <td data-label="${t('cpTotal')}">${num(c.total)}</td><td data-label="${t('cpSent')}">${num(c.sent)}</td><td data-label="${t('cpFailed')}">${num(c.failed)}</td><td data-label="${t('cpDelivered')}">${c.report && c.report.delivered ? num(c.report.delivered) + (c.report.undelivered ? ' <small style="color:var(--bad)">/ ' + num(c.report.undelivered) + '</small>' : '') : '—'}</td><td data-label="${t('cpSkipped')}">${num(c.skipped)}</td><td data-label="${t('status')}"><span class="pill ${c.status === 'done' ? 'ok' : c.status === 'error' ? 'bad' : 'warn'}">${t('cp_' + c.status)}</span></td><td class="c-act"><button class="btn sec sm" data-rep="${c.id}">${t('cpReport')}</button></td></tr>`).join('') || `<tr><td colspan="9" class="emptyrow">${t('empty')}</td></tr>`}</tbody></table></div>`;
+    $('#mb').onclick = (e) => { const b = e.target.closest('[data-rep]'); if (b) campaignReport(Number(b.dataset.rep)); };
     if (list.some((c) => c.status === 'running')) { clearTimeout(campaignsTab.t); campaignsTab.t = setTimeout(() => { if (location.hash === '#messages' && mtab === 'cmp' && $('#mb')) campaignsTab(); }, 3000); }
+  }
+
+  async function campaignReport(id) {
+    const load = async () => {
+      const d = await api('/campaigns/' + id), r = d.report, c = d.campaign, bar = (n, cls) => (r.total ? `<i class="${cls}" style="width:${(n / r.total * 100).toFixed(1)}%"></i>` : '');
+      modal(`<h1>${esc(c.name)} · ${t('cpReport')}</h1><p class="muted hint" style="white-space:pre-line">${esc(c.text || '')}</p>
+        <div class="repbar">${bar(r.delivered, 'ok')}${bar(r.pending, 'warn')}${bar(r.undelivered + r.failed, 'bad')}${bar(r.dev, 'dev')}</div>
+        <div class="grid3" style="grid-template-columns:repeat(auto-fit,minmax(110px,1fr));margin:10px 0">${[['cpTotal', r.total], ['cpDelivered', r.delivered], ['cpPending', r.pending], ['cpUndelivered', r.undelivered], ['cpFailed', r.failed]].map(([k, n]) => `<div class="stat"><b>${num(n)}</b><small>${t(k)}</small></div>`).join('')}</div>
+        ${r.dev ? `<p class="muted hint">${t('cpDevNote')} (${num(r.dev)})</p>` : ''}
+        <div class="scroll" style="max-height:280px"><table class="rt"><thead><tr><th>${t('lTo')}</th><th>${t('lTime')}</th><th>${t('lStatus')}</th></tr></thead><tbody>${d.messages.slice(0, 200).map((m) => `<tr><td dir="ltr">${esc(m.to)}</td><td><small>${fmtDate(m.at)}</small></td><td>${m.status === 'failed' ? `<span class="pill bad" title="${esc(m.error || '')}">${t('ls_failed')}</span>` : m.delivery ? `<span class="pill ${m.delivery.state === 'delivered' ? 'ok' : m.delivery.state === 'transit' || m.delivery.state === 'queued' ? 'warn' : 'bad'}">${t('ds_' + m.delivery.state)}</span>` : `<span class="pill ${m.status === 'sent' ? 'warn' : ''}">${t(m.status === 'sent' ? 'cpPending' : 'ls_dev')}</span>`}</td></tr>`).join('')}</tbody></table></div>
+        <div class="actions"><button class="btn sec" id="rr">${t('cpRefresh')}</button><a class="btn sec" id="rx" href="/api/admin/campaigns/${id}/export">${t('cpExport')}</a><button class="btn" id="rc">${t('cancel')}</button></div>`);
+      $('#rc').onclick = () => closeModal();
+      $('#rr').onclick = async () => { try { await api('/messages/refresh', { method: 'POST' }); toast(t('lRefreshed')); closeModal(); load(); } catch (er) { toast(errMsg(er)); } };
+    };
+    try { await load(); } catch (er) { toast(errMsg(er)); }
   }
 
   async function logTab() {
     const f = { status: '', q: '' };
-    $('#mb').innerHTML = `<div class="filters" style="grid-template-columns:2fr 1fr"><input id="lq" type="search" placeholder="${t('lTo')} / ${t('lText')}"><select id="ls"><option value="">${t('lStatus')}: ${t('lAll')}</option>${['sent', 'failed', 'dev'].map((s) => `<option value="${s}">${t('ls_' + s)}</option>`).join('')}</select></div>
+    $('#mb').innerHTML = `<div id="kvbal"></div><div class="filters" style="grid-template-columns:2fr 1fr auto"><input id="lq" type="search" placeholder="${t('lTo')} / ${t('lText')}"><select id="ls"><option value="">${t('lStatus')}: ${t('lAll')}</option>${['sent', 'failed', 'dev'].map((s) => `<option value="${s}">${t('ls_' + s)}</option>`).join('')}</select><button class="btn sec" id="lr" hidden>${t('cpRefresh')}</button></div>
       <div class="scroll"><table class="rt"><thead><tr><th>${t('lTime')}</th><th>${t('lTo')}</th><th>${t('lType')}</th><th>${t('lText')}</th><th>${t('lStatus')}</th></tr></thead><tbody id="lb"></tbody></table></div>`;
     const load = async () => {
       const list = await api('/messages/log?' + qs({ q: f.q, status: f.status, limit: 300 }));
       $('#lb').innerHTML = list.map((m) => `<tr><td class="c-name"><small>${fmtDate(m.at)}</small></td><td data-label="${t('lTo')}" dir="ltr">${esc(m.to)}</td><td data-label="${t('lType')}"><span class="pill">${esc(m.type || '')}</span></td><td data-label="${t('lText')}"><span style="white-space:pre-line;text-align:start">${esc(m.text)}${m.error ? `<br><small style="color:var(--bad)">${esc(m.error)}</small>` : ''}</span></td>
-        <td data-label="${t('lStatus')}"><span class="pill ${m.status === 'sent' ? 'ok' : m.status === 'failed' ? 'bad' : ''}">${t('ls_' + m.status)}</span></td></tr>`).join('') || `<tr><td colspan="5" class="emptyrow">${t('empty')}</td></tr>`;
+        <td data-label="${t('lStatus')}"><span class="pill ${m.status === 'sent' ? 'ok' : m.status === 'failed' ? 'bad' : ''}">${t('ls_' + m.status)}</span>${m.delivery ? ` <span class="pill ${m.delivery.state === 'delivered' ? 'ok' : m.delivery.state === 'transit' || m.delivery.state === 'queued' ? 'warn' : 'bad'}" title="${esc(m.delivery.text || '')}">${t('ds_' + m.delivery.state)}</span>` : ''}${m.via === 'lookup' ? ` <small class="muted">${t('via_lookup')}</small>` : ''}</td></tr>`).join('') || `<tr><td colspan="5" class="emptyrow">${t('empty')}</td></tr>`;
     };
     let qt; $('#lq').oninput = (e) => { clearTimeout(qt); qt = setTimeout(() => { f.q = e.target.value; load(); }, 250); }; $('#ls').onchange = (e) => { f.status = e.target.value; load(); };
     load();
+    api('/settings/status').then(async (s) => {
+      if (s.provider !== 'kavenegar') return;
+      $('#lr').hidden = false; $('#lr').onclick = async () => { try { const r = await api('/messages/refresh', { method: 'POST' }); toast(t('lRefreshed') + ' (' + num(r.updated || 0) + ')'); load(); } catch (er) { toast(errMsg(er)); } };
+      try { const b = await api('/settings/sms/balance'); if (b.balance) $('#kvbal').innerHTML = `<div class="banner ok">${t('lBalance')}: <b>${num(b.balance.credit)}</b></div>`; } catch {}
+    }).catch(() => {});
   }
 
   return { dict, pages: {

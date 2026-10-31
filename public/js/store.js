@@ -244,16 +244,21 @@
       ${me ? `<div class="sumrow"><span>${t('phone')}</span><b dir="ltr">${esc(me.phone)}</b></div>` : `<label>${t('phone')}<input name="phone" required inputmode="tel" dir="ltr" autocomplete="tel" placeholder="09xxxxxxxxx"></label>${checkoutCfg.requireLogin ? '' : `<button class="link" type="button" id="coLogin">${t('loginFaster')}</button>`}`}
       <label>${t('address')}<textarea name="address" rows="3" required maxlength="500" autocomplete="street-address">${esc(me ? me.address : '')}</textarea></label>
       <label>${t('note')}<textarea name="note" rows="2" maxlength="500"></textarea></label>
+      ${checkoutCfg.online ? `<fieldset class="paym"><legend>${t('payMethod')}</legend><label class="check"><input type="radio" name="pm" value="online" checked> <span>${t('payOnline')} <small class="muted">· ${t('payOnlineHint')}</small></span></label><label class="check"><input type="radio" name="pm" value="later"> <span>${t('payLater')}</span></label>${checkoutCfg.sandbox ? `<small class="muted">${t('paySandbox')}</small>` : ''}</fieldset>` : ''}
       <label class="check"><input type="checkbox" name="opt" ${me && me.marketingOptIn ? 'checked' : ''}> <span>${t('optInSms')}</span></label>
       <div class="sumrow"><span>${t('subtotal')}</span><span id="cSub"></span></div><div class="sumrow" id="cDiscRow" hidden><span>${t('discount')}</span><span id="cDisc"></span></div><div class="sumrow total"><b>${t('total')}</b><b id="cTot"></b></div>
-      <div class="err" id="coErr"></div><button class="btn" type="submit">${t('placeOrder')}</button><button class="btn ghost" type="button" id="coBack">${t('back')}</button></form>`);
+      <div class="err" id="coErr"></div><button class="btn" type="submit" id="coSubmit">${t('placeOrder')}</button><button class="btn ghost" type="button" id="coBack">${t('back')}</button></form>`);
     $('#coBack').onclick = openCart; if ($('#coLogin')) $('#coLogin').onclick = () => authDrawer(() => checkoutForm());
     refreshTotals('c');
+    const syncBtn = () => { const f = $('#co'); if (f.pm) $('#coSubmit').textContent = t(f.pm.value === 'online' ? 'payAndOrder' : 'placeOrder'); };
+    if ($('#co').pm) { syncBtn(); $('#co').addEventListener('change', syncBtn); }
     $('#co').onsubmit = async (e) => {
       e.preventDefault(); const f = e.target, btn = f.querySelector('[type=submit]'); btn.disabled = true; $('#coErr').textContent = '';
       try {
-        const j = await jsonApi('/api/orders', { method: 'POST', body: { name: f.name.value, phone: f.phone ? f.phone.value : undefined, address: f.address.value, note: f.note.value, items: cart, coupon, marketingOptIn: f.opt.checked } });
+        const j = await jsonApi('/api/orders', { method: 'POST', body: { name: f.name.value, phone: f.phone ? f.phone.value : undefined, address: f.address.value, note: f.note.value, items: cart, coupon, marketingOptIn: f.opt.checked, payOnline: !!f.pm && f.pm.value === 'online' } });
         cart = []; coupon = ''; ls.set('coupon', ''); saveCart(); await load(); if (me) await loadMe();
+        if (j.payUrl) { drawer(`<div class="dh"><b>${t('checkout')}</b></div><div class="done"><p>${t('payRedirect')}</p></div>`); location.href = j.payUrl; return; }
+        if (j.payError) return payResult('failed', j.orderId, j.payKey, t('payErrGate'));
         drawer(`<div class="dh"><b>${t('cart')}</b><button data-close aria-label="${t('close')}">✕</button></div><div class="done"><h2 class="display">${t('orderDone')}</h2><p>${t('orderNum')}: <b>${num(j.orderId)}</b></p><p>${t('orderMsg')}</p>${me ? `<a class="btn ghost" data-link href="/account">${t('myOrders')}</a>` : ''}<button class="btn" data-close>${t('continue')}</button></div>`);
       } catch (er) {
         const d = er.data || {}, c = d.error;
@@ -266,6 +271,19 @@
 
   // ---------- customer login (SMS code) & account ----------
   let me = null, checkoutCfg = { requireLogin: false };
+  // back from the payment page (?pay=paid|failed|pending&order=ID&k=KEY) or a gateway error at checkout
+  function payResult(state, id, key, note) {
+    const ok = state === 'paid', wait = state === 'pending';
+    drawer(`<div class="dh"><b>${t('cart')}</b><button data-close aria-label="${t('close')}">✕</button></div><div class="done"><h2 class="display">${t(ok ? 'payPaidTitle' : wait ? 'payPendingTitle' : 'payFailTitle')}</h2>
+      <p>${t('payRef')}: <b>${num(id)}</b></p><p>${esc(note || t(ok ? 'payPaidMsg' : wait ? 'payPendingMsg' : 'payFailMsg'))}</p>
+      ${ok ? '' : `<button class="btn" id="payAgain">${t('payRetry')}</button>`}${me ? `<a class="btn ghost" data-link href="/account">${t('myOrders')}</a>` : ''}<button class="btn ${ok ? '' : 'ghost'}" data-close>${t('continue')}</button></div>`);
+    const b = $('#payAgain'); if (b) b.onclick = async () => { b.disabled = true; try { const r = await jsonApi(`/api/orders/${id}/pay`, { method: 'POST', body: { key } }); location.href = r.payUrl; } catch { b.disabled = false; $('.done p:last-of-type').textContent = t('errGeneric'); } };
+  }
+  function payReturn() {
+    const q = new URLSearchParams(location.search), st = q.get('pay'); if (!st) return;
+    history.replaceState({}, '', location.pathname);
+    payResult(['paid', 'pending'].includes(st) ? st : 'failed', Number(q.get('order')), q.get('k') || '');
+  }
   async function loadMe() { try { const j = await jsonApi('/api/auth/me'); me = j.customer; checkoutCfg = j.checkout || checkoutCfg; } catch {} chrome(); }
   function authDrawer(after) {
     let phone = '', timer;
@@ -336,5 +354,5 @@
   async function load() {
     try { data = await (await fetch('/api/store')).json(); } catch { toast(t('errGeneric')); }
   }
-  (async () => { chrome(); if (window.UX) $('#app').innerHTML = `<div class="page-title display ux-skel" style="margin:70px 20px 60px;height:90px;width:40%"></div>${UX.skeletonGrid(8, ui.cols)}`; await Promise.all([load(), loadMe()]); route(); track('view'); })();
+  (async () => { chrome(); if (window.UX) $('#app').innerHTML = `<div class="page-title display ux-skel" style="margin:70px 20px 60px;height:90px;width:40%"></div>${UX.skeletonGrid(8, ui.cols)}`; await Promise.all([load(), loadMe()]); route(); payReturn(); track('view'); })();
 })();
