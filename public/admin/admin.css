@@ -1,7 +1,7 @@
 :root { --bg:#f5f5f4; --card:#fff; --fg:#111; --muted:#6b6b6b; --line:#e5e5e3; --accent:#111; --ok:#1a7f4b; --warn:#b45309; --bad:#c0392b; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--bg); color: var(--fg); font: 14px/1.5 'Inter', system-ui, sans-serif; }
-html[lang=fa] body { font-family: 'Vazirmatn', system-ui, sans-serif; }
+html[lang=fa] body { font-family: 'Dana', system-ui, sans-serif; }
 button, input, select, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; }
 .login { max-width: 340px; margin: 18vh auto; background: var(--card); padding: 28px; border: 1px solid var(--line); border-radius: 10px; display: grid; gap: 14px; }

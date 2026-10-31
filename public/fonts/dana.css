@@ -1,0 +1,6 @@
+/* Dana (FontIran) — licensed font, used for Persian text. Keep FontLicense.txt next to these files. */
+@font-face { font-family: 'Dana'; font-weight: 400; font-style: normal; font-display: swap; src: url(Dana-Regular.woff2) format('woff2'); }
+@font-face { font-family: 'Dana'; font-weight: 500; font-style: normal; font-display: swap; src: url(Dana-Medium.woff2) format('woff2'); }
+@font-face { font-family: 'Dana'; font-weight: 600; font-style: normal; font-display: swap; src: url(Dana-DemiBold.woff2) format('woff2'); }
+@font-face { font-family: 'Dana'; font-weight: 700; font-style: normal; font-display: swap; src: url(Dana-Bold.woff2) format('woff2'); }
+@font-face { font-family: 'Dana'; font-weight: 800; font-style: normal; font-display: swap; src: url(Dana-ExtraBold.woff2) format('woff2'); }
