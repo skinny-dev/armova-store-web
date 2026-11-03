@@ -10,10 +10,12 @@ const str = (v, max = 500) => (typeof v === 'string' ? v.trim().slice(0, max) : 
 const CUST_MS = 30 * 864e5;
 const pubCustomer = (c) => c && ({ id: c.id, phone: c.phone, name: c.name || '', address: c.address || '', marketingOptIn: !!c.marketingOptIn });
 const checkout = () => ({ requireLogin: false, ...((db.get().settings || {}).checkout || {}), online: zibal.enabled(), sandbox: zibal.cfg().sandbox });
-// public address used for the payment return URL: the configured one, else the request's (https behind a TLS proxy such as Runflare)
+// Payment return URL base = the address the customer is actually on (Zibal only accepts the domain registered for the merchant, so a
+// wrong "public address" setting must not be used here). https behind a TLS proxy such as Runflare; the configured address is only a fallback.
 const origin = (req) => {
-  if (orders.baseUrl()) return orders.baseUrl();
-  const host = req.get('host') || '', local = /^(localhost|127\.|\[::1\])/.test(host), fwd = String(req.headers['x-forwarded-proto'] || '').split(',')[0].trim();
+  const host = String(req.headers['x-forwarded-host'] || req.get('host') || '').split(',')[0].trim();
+  if (!host) return orders.baseUrl();
+  const local = /^(localhost|127\.|\[::1\])/.test(host), fwd = String(req.headers['x-forwarded-proto'] || '').split(',')[0].trim();
   return `${fwd || (local ? req.protocol : 'https')}://${host}`;
 };
 
@@ -132,7 +134,7 @@ module.exports = function (app) {
     const out = { ok: true, orderId: order.id, total: order.total };
     if (zibal.enabled()) { // online payment is on: every web order is paid online; open a Zibal payment; the order stays unpaid until it is verified
       const p = await zibal.start(order, origin(req) + '/pay/zibal/callback'); db.save();
-      if (p.payUrl) out.payUrl = p.payUrl; else out.payError = p.error;
+      if (p.payUrl) out.payUrl = p.payUrl; else { out.payError = p.error; out.payDetail = String(p.message || p.code || '').slice(0, 160); }
       out.payKey = zibal.payToken(order);
     }
     res.json(out);

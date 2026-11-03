@@ -257,7 +257,7 @@
         const j = await jsonApi('/api/orders', { method: 'POST', body: { name: f.name.value, phone: f.phone ? f.phone.value : undefined, address: f.address.value, note: f.note.value, items: cart, coupon, marketingOptIn: f.opt.checked, payOnline: !!checkoutCfg.online } });
         cart = []; coupon = ''; ls.set('coupon', ''); saveCart(); await load(); if (me) await loadMe();
         if (j.payUrl) { drawer(`<div class="dh"><b>${t('checkout')}</b></div><div class="done"><p>${t('payRedirect')}</p></div>`); location.href = j.payUrl; return; }
-        if (j.payError) return payResult('failed', j.orderId, j.payKey, t('payErrGate'));
+        if (j.payError) return payResult('failed', j.orderId, j.payKey, t('payErrGate') + (j.payDetail ? ' (' + j.payDetail + ')' : ''));
         drawer(`<div class="dh"><b>${t('cart')}</b><button data-close aria-label="${t('close')}">✕</button></div><div class="done"><h2 class="display">${t('orderDone')}</h2><p>${t('orderNum')}: <b>${num(j.orderId)}</b></p><p>${t('orderMsg')}</p>${me ? `<a class="btn ghost" data-link href="/account">${t('myOrders')}</a>` : ''}<button class="btn" data-close>${t('continue')}</button></div>`);
       } catch (er) {
         const d = er.data || {}, c = d.error;
