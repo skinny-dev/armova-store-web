@@ -219,3 +219,4 @@ body.lock { overflow: hidden; }
 @media (max-width: 900px) { #lang { display: none; } .row b { font-weight: 600; } }
 
 .paym { border: 0; padding: 0; margin: 4px 0 8px; display: grid; gap: 8px; } .paym legend { font-size: 12px; text-transform: uppercase; padding: 0 0 6px; color: var(--muted); } .paym .check { align-items: center; }
+.paynote { margin: 4px 0 8px; font-size: 12px; line-height: 1.7; }

@@ -9,6 +9,8 @@ const db = require('./lib/db');
 const PORT = process.env.PORT || 4000; // set PORT in the environment (e.g. PORT=80 on Runflare)
 const UPLOADS = process.env.UPLOADS_DIR || path.join(__dirname, 'uploads'); // UPLOADS_DIR: persistent volume for product photos
 fs.mkdirSync(UPLOADS, { recursive: true });
+// catalog/uploads ships with the code: put back any photo that is missing (an ephemeral disk is wiped on every deploy)
+try { const src = path.join(__dirname, 'catalog', 'uploads'); let n = 0; for (const f of fs.existsSync(src) ? fs.readdirSync(src) : []) if (!fs.existsSync(path.join(UPLOADS, f))) { fs.copyFileSync(path.join(src, f), path.join(UPLOADS, f)); n++; } if (n) console.log(`Restored ${n} catalog photos.`); } catch (e) { console.error('photo restore failed:', e.message); }
 const A = require('./lib/auth');
 A.ensure();
 const sms = require('./lib/sms');

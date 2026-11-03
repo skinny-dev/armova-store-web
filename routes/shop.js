@@ -10,7 +10,12 @@ const str = (v, max = 500) => (typeof v === 'string' ? v.trim().slice(0, max) : 
 const CUST_MS = 30 * 864e5;
 const pubCustomer = (c) => c && ({ id: c.id, phone: c.phone, name: c.name || '', address: c.address || '', marketingOptIn: !!c.marketingOptIn });
 const checkout = () => ({ requireLogin: false, ...((db.get().settings || {}).checkout || {}), online: zibal.enabled(), sandbox: zibal.cfg().sandbox });
-const origin = (req) => orders.baseUrl() || `${req.protocol}://${req.get('host')}`;
+// public address used for the payment return URL: the configured one, else the request's (https behind a TLS proxy such as Runflare)
+const origin = (req) => {
+  if (orders.baseUrl()) return orders.baseUrl();
+  const host = req.get('host') || '', local = /^(localhost|127\.|\[::1\])/.test(host), fwd = String(req.headers['x-forwarded-proto'] || '').split(',')[0].trim();
+  return `${fwd || (local ? req.protocol : 'https')}://${host}`;
+};
 
 function startCustomerSession(res, c) {
   c.lastLoginAt = Date.now(); db.save();
@@ -125,7 +130,7 @@ module.exports = function (app) {
     s.orders.push(order); db.bump('orders'); db.bump('revenue', order.total); db.save();
     orders.onCreated(order);
     const out = { ok: true, orderId: order.id, total: order.total };
-    if (b.payOnline === true && zibal.enabled()) { // customer chose to pay online: open a Zibal payment; the order stays unpaid until it is verified
+    if (zibal.enabled()) { // online payment is on: every web order is paid online; open a Zibal payment; the order stays unpaid until it is verified
       const p = await zibal.start(order, origin(req) + '/pay/zibal/callback'); db.save();
       if (p.payUrl) out.payUrl = p.payUrl; else out.payError = p.error;
       out.payKey = zibal.payToken(order);

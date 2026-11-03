@@ -244,18 +244,17 @@
       ${me ? `<div class="sumrow"><span>${t('phone')}</span><b dir="ltr">${esc(me.phone)}</b></div>` : `<label>${t('phone')}<input name="phone" required inputmode="tel" dir="ltr" autocomplete="tel" placeholder="09xxxxxxxxx"></label>${checkoutCfg.requireLogin ? '' : `<button class="link" type="button" id="coLogin">${t('loginFaster')}</button>`}`}
       <label>${t('address')}<textarea name="address" rows="3" required maxlength="500" autocomplete="street-address">${esc(me ? me.address : '')}</textarea></label>
       <label>${t('note')}<textarea name="note" rows="2" maxlength="500"></textarea></label>
-      ${checkoutCfg.online ? `<fieldset class="paym"><legend>${t('payMethod')}</legend><label class="check"><input type="radio" name="pm" value="online" checked> <span>${t('payOnline')} <small class="muted">· ${t('payOnlineHint')}</small></span></label><label class="check"><input type="radio" name="pm" value="later"> <span>${t('payLater')}</span></label>${checkoutCfg.sandbox ? `<small class="muted">${t('paySandbox')}</small>` : ''}</fieldset>` : ''}
+      ${checkoutCfg.online ? `<p class="muted paynote">${t('payOnline')} · ${t('payOnlineHint')}${checkoutCfg.sandbox ? '<br>' + t('paySandbox') : ''}</p>` : ''}
       <label class="check"><input type="checkbox" name="opt" ${me && me.marketingOptIn ? 'checked' : ''}> <span>${t('optInSms')}</span></label>
       <div class="sumrow"><span>${t('subtotal')}</span><span id="cSub"></span></div><div class="sumrow" id="cDiscRow" hidden><span>${t('discount')}</span><span id="cDisc"></span></div><div class="sumrow total"><b>${t('total')}</b><b id="cTot"></b></div>
       <div class="err" id="coErr"></div><button class="btn" type="submit" id="coSubmit">${t('placeOrder')}</button><button class="btn ghost" type="button" id="coBack">${t('back')}</button></form>`);
     $('#coBack').onclick = openCart; if ($('#coLogin')) $('#coLogin').onclick = () => authDrawer(() => checkoutForm());
     refreshTotals('c');
-    const syncBtn = () => { const f = $('#co'); if (f.pm) $('#coSubmit').textContent = t(f.pm.value === 'online' ? 'payAndOrder' : 'placeOrder'); };
-    if ($('#co').pm) { syncBtn(); $('#co').addEventListener('change', syncBtn); }
+    if (checkoutCfg.online) $('#coSubmit').textContent = t('payAndOrder');
     $('#co').onsubmit = async (e) => {
       e.preventDefault(); const f = e.target, btn = f.querySelector('[type=submit]'); btn.disabled = true; $('#coErr').textContent = '';
       try {
-        const j = await jsonApi('/api/orders', { method: 'POST', body: { name: f.name.value, phone: f.phone ? f.phone.value : undefined, address: f.address.value, note: f.note.value, items: cart, coupon, marketingOptIn: f.opt.checked, payOnline: !!f.pm && f.pm.value === 'online' } });
+        const j = await jsonApi('/api/orders', { method: 'POST', body: { name: f.name.value, phone: f.phone ? f.phone.value : undefined, address: f.address.value, note: f.note.value, items: cart, coupon, marketingOptIn: f.opt.checked, payOnline: !!checkoutCfg.online } });
         cart = []; coupon = ''; ls.set('coupon', ''); saveCart(); await load(); if (me) await loadMe();
         if (j.payUrl) { drawer(`<div class="dh"><b>${t('checkout')}</b></div><div class="done"><p>${t('payRedirect')}</p></div>`); location.href = j.payUrl; return; }
         if (j.payError) return payResult('failed', j.orderId, j.payKey, t('payErrGate'));
