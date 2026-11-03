@@ -154,7 +154,7 @@ module.exports = function (app) {
   app.get('/pay/zibal/callback', async (req, res) => {
     const track = String(req.query.trackId || ''), o = db.get().orders.find((x) => x.payment && x.payment.gateway === 'zibal' && x.payment.trackId === track);
     if (!o) return res.redirect('/');
-    const r = await zibal.settle(o); db.save();
+    const r = await zibal.settle(o, req.query); db.save();
     const state = r.state === 'paid' ? 'paid' : r.state === 'pending' ? 'pending' : 'failed';
     res.redirect(`/?pay=${state}&order=${o.id}&k=${zibal.payToken(o)}`);
   });

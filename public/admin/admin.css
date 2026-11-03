@@ -165,3 +165,6 @@ a.btn { text-decoration: none; display: inline-block; }
 .repbar { display: flex; height: 10px; border-radius: 5px; overflow: hidden; background: var(--line, #eee); margin: 10px 0; } .repbar i { display: block; height: 100%; } .repbar .ok { background: var(--ok, #2e9e5b); } .repbar .warn { background: #e0a526; } .repbar .bad { background: var(--bad, #d64545); } .repbar .dev { background: #bbb; }
 .kvbox { margin: 8px 0; padding: 10px; border: 1px dashed var(--line, #ddd); border-radius: 8px; }
 .stat { padding: 8px 10px; border: 1px solid var(--line, #e5e5e5); border-radius: 8px; } .stat b { display: block; font-size: 18px; } .stat small { color: var(--muted, #777); }
+
+select.paysel { font-weight: 600; } select.paysel.ok { background: #e3f5ea; color: #137040; border-color: #9fd6b5; } select.paysel.bad { background: #fde8e8; color: #b42222; border-color: #eba5a5; } select.paysel.wait { background: #fff2d6; color: #8a5a00; border-color: #e6c77a; }
+.zinfo { display: block; margin-bottom: 4px; font-size: 11px; color: var(--muted, #777); } .zinfo.bad { color: #b42222; } .zinfo.ok { color: #137040; }

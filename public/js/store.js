@@ -273,7 +273,7 @@
   // back from the payment page (?pay=paid|failed|pending&order=ID&k=KEY) or a gateway error at checkout
   function payResult(state, id, key, note) {
     const ok = state === 'paid', wait = state === 'pending';
-    drawer(`<div class="dh"><b>${t('cart')}</b><button data-close aria-label="${t('close')}">✕</button></div><div class="done"><h2 class="display">${t(ok ? 'payPaidTitle' : wait ? 'payPendingTitle' : 'payFailTitle')}</h2>
+    drawer(`<div class="dh"><b>${t('cart')}</b><button data-close aria-label="${t('close')}">✕</button></div><div class="done payres ${ok ? 'ok' : wait ? 'wait' : 'bad'}"><span class="payico" aria-hidden="true">${ok ? '✓' : wait ? '…' : '✕'}</span><h2 class="display">${t(ok ? 'payPaidTitle' : wait ? 'payPendingTitle' : 'payFailTitle')}</h2>
       <p>${t('payRef')}: <b>${num(id)}</b></p><p>${esc(note || t(ok ? 'payPaidMsg' : wait ? 'payPendingMsg' : 'payFailMsg'))}</p>
       ${ok ? '' : `<button class="btn" id="payAgain">${t('payRetry')}</button>`}${me ? `<a class="btn ghost" data-link href="/account">${t('myOrders')}</a>` : ''}<button class="btn ${ok ? '' : 'ghost'}" data-close>${t('continue')}</button></div>`);
     const b = $('#payAgain'); if (b) b.onclick = async () => { b.disabled = true; try { const r = await jsonApi(`/api/orders/${id}/pay`, { method: 'POST', body: { key } }); location.href = r.payUrl; } catch { b.disabled = false; $('.done p:last-of-type').textContent = t('errGeneric'); } };
@@ -326,12 +326,14 @@
         ${idx !== undefined && !bad ? `<div class="steps">${steps.map((s, i) => `<span class="${i <= idx ? 'on' : ''}">${t(s)}</span>`).join('')}</div>` : ''}
         ${o.items.map((i) => `<div class="oi"><span>${esc(L(i.name))} · ${esc(i.size)} ×${num(i.qty)}</span><span>${money(i.price * i.qty)}</span></div>`).join('')}
         <div class="oi tot"><b>${t('total')}</b><b>${money(o.total)}${o.discount ? ` <small>(−${num(o.discount)})</small>` : ''}</b></div>
-        <div class="oi"><span>${t('payment')}</span><span>${t('pay_' + o.paymentStatus)}</span></div>
+        <div class="oi"><span>${t('payment')}</span><span class="paypill ${o.paymentStatus === 'paid' ? 'ok' : o.paymentStatus === 'unpaid' ? 'wait' : 'bad'}">${t('pay_' + o.paymentStatus)}</span></div>
         ${o.trackingCode ? `<div class="oi"><span>${t('trackingCode')}</span><b dir="ltr">${esc(o.trackingCode)}</b></div>` : ''}
-        <div class="oa">${['new', 'confirmed'].includes(o.status) ? `<button class="link" data-cancel="${o.id}">${t('cancelOrder')}</button>` : ''}${o.status === 'delivered' ? `<button class="link" data-return="${o.id}">${t('returnOrder')}</button>` : ''}</div></div>`; }).join('') || `<p class="empty">${t('noOrders')}</p>`}</section>`;
+        <div class="oa">${checkoutCfg.online && ['unpaid', 'failed'].includes(o.paymentStatus) && !['cancelled', 'returned'].includes(o.status) ? `<button class="btn sm" data-pay="${o.id}">${t('payNow')}</button>` : ''}${['new', 'confirmed'].includes(o.status) ? `<button class="link" data-cancel="${o.id}">${t('cancelOrder')}</button>` : ''}${o.status === 'delivered' ? `<button class="link" data-return="${o.id}">${t('returnOrder')}</button>` : ''}</div></div>`; }).join('') || `<p class="empty">${t('noOrders')}</p>`}</section>`;
     $('#lo').onclick = async () => { await jsonApi('/api/auth/logout', { method: 'POST' }).catch(() => {}); me = null; cart = cart; chrome(); go('/'); };
     $('#pf').onsubmit = async (e) => { e.preventDefault(); const f = e.target; try { const r = await jsonApi('/api/auth/me', { method: 'PUT', body: { name: f.name.value, address: f.address.value, marketingOptIn: f.opt.checked } }); me = r.customer; chrome(); toast(t('saved')); } catch { $('#pe').textContent = t('errGeneric'); } };
     $('#app').onclick = async (e) => {
+      const pb = e.target.closest('[data-pay]');
+      if (pb) { pb.disabled = true; try { const r = await jsonApi(`/api/orders/${pb.dataset.pay}/pay`, { method: 'POST', body: {} }); location.href = r.payUrl; } catch { pb.disabled = false; toast(t('payErrGate')); } return; }
       const b = e.target.closest('[data-cancel],[data-return]'); if (!b) return;
       try {
         if (b.dataset.cancel) { if (!confirm(t('confirmCancelOrder'))) return; await jsonApi(`/api/auth/orders/${b.dataset.cancel}/cancel`, { method: 'POST' }); }

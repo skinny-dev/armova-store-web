@@ -220,3 +220,11 @@ body.lock { overflow: hidden; }
 
 .paym { border: 0; padding: 0; margin: 4px 0 8px; display: grid; gap: 8px; } .paym legend { font-size: 12px; text-transform: uppercase; padding: 0 0 6px; color: var(--muted); } .paym .check { align-items: center; }
 .paynote { margin: 4px 0 8px; font-size: 12px; line-height: 1.7; }
+
+/* payment results: green = paid, red = failed, amber = waiting */
+.payres { text-align: center; } .payres .payico { display: grid; place-items: center; width: 64px; height: 64px; margin: 8px auto 14px; border-radius: 50%; font-size: 34px; font-weight: 700; color: #fff; }
+.payres.ok .payico { background: #1a8a4f; } .payres.bad .payico { background: #d03030; } .payres.wait .payico { background: #d99a12; }
+.payres.ok h2 { color: #1a8a4f; } .payres.bad h2 { color: #d03030; } .payres.wait h2 { color: #b37a05; }
+.payres.ok { border-top: 4px solid #1a8a4f; } .payres.bad { border-top: 4px solid #d03030; } .payres.wait { border-top: 4px solid #d99a12; }
+.paypill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+.paypill.ok { background: #e3f5ea; color: #137040; } .paypill.bad { background: #fde8e8; color: #b42222; } .paypill.wait { background: #fff2d6; color: #8a5a00; }
