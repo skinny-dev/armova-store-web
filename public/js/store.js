@@ -6,7 +6,7 @@
   let lang = ls.get('lang', 'fa'); if (!I18N[lang]) lang = 'fa';
   let data = { categories: [], products: [] };
   let cart = ls.get('cart', []);
-  let ui = { kind: 'product', cols: 4, sort: 'newest' };
+  let ui = { kind: 'product', cols: innerWidth <= 900 ? 8 : 4, sort: 'newest' }; // phones and tablets start with the 3x3 (dense) grid
   const t = (k) => I18N[lang][k] ?? k;
   const L = (o) => (o && (o[lang] || o.fa || o.en)) || '';
   const nf = () => new Intl.NumberFormat(lang === 'fa' ? 'fa-IR' : 'en-US');
