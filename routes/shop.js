@@ -1,15 +1,17 @@
 // Public shop API: customer OTP login, account, quote, orders, stock watch.
+const express = require('express');
 const db = require('../lib/db');
 const A = require('../lib/auth');
 const sms = require('../lib/sms');
 const pricing = require('../lib/pricing');
 const orders = require('../lib/orders');
 const zibal = require('../lib/zibal');
+const digipay = require('../lib/digipay');
 
 const str = (v, max = 500) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
 const CUST_MS = 30 * 864e5;
 const pubCustomer = (c) => c && ({ id: c.id, phone: c.phone, name: c.name || '', address: c.address || '', marketingOptIn: !!c.marketingOptIn });
-const checkout = () => ({ requireLogin: false, ...((db.get().settings || {}).checkout || {}), online: zibal.enabled(), sandbox: zibal.cfg().sandbox });
+const checkout = () => ({ requireLogin: false, ...((db.get().settings || {}).checkout || {}), online: zibal.enabled(), sandbox: zibal.cfg().sandbox, installment: digipay.enabled(), installmentMin: digipay.cfg().minTotal, installmentSandbox: digipay.cfg().sandbox });
 // Payment return URL base = the address the customer is actually on (Zibal only accepts the domain registered for the merchant, so a
 // wrong "public address" setting must not be used here). https behind a TLS proxy such as Runflare; the configured address is only a fallback.
 const origin = (req) => {
@@ -132,9 +134,10 @@ module.exports = function (app) {
     s.orders.push(order); db.bump('orders'); db.bump('revenue', order.total); db.save();
     orders.onCreated(order);
     const out = { ok: true, orderId: order.id, total: order.total };
-    if (zibal.enabled()) { // online payment is on: every web order is paid online; open a Zibal payment; the order stays unpaid until it is verified
-      const p = await zibal.start(order, origin(req) + '/pay/zibal/callback'); db.save();
-      if (p.payUrl) out.payUrl = p.payUrl; else { out.payError = p.error; out.payDetail = String(p.message || p.code || '').slice(0, 160); }
+    const gw = b.method === 'digipay' && digipay.enabled() ? 'digipay' : zibal.enabled() ? 'zibal' : digipay.enabled() ? 'digipay' : null;
+    if (gw) { // online payment is on: every web order is paid online (Zibal card payment, or Digipay installments); the order stays unpaid until it is verified
+      const p = gw === 'digipay' ? await digipay.start(order, origin(req) + '/pay/digipay/callback') : await zibal.start(order, origin(req) + '/pay/zibal/callback'); db.save();
+      if (p.payUrl) out.payUrl = p.payUrl; else { out.payError = p.error; out.payDetail = String(p.message || p.code || '').slice(0, 160); if (p.min) out.min = p.min; }
       out.payKey = zibal.payToken(order);
     }
     res.json(out);
@@ -145,10 +148,11 @@ module.exports = function (app) {
     const o = db.get().orders.find((x) => x.id === Number(req.params.id));
     const mine = o && req.customer && (o.customerId === req.customer.id || sms.normPhone(o.customer.phone) === req.customer.phone);
     if (!o || !(mine || zibal.tokenOk(o, (req.body || {}).key))) return res.status(404).json({ error: 'not_found' });
-    if (!zibal.enabled()) return res.status(409).json({ error: 'gateway_off' });
+    const want = (req.body || {}).method === 'digipay' ? 'digipay' : (req.body || {}).method === 'zibal' ? 'zibal' : (o.payment && o.payment.gateway) || (zibal.enabled() ? 'zibal' : 'digipay');
+    if (!(want === 'digipay' ? digipay.enabled() : zibal.enabled())) return res.status(409).json({ error: 'gateway_off' });
     if (o.paymentStatus === 'paid') return res.status(409).json({ error: 'already_paid' });
     if (['cancelled', 'returned'].includes(o.status)) return res.status(409).json({ error: 'order_closed' });
-    const p = await zibal.start(o, origin(req) + '/pay/zibal/callback'); db.save();
+    const p = want === 'digipay' ? await digipay.start(o, origin(req) + '/pay/digipay/callback') : await zibal.start(o, origin(req) + '/pay/zibal/callback'); db.save();
     p.payUrl ? res.json({ ok: true, payUrl: p.payUrl }) : res.status(502).json({ error: p.error });
   });
 
@@ -159,6 +163,14 @@ module.exports = function (app) {
     const r = await zibal.settle(o, req.query); db.save();
     const state = r.state === 'paid' ? 'paid' : r.state === 'pending' ? 'pending' : 'failed';
     res.redirect(`/?pay=${state}&order=${o.id}&k=${zibal.payToken(o)}`);
+  });
+  // Digipay posts the result to the callback URL (form or JSON); the browser lands here, we verify with Digipay and send the customer on
+  app.all('/pay/digipay/callback', express.urlencoded({ extended: false }), async (req, res) => {
+    const cb = { ...req.query, ...(req.body || {}) }, pid = String(cb.providerId || ''), o = db.get().orders.find((x) => x.payment && x.payment.gateway === 'digipay' && x.payment.providerId === pid);
+    if (!o) return res.redirect('/');
+    const r = await digipay.settle(o, cb); db.save();
+    const state = r.state === 'paid' ? 'paid' : r.state === 'pending' ? 'pending' : 'failed';
+    res.redirect(303, `/?pay=${state}&order=${o.id}&k=${digipay.payToken(o)}`);
   });
   // lets the result screen read the outcome without exposing the order
   app.get('/api/orders/:id/pay-state', (req, res) => {

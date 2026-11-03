@@ -258,20 +258,22 @@
       ${me ? `<div class="sumrow"><span>${t('phone')}</span><b dir="ltr">${esc(me.phone)}</b></div>` : `<label>${t('phone')}<input name="phone" required inputmode="tel" dir="ltr" autocomplete="tel" placeholder="09xxxxxxxxx"></label>${checkoutCfg.requireLogin ? '' : `<button class="link" type="button" id="coLogin">${t('loginFaster')}</button>`}`}
       <label>${t('address')}<textarea name="address" rows="3" required maxlength="500" autocomplete="street-address">${esc(me ? me.address : '')}</textarea></label>
       <label>${t('note')}<textarea name="note" rows="2" maxlength="500"></textarea></label>
-      ${checkoutCfg.online ? `<p class="muted paynote">${t('payOnline')} · ${t('payOnlineHint')}${checkoutCfg.sandbox ? '<br>' + t('paySandbox') : ''}</p>` : ''}
+      ${checkoutCfg.online && checkoutCfg.installment ? `<fieldset class="paym"><legend>${t('payMethod')}</legend><label class="check"><input type="radio" name="pm" value="zibal" checked> <span>${t('payCard')}</span></label><label class="check"><input type="radio" name="pm" value="digipay"> <span>${t('payInstallment')}${checkoutCfg.installmentMin ? ` <small class="muted">· ${t('payInstallmentMin')}: ${money(checkoutCfg.installmentMin)}</small>` : ''}</span></label>${checkoutCfg.installmentSandbox ? `<small class="muted">${t('payInstallmentSandbox')}</small>` : ''}</fieldset>`
+        : checkoutCfg.installment ? `<p class="muted paynote">${t('payInstallment')}${checkoutCfg.installmentSandbox ? '<br>' + t('payInstallmentSandbox') : ''}</p>`
+        : checkoutCfg.online ? `<p class="muted paynote">${t('payOnline')} · ${t('payOnlineHint')}${checkoutCfg.sandbox ? '<br>' + t('paySandbox') : ''}</p>` : ''}
       <label class="check"><input type="checkbox" name="opt" ${me && me.marketingOptIn ? 'checked' : ''}> <span>${t('optInSms')}</span></label>
       <div class="sumrow"><span>${t('subtotal')}</span><span id="cSub"></span></div><div class="sumrow" id="cDiscRow" hidden><span>${t('discount')}</span><span id="cDisc"></span></div><div class="sumrow total"><b>${t('total')}</b><b id="cTot"></b></div>
       <div class="err" id="coErr"></div><button class="btn" type="submit" id="coSubmit">${t('placeOrder')}</button><button class="btn ghost" type="button" id="coBack">${t('back')}</button></form>`);
     $('#coBack').onclick = openCart; if ($('#coLogin')) $('#coLogin').onclick = () => authDrawer(() => checkoutForm());
     refreshTotals('c');
-    if (checkoutCfg.online) $('#coSubmit').textContent = t('payAndOrder');
+    if (checkoutCfg.online || checkoutCfg.installment) $('#coSubmit').textContent = t('payAndOrder');
     $('#co').onsubmit = async (e) => {
       e.preventDefault(); const f = e.target, btn = f.querySelector('[type=submit]'); btn.disabled = true; $('#coErr').textContent = '';
       try {
-        const j = await jsonApi('/api/orders', { method: 'POST', body: { name: f.name.value, phone: f.phone ? f.phone.value : undefined, address: f.address.value, note: f.note.value, items: cart, coupon, marketingOptIn: f.opt.checked, payOnline: !!checkoutCfg.online } });
+        const j = await jsonApi('/api/orders', { method: 'POST', body: { name: f.name.value, phone: f.phone ? f.phone.value : undefined, address: f.address.value, note: f.note.value, items: cart, coupon, marketingOptIn: f.opt.checked, payOnline: !!(checkoutCfg.online || checkoutCfg.installment), method: f.pm ? f.pm.value : (checkoutCfg.online ? 'zibal' : 'digipay') } });
         cart = []; coupon = ''; ls.set('coupon', ''); saveCart(); await load(); if (me) await loadMe();
         if (j.payUrl) { drawer(`<div class="dh"><b>${t('checkout')}</b></div><div class="done"><p>${t('payRedirect')}</p></div>`); location.href = j.payUrl; return; }
-        if (j.payError) return payResult('failed', j.orderId, j.payKey, t('payErrGate') + (j.payDetail ? ' (' + j.payDetail + ')' : ''));
+        if (j.payError) return payResult('failed', j.orderId, j.payKey, (j.payError === 'installment_min' ? t('payInstallmentMin') + ': ' + money(j.min) : t('payErrGate')) + (j.payDetail && j.payError !== 'installment_min' ? ' (' + j.payDetail + ')' : ''));
         drawer(`<div class="dh"><b>${t('cart')}</b><button data-close aria-label="${t('close')}">✕</button></div><div class="done"><h2 class="display">${t('orderDone')}</h2><p>${t('orderNum')}: <b>${num(j.orderId)}</b></p><p>${t('orderMsg')}</p>${me ? `<a class="btn ghost" data-link href="/account">${t('myOrders')}</a>` : ''}<button class="btn" data-close>${t('continue')}</button></div>`);
       } catch (er) {
         const d = er.data || {}, c = d.error;
@@ -342,7 +344,7 @@
         <div class="oi tot"><b>${t('total')}</b><b>${money(o.total)}${o.discount ? ` <small>(−${num(o.discount)})</small>` : ''}</b></div>
         <div class="oi"><span>${t('payment')}</span><span class="paypill ${o.paymentStatus === 'paid' ? 'ok' : o.paymentStatus === 'unpaid' ? 'wait' : 'bad'}">${t('pay_' + o.paymentStatus)}</span></div>
         ${o.trackingCode ? `<div class="oi"><span>${t('trackingCode')}</span><b dir="ltr">${esc(o.trackingCode)}</b></div>` : ''}
-        <div class="oa">${checkoutCfg.online && ['unpaid', 'failed'].includes(o.paymentStatus) && !['cancelled', 'returned'].includes(o.status) ? `<button class="btn sm" data-pay="${o.id}">${t('payNow')}</button>` : ''}${['new', 'confirmed'].includes(o.status) ? `<button class="link" data-cancel="${o.id}">${t('cancelOrder')}</button>` : ''}${o.status === 'delivered' ? `<button class="link" data-return="${o.id}">${t('returnOrder')}</button>` : ''}</div></div>`; }).join('') || `<p class="empty">${t('noOrders')}</p>`}</section>`;
+        <div class="oa">${(checkoutCfg.online || checkoutCfg.installment) && ['unpaid', 'failed'].includes(o.paymentStatus) && !['cancelled', 'returned'].includes(o.status) ? `<button class="btn sm" data-pay="${o.id}">${t('payNow')}</button>` : ''}${['new', 'confirmed'].includes(o.status) ? `<button class="link" data-cancel="${o.id}">${t('cancelOrder')}</button>` : ''}${o.status === 'delivered' ? `<button class="link" data-return="${o.id}">${t('returnOrder')}</button>` : ''}</div></div>`; }).join('') || `<p class="empty">${t('noOrders')}</p>`}</section>`;
     $('#lo').onclick = async () => { await jsonApi('/api/auth/logout', { method: 'POST' }).catch(() => {}); me = null; cart = cart; chrome(); go('/'); };
     $('#pf').onsubmit = async (e) => { e.preventDefault(); const f = e.target; try { const r = await jsonApi('/api/auth/me', { method: 'PUT', body: { name: f.name.value, address: f.address.value, marketingOptIn: f.opt.checked } }); me = r.customer; chrome(); toast(t('saved')); } catch { $('#pe').textContent = t('errGeneric'); } };
     $('#app').onclick = async (e) => {

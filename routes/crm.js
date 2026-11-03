@@ -5,6 +5,7 @@ const sms = require('../lib/sms');
 const orders = require('../lib/orders');
 const campaign = require('../lib/campaign');
 const zibal = require('../lib/zibal');
+const digipay = require('../lib/digipay');
 
 const str = (v, max = 500) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -143,11 +144,18 @@ module.exports = function (admin) {
     const r = await zibal.settle(o); db.save(); res.json({ ...r, paymentStatus: o.paymentStatus, payment: o.payment });
   });
 
+  // ----- Digipay: report delivery again if it failed (e.g. Digipay was unreachable when the order was shipped) -----
+  admin.post('/orders/:id/digipay-deliver', A.can('orders.manage'), async (req, res) => {
+    const o = db.get().orders.find((x) => x.id === Number(req.params.id)); if (!o) return res.status(404).end();
+    const r = await digipay.deliver(o); db.save(); res.json({ ...r, payment: o.payment });
+  });
+
   // ----- settings -----
   const settingsView = () => {
     const s = db.get().settings || {}, c = sms.config();
-    const z = zibal.cfg();
-    return { payment: { zibal: { enabled: z.enabled, merchant: z.merchant, sandbox: z.sandbox, fromEnv: z.fromEnv } },
+    const z = zibal.cfg(), d = digipay.cfg();
+    return { payment: { zibal: { enabled: z.enabled, merchant: z.merchant, sandbox: z.sandbox, fromEnv: z.fromEnv },
+      digipay: { enabled: d.enabled, sandbox: d.sandbox, unit: d.mult === 1 ? 'toman' : 'rial', type: d.type, clientId: d.clientId, username: d.username, hasSecret: !!d.clientSecret, hasPassword: !!d.password, sellerId: d.sellerId, categoryId: d.categoryId, minTotal: d.minTotal, ready: d.ready, fromEnv: !!process.env.DIGIPAY_CLIENT_ID } },
       sms: { provider: c.provider, configured: sms.configured(), enabled: c.enabled, sender: c.sender, otpTemplate: c.otpTemplate, apiKeyMasked: mask(c.apiKey), fromEnv: c.fromEnv },
       checkout: { requireLogin: false, ...(s.checkout || {}) }, alerts: orders.alerts(), automation: { abandonedHours: 3, reviewDays: 3, ...(s.automation || {}) },
       lastFailure: sms.lastFailure(), publicUrl: s.publicUrl || '', storeName: s.storeName || '', promoFooter: s.promoFooter || '' };
@@ -170,6 +178,16 @@ module.exports = function (admin) {
       const z = ((s.settings.payment ||= {}).zibal ||= {}), n = b.payment.zibal;
       if (n.merchant !== undefined) z.merchant = str(n.merchant, 60).replace(/[^\w-]/g, '');
       if (n.enabled !== undefined) z.enabled = !!n.enabled;
+    }
+    if (b.payment && b.payment.digipay) {
+      const z = ((s.settings.payment ||= {}).digipay ||= {}), n = b.payment.digipay, id = (v, m) => String(v || '').trim().replace(/[^\w.@:-]/g, '').slice(0, m);
+      if (n.enabled !== undefined) z.enabled = !!n.enabled;
+      if (n.sandbox !== undefined) z.sandbox = !!n.sandbox;
+      if (['rial', 'toman'].includes(n.unit)) z.unit = n.unit;
+      if (n.type !== undefined) z.type = [5, 13].includes(Number(n.type)) ? Number(n.type) : 13;
+      for (const [k, m] of [['clientId', 80], ['username', 80], ['sellerId', 60], ['categoryId', 60]]) if (n[k] !== undefined) z[k] = id(n[k], m);
+      for (const k of ['clientSecret', 'password']) if (typeof n[k] === 'string' && n[k].trim() && !n[k].includes('•')) z[k] = n[k].trim().slice(0, 200);
+      if (n.minTotal !== undefined) z.minTotal = Math.max(0, Math.round(Number(n.minTotal)) || 0);
     }
     if (b.checkout) s.settings.checkout = { requireLogin: !!b.checkout.requireLogin };
     if (b.alerts) {
