@@ -23,7 +23,6 @@
   // ---------- chrome ----------
   function chrome() {
     document.documentElement.lang = lang; document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
-    if (!document.querySelector('meta[name=x-fixed-title]')) document.title = t('brand');
     $('#logo').textContent = t('brand');
     $('#nav').innerHTML = `<button class="menubtn" id="menuBtn" aria-label="${t('menu')}">☰</button><a href="/" data-link>${t('shop')}</a><a href="/about" data-link>${t('about')}</a><a href="/contact" data-link>${t('contact')}</a>`;
     $('#menuBtn').onclick = () => drawer(`<div class="dh"><b>${t('menu')}</b><button data-close aria-label="${t('close')}">✕</button></div><div class="db"><a class="row" data-link href="/">${t('shop')}</a>${(function walk(pid, depth) { return kids(pid).map((c) => `<a class="row sub" style="padding-inline-start:${20 + depth * 18}px" data-link href="/?cat=${encodeURIComponent(c.slug)}">${depth ? '└ ' : ''}${esc(L(c.name))}</a>${walk(c.id, depth + 1)}`).join(''); })(null, 0)}<a class="row" data-link href="/account">${me ? esc(me.name || t('account')) : t('login')}</a><a class="row" data-link href="/about">${t('about')}</a><a class="row" data-link href="/contact">${t('contact')}</a><button class="row" data-lang><span>${t('language')}</span><b>${t('otherLang')}</b></button></div>`, 'side');
@@ -44,25 +43,40 @@
   });
   addEventListener('popstate', route);
 
+  // <title>, description and canonical per page (the server renders the same for crawlers; this keeps them right while navigating inside the app)
+  const clip = (s, n) => (s.length <= n ? s : s.slice(0, n - 1).replace(/[\s،,؛;:-]+\S*$/, '') + '…');
+  function seo(title, desc, noindex) {
+    if (!document.querySelector('meta[name=x-fixed-title]')) document.title = clip(title, 60);
+    const set = (sel, make, attr, val) => { let el = document.head.querySelector(sel); if (!el) { el = document.createElement(make); document.head.appendChild(el); } el.setAttribute(attr, val); return el; };
+    if (desc) { set('meta[name=description]', 'meta', 'content', clip(desc, 160)).setAttribute('name', 'description'); set('meta[property="og:description"]', 'meta', 'content', clip(desc, 160)).setAttribute('property', 'og:description'); }
+    set('meta[property="og:title"]', 'meta', 'content', document.title).setAttribute('property', 'og:title');
+    set('meta[name=robots]', 'meta', 'content', noindex ? 'noindex,nofollow' : 'index,follow,max-image-preview:large').setAttribute('name', 'robots');
+    const c = set('link[rel=canonical]', 'link', 'href', location.origin + (noindex ? '' : location.pathname.replace(/\/$/, '') || '/')); c.setAttribute('rel', 'canonical'); if (noindex) c.remove();
+  }
   function route() {
     const path = decodeURIComponent(location.pathname), q = new URLSearchParams(location.search);
     let m;
-    if (path === '/' || path === '') shopPage(q.get('cat'));
+    if ((m = path.match(/^\/category\/([^/]+)$/))) shopPage(m[1]);
+    else if (path === '/' || path === '') shopPage(q.get('cat'));
     else if ((m = path.match(/^\/product\/(.+)$/))) productPage(m[1]);
-    else if (path === '/account') accountPage();
-    else if (path === '/about') staticPage(t('about'), t('aboutText'));
-    else if (path === '/contact') staticPage(t('contact'), t('contactText'));
-    else staticPage('404', t('notFound'));
+    else if (path === '/account') { seo(t('seoAccount'), '', true); accountPage(); }
+    else if (path === '/about') { seo(t('seoAbout'), t('aboutText')); staticPage(t('about'), t('aboutText'), true); }
+    else if (path === '/contact') { seo(t('seoContact'), t('contactText')); staticPage(t('contact'), t('contactText')); }
+    else { seo(t('seoNotFound'), t('notFound'), true); staticPage('404', t('notFound')); }
   }
-  const staticPage = (h, body) => { $('#app').innerHTML = `<section class="static"><h1 class="display">${esc(h)}</h1><p>${esc(body)}</p></section>`; };
+  const staticPage = (h, body, faq) => {
+    $('#app').innerHTML = `<section class="static"><h1 class="display">${esc(h)}</h1><p>${esc(body)}</p>${faq ? '<div id="faq"></div>' : ''}</section>`;
+    if (faq) fetch('/api/faq').then((r) => r.json()).then((list) => { const el = $('#faq'); if (el) el.innerHTML = `<h2>${t('faqTitle')}</h2>` + list.map((f) => `<details class="acc"><summary>${esc(L(f.q))}</summary><p>${esc(L(f.a))}</p></details>`).join(''); }).catch(() => {});
+  };
 
   // ---------- shop ----------
   function shopPage(catSlug) {
     const cat = data.categories.find((c) => c.slug === catSlug);
     const inCat = cat ? descIds(cat.id) : null;
+    seo(cat ? `${L(cat.name)} | ${t('seoCat')}` : t('seoHome'), cat ? `${L(cat.name)} — ${t('seoCat')}. ${lang === 'fa' ? 'سایزها و قیمت‌ها را ببینید و همین حالا سفارش دهید.' : 'See sizes and prices and order now.'}` : (lang === 'fa' ? 'آرموا برند پوشاک خیابانی با طراحی ساده، جنس باکیفیت و دوخت دقیق. همین حالا آنلاین سفارش دهید.' : 'Armova is a streetwear label: simple design, quality fabrics, precise construction. Order online now.'));
     let list = data.products.filter((p) => !cat || inCat.has(p.categoryId));
     if (ui.sort === 'priceAsc') list.sort((a, b) => unit(a) - unit(b)); else if (ui.sort === 'priceDesc') list.sort((a, b) => unit(b) - unit(a));
-    const href = (c) => (c.slug ? '/?cat=' + encodeURIComponent(c.slug) : '/');
+    const href = (c) => (c.slug ? '/category/' + encodeURIComponent(c.slug) : '/');
     const tab = (c, on) => `<a class="tab ${on ? 'on' : ''}" data-link href="${href(c)}">${esc(c.name)}</a>`;
     const path = cat ? catPath(cat.id) : [], root = path[0] || null;
     const tabs = [{ slug: '', name: t('all') }, ...kids(null).map((c) => ({ slug: c.slug, name: L(c.name), id: c.id }))].map((c) => tab(c, root ? c.id === root.id : !c.slug)).join('');
@@ -119,7 +133,7 @@
     if (!p) return staticPage('404', t('notFound'));
     pick = null; track('product', p.id);
     const cat = data.categories.find((c) => c.id === p.categoryId), cpath = catPath(p.categoryId);
-    if (!document.querySelector('meta[name=x-fixed-title]')) document.title = `${L(p.name)} | ${t('brand')}`;
+    { const pc = L(cat ? cat.name : ''), pt = `${L(p.name)} | ${pc ? pc + ' | ' : ''}${t('brand')}`; seo(pt.length <= 60 ? pt : `${L(p.name)} | ${t('brand')}`, `${L(p.description) ? clip(L(p.description), 90) + ' ' : ''}${L(p.name)}${pc ? ' — ' + pc : ''}: ${money(unit(p))}. ${lang === 'fa' ? 'سایزها و موجودی را ببینید و آنلاین سفارش دهید.' : 'See sizes and stock, then order online.'}`); }
     const sibs = p.group ? data.products.filter((x) => x.group === p.group).sort((a, b) => a.id - b.id) : [];
     const colorName = p.color ? L(p.color) : '';
     const cdot = p.color && p.color.hex ? `<i class="cdot" style="background:${esc(p.color.hex)}"></i>` : '';

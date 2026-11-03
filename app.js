@@ -305,15 +305,23 @@ if (process.env.WARM_THUMBS === '1') setTimeout(() => warmThumbs().catch(() => {
 // Enamad verification page: <title> and <body> are both the code.
 app.get('/23289698.txt', (req, res) => res.type('html').send('<!doctype html><html><head><meta charset="utf-8"><title>23289698</title></head><body>23289698</body></html>'));
 app.use('/uploads', express.static(UPLOADS, { maxAge: '365d', immutable: true, setHeaders: (r) => r.set('X-Content-Type-Options', 'nosniff') }));
-app.use('/admin', express.static(path.join(__dirname, 'public', 'admin')));
+const seo = require('./lib/seo');
+app.get('/robots.txt', (req, res) => res.type('text/plain').send(seo.robots(req)));
+app.get('/sitemap.xml', (req, res) => res.type('application/xml').send(seo.sitemap(req)));
+app.get('/llms.txt', (req, res) => res.type('text/markdown; charset=utf-8').send(seo.llms(req)));
+app.get('/api/faq', (req, res) => res.json(seo.FAQ));
+app.use('/admin', (req, res, next) => { res.set('X-Robots-Tag', 'noindex, nofollow'); next(); }, express.static(path.join(__dirname, 'public', 'admin')));
 app.use(express.static(path.join(__dirname, 'public'), { index: false }));
 app.get('/api/*', (req, res) => res.status(404).json({ error: 'not_found' }));
 // Storefront shell. ENAMAD_TITLE (temporary) replaces the page <title> in the raw HTML for domain-verification checks (e.g. Enamad).
 const INDEX = path.join(__dirname, 'public', 'index.html');
 app.get('*', (req, res) => {
+  if (/^\/(pay|api)\//.test(req.path)) { res.set('X-Robots-Tag', 'noindex'); }
+  const r = seo.render(req);
+  if (r.redirect) return res.redirect(301, r.redirect);
   const t = (process.env.ENAMAD_TITLE || '').replace(/[^\w\u0600-\u06ff .-]/g, '');
-  if (!t) return res.sendFile(INDEX);
-  res.type('html').send(fs.readFileSync(INDEX, 'utf8').replace(/<title>[^<]*<\/title>/, `<title>${t}</title><meta name="x-fixed-title" content="1">`));
+  const html = t ? r.html.replace(/<title>[^<]*<\/title>/, `<title>${t}</title><meta name="x-fixed-title" content="1">`) : r.html;
+  res.status(r.status).type('html').send(html);
 });
 
 process.on('SIGTERM', () => console.log('SIGTERM received (the platform is stopping this pod)'));
