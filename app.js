@@ -309,7 +309,7 @@ const seo = require('./lib/seo');
 app.get('/robots.txt', (req, res) => res.type('text/plain').send(seo.robots(req)));
 app.get('/sitemap.xml', (req, res) => res.type('application/xml').send(seo.sitemap(req)));
 app.get('/llms.txt', (req, res) => res.type('text/markdown; charset=utf-8').send(seo.llms(req)));
-app.get('/api/faq', (req, res) => res.json(seo.FAQ));
+app.get('/api/faq', (req, res) => res.json(seo.faq()));
 app.use('/admin', (req, res, next) => { res.set('X-Robots-Tag', 'noindex, nofollow'); next(); }, express.static(path.join(__dirname, 'public', 'admin')));
 app.use(express.static(path.join(__dirname, 'public'), { index: false }));
 app.get('/api/*', (req, res) => res.status(404).json({ error: 'not_found' }));

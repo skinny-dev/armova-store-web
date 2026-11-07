@@ -228,3 +228,8 @@ body.lock { overflow: hidden; }
 .payres.ok { border-top: 4px solid #1a8a4f; } .payres.bad { border-top: 4px solid #d03030; } .payres.wait { border-top: 4px solid #d99a12; }
 .paypill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
 .paypill.ok { background: #e3f5ea; color: #137040; } .paypill.bad { background: #fde8e8; color: #b42222; } .paypill.wait { background: #fff2d6; color: #8a5a00; }
+
+/* Digipay installments */
+.dpmark { display: inline-block; padding: 2px 9px; border-radius: 6px; background: #1d4ed8; color: #fff; font-size: 12px; font-weight: 700; letter-spacing: .02em; }
+.dpbox { display: flex; gap: 12px; align-items: flex-start; margin: 14px 0; padding: 12px 14px; border: 1px solid #c9d6f5; border-radius: 10px; background: #f3f6ff; } .dpbox > div { display: grid; gap: 2px; font-size: 13px; line-height: 1.6; } .dpbox b { font-size: 14px; } .dpbox small { color: var(--muted); font-size: 11px; }
+.dpstrip { margin: 0 0 14px; padding: 10px 14px; border: 1px solid #c9d6f5; border-radius: 10px; background: #f3f6ff; font-size: 13px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }

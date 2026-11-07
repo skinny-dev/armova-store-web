@@ -94,6 +94,7 @@
     const gb = (c, n) => { const g = n === 2 ? 3 : 2, s = (17 - g * (n - 1)) / n; let r = ''; for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) r += `<rect x="${(1.5 + x * (s + g)).toFixed(2)}" y="${(1.5 + y * (s + g)).toFixed(2)}" width="${s.toFixed(2)}" height="${s.toFixed(2)}" rx="1.2"/>`; return `<button class="gridbtn ${ui.cols === c ? 'on' : ''}" data-cols="${c}" aria-label="${n}×${n}" aria-pressed="${ui.cols === c}"><svg viewBox="0 0 20 20" aria-hidden="true">${r}</svg></button>`; };
     $('#app').innerHTML = `
       <h1 class="page-title display">${esc(cat ? L(cat.name) : t('allProducts'))}</h1>
+      ${checkoutCfg.installment ? `<p class="dpstrip"><span class="dpmark">${t('dpName')}</span> ${t('dpStrip')}</p>` : ''}
       <div class="tabs">${tabs}</div>${subTabs}
       <div class="bar">
         <select id="sort">${['newest', 'priceAsc', 'priceDesc'].map((k) => `<option value="${k}" ${ui.sort === k ? 'selected' : ''}>${t(k)}</option>`).join('')}</select>
@@ -160,6 +161,7 @@
         ${p.sale ? `<div class="salebar"><b>−${num(p.sale.percent)}${lang === 'fa' ? '٪' : '%'}</b> ${t('onSale')}${p.sale.endsAt ? ` · ${t('until')} ${new Date(p.sale.endsAt).toLocaleDateString(lang === 'fa' ? 'fa-IR' : 'en-GB')}` : ''}</div>` : ''}
         ${swatches}${sizeChips}
         <div class="buy"><button class="addbtn needs" id="addBtn" ${allOut ? 'disabled' : ''}><span id="addLbl">${allOut ? t('soldOut') : t('selectSize')}</span><span>${p.sale ? `<s class="price-old">${num(p.price)}</s>` : p.comparePrice ? `<s class="price-old">${num(p.comparePrice)}</s>` : ''}${money(unit(p))}</span></button></div>
+        ${dpBox(unit(p))}
         <p class="desc">${esc(L(p.description))}</p>
         <div class="acc">${rows ? `<details open><summary>${t('props')}</summary><dl class="props">${rows}</dl></details>` : ''}${acc(t('specs'), L(p.details))}</div>
         ${pn ? `<div class="pn"><a data-link href="/product/${encodeURIComponent(pn[0].slug)}">‹ ${t('prev')}</a><a data-link href="/product/${encodeURIComponent(pn[1].slug)}">${t('next')} ›</a></div>` : ''}
@@ -238,7 +240,7 @@
         <button class="link" data-rm="${i}">${t('remove')}</button></div></div></div>`).join('') : `<p class="empty">${t('emptyCart')}</p>`}</div>
       ${lines.length ? `<div class="df"><div class="coupon"><input id="cpn" dir="ltr" autocomplete="off" placeholder="${t('couponCode')}" value="${esc(coupon)}"><button class="btn ghost" id="cpnBtn">${t('apply')}</button></div><div id="cpnMsg" class="err"></div>
         <div class="sumrow"><span>${t('subtotal')} (${num(count)} ${t('items')})</span><span id="sSub">${money(est)}</span></div><div class="sumrow" id="sDiscRow" hidden><span>${t('discount')}</span><span id="sDisc"></span></div>
-        <div class="sumrow total"><b>${t('total')}</b><b id="sTot">${money(est)}</b></div><button class="btn" id="goCheckout">${t('checkout')}</button></div>` : ''}`);
+        <div class="sumrow total"><b>${t('total')}</b><b id="sTot">${money(est)}</b></div>${dpBox(est)}<button class="btn" id="goCheckout">${t('checkout')}</button></div>` : ''}`);
     const lines2 = cartLines();
     document.querySelectorAll('[data-q]').forEach((b) => (b.onclick = () => { const [i, d] = b.dataset.q.split(':').map(Number); const l = lines2[i]; const it = cart.find((c) => c.productId === l.productId && c.size === l.size); it.qty = Math.max(1, Math.min(l.max, it.qty + d)); saveCart(); openCart(); }));
     document.querySelectorAll('[data-rm]').forEach((b) => (b.onclick = () => { const l = lines2[+b.dataset.rm]; cart = cart.filter((c) => !(c.productId === l.productId && c.size === l.size)); saveCart(); openCart(); }));
@@ -286,6 +288,9 @@
 
   // ---------- customer login (SMS code) & account ----------
   let me = null, checkoutCfg = { requireLogin: false };
+  // Digipay installments: shown only while the service is switched on (and the amount reaches the minimum)
+  const dpOk = (price) => !!checkoutCfg.installment && price >= (checkoutCfg.installmentMin || 0);
+  const dpBox = (price) => (dpOk(price) ? `<div class="dpbox"><span class="dpmark">${t('dpName')}</span><div><b>${t('dpTitle')}</b><span>${t('dpParts').replace('{n}', money(Math.ceil(price / 4)))}</span><small>${t('dpFine')}</small></div></div>` : '');
   // back from the payment page (?pay=paid|failed|pending&order=ID&k=KEY) or a gateway error at checkout
   function payResult(state, id, key, note) {
     const ok = state === 'paid', wait = state === 'pending';
