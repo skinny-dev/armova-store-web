@@ -121,6 +121,7 @@
     }
     document.querySelectorAll('.card').forEach((c) => { const a = c.querySelector('img.alt'); if (a) c.addEventListener('pointerenter', () => { if (a.dataset.src) { a.src = a.dataset.src; delete a.dataset.src; } }, { once: true }); });
     $('#sort').onchange = (e) => { ui.sort = e.target.value; shopPage(catSlug); };
+    document.querySelectorAll('.dpb-ico, .dpb-word').forEach((im) => im.addEventListener('error', () => { if (im.classList.contains('dpb-word')) { const b = document.createElement('b'); b.textContent = t('dpName'); b.style.cssText = 'color:#1034e8;font-size:inherit'; im.replaceWith(b); } else im.remove(); }, { once: true }));
     if ($('#dpGo')) $('#dpGo').onclick = () => { const g = document.querySelector('.tabs') || document.querySelector('.grid'); if (g) g.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
     document.querySelectorAll('[data-cols]').forEach((b) => (b.onclick = () => { ui.cols = +b.dataset.cols; shopPage(catSlug); }));
     document.querySelectorAll('[data-kind]').forEach((b) => (b.onclick = () => { ui.kind = b.dataset.kind; shopPage(catSlug); }));

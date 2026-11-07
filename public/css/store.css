@@ -230,32 +230,29 @@ body.lock { overflow: hidden; }
 .paypill.ok { background: #e3f5ea; color: #137040; } .paypill.bad { background: #fde8e8; color: #b42222; } .paypill.wait { background: #fff2d6; color: #8a5a00; }
 
 /* Digipay installments */
-.dpmark { display: inline-block; padding: 2px 9px; border-radius: 6px; background: #1d4ed8; color: #fff; font-size: 12px; font-weight: 700; letter-spacing: .02em; }
-.dpbox { display: flex; gap: 12px; align-items: flex-start; margin: 14px 0; padding: 12px 14px; border: 1px solid #c9d6f5; border-radius: 10px; background: #f3f6ff; } .dpbox > div { display: grid; gap: 2px; font-size: 13px; line-height: 1.6; } .dpbox b { font-size: 14px; } .dpbox small { color: var(--muted); font-size: 11px; }
-.dpstrip { margin: 0 0 14px; padding: 10px 14px; border: 1px solid #c9d6f5; border-radius: 10px; background: #f3f6ff; font-size: 13px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.dpmark { display: inline-block; padding: 2px 9px; border-radius: 0; background: #1d4ed8; color: #fff; font-size: 12px; font-weight: 700; letter-spacing: .02em; }
+.dpbox { display: flex; gap: 12px; align-items: flex-start; margin: 14px 0; padding: 12px 14px; border: 1px solid #c9d6f5; border-radius: 0; background: #f3f6ff; } .dpbox > div { display: grid; gap: 2px; font-size: 13px; line-height: 1.6; } .dpbox b { font-size: 14px; } .dpbox small { color: var(--muted); font-size: 11px; }
+.dpstrip { margin: 0 0 14px; padding: 10px 14px; border: 1px solid #c9d6f5; border-radius: 0; background: #f3f6ff; font-size: 13px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 
-/* Digipay banner (5:1 on wide screens, stacked on phones). Sizes use container units so it scales like the artboard (1500px wide). */
-.dpbwrap { container: dpb / inline-size; margin: 0 0 18px; }
-.dpban { position: relative; overflow: hidden; margin: 0; border-radius: 16px; background: #1034e8; color: #fff; aspect-ratio: 5 / 1; display: flex; align-items: center; justify-content: space-between; padding: 0 5.3cqw; isolation: isolate; }
-.dpban::before, .dpban::after { content: ""; position: absolute; border-radius: 50%; z-index: -1; } .dpban::before { inset-inline-end: -8cqw; bottom: -15cqw; width: 37cqw; height: 37cqw; background: rgba(255,255,255,.09); } .dpban::after { inset-inline-end: 20cqw; top: -15cqw; width: 28cqw; height: 28cqw; background: rgba(0,0,40,.14); }
-.dpb-text { width: 53cqw; display: flex; flex-direction: column; align-items: flex-start; gap: 1.1cqw; }
-.dpb-lock { display: flex; align-items: center; gap: .9cqw; } .dpb-lock > i { font-style: normal; font-size: 1.5cqw; opacity: .8; }
-.dpb-armova { height: 2.9cqw; padding: 0 1.5cqw; border-radius: 999px; background: rgba(255,255,255,.16); display: flex; align-items: center; font-size: 1.5cqw; font-weight: 800; }
-.dpb-dp { height: 2.9cqw; padding: 0 1.1cqw; border-radius: 999px; background: #fff; display: flex; align-items: center; gap: .8cqw; } .dpb-ico { width: 2cqw; height: 2cqw; border-radius: .55cqw; display: block; } .dpb-word { height: 1.6cqw; width: auto; display: block; }
-.dpb-h { margin: 0; font-size: 3.9cqw; line-height: 1.2; font-weight: 800; }
-.dpb-row { display: flex; align-items: center; gap: 1.9cqw; } .dpb-row p { margin: 0; font-size: 1.5cqw; line-height: 1.5; opacity: .93; }
-.dpb-cta { display: inline-flex; align-items: center; gap: .7cqw; padding: .8cqw 1.9cqw; border-radius: 999px; background: #fff; color: #1034e8; font-size: 1.35cqw; font-weight: 800; white-space: nowrap; cursor: pointer; } .dpb-cta svg { width: 1.4cqw; height: 1.4cqw; } .dpb-cta:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
-.dpb-pics { position: relative; width: 36cqw; align-self: stretch; flex-shrink: 0; }
-.dpb-pic { position: absolute; width: 12cqw; aspect-ratio: 4 / 5; border-radius: 1.2cqw; overflow: hidden; border: .27cqw solid #fff; background: #dfe3ee; box-shadow: 0 1.2cqw 2.5cqw rgba(0,0,40,.35); display: block; } .dpb-pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.dpb-pic:nth-child(1) { inset-inline-end: 0; top: 17%; transform: rotate(5deg); } .dpb-pic:nth-child(2) { inset-inline-end: 10cqw; top: 6%; width: 12.4cqw; z-index: 1; } .dpb-pic:nth-child(3) { inset-inline-end: 20.8cqw; top: 18%; transform: rotate(-5deg); }
-.dpb-four { position: absolute; inset-inline-end: 16.6cqw; bottom: 1.5%; z-index: 2; width: 6.4cqw; height: 6.4cqw; border-radius: 50%; background: #fff; color: #1034e8; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 .7cqw 1.7cqw rgba(0,0,40,.35); line-height: 1.05; } .dpb-four b { font-size: 2.5cqw; font-weight: 800; } .dpb-four small { font-size: 1.05cqw; font-weight: 800; }
+/* Digipay banner: flat, square and edge to edge like the product grid (5:1 on wide screens, stacked on phones). Container units keep it in proportion. */
+.dpbwrap { container: dpb / inline-size; margin: 0; border-bottom: 1px solid var(--line); }
+.dpban { position: relative; overflow: hidden; margin: 0; background: #1034e8; color: #fff; aspect-ratio: 5 / 1; display: flex; align-items: stretch; justify-content: space-between; }
+.dpb-text { flex: 1 1 0; min-width: 0; padding: 0 4cqw; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 1.1cqw; }
+.dpb-lock { display: flex; align-items: center; gap: .9cqw; } .dpb-lock > i { font-style: normal; font-size: 1.4cqw; opacity: .8; }
+.dpb-armova { height: 2.8cqw; padding: 0 1.3cqw; border: 1px solid rgba(255,255,255,.7); display: flex; align-items: center; font-size: 1.3cqw; font-weight: 700; letter-spacing: .02em; }
+.dpb-dp { height: 2.8cqw; padding: 0 1cqw 0 .45cqw; background: #fff; display: flex; align-items: center; gap: .7cqw; } .dpb-ico { width: 2cqw; height: 2cqw; display: block; } .dpb-word { height: 1.5cqw; width: auto; display: block; }
+.dpb-h { margin: 0; font-size: 2.5cqw; line-height: 1.25; font-weight: 800; }
+.dpb-row { display: flex; align-items: center; gap: 1.8cqw; } .dpb-row p { margin: 0; font-size: 1.3cqw; line-height: 1.5; opacity: .92; }
+.dpb-cta { display: inline-flex; align-items: center; gap: .7cqw; padding: .75cqw 1.8cqw; border-radius: 0; background: #fff; color: #1034e8; font-size: 1.15cqw; font-weight: 700; letter-spacing: .02em; white-space: nowrap; cursor: pointer; } .dpb-cta svg { width: 1.2cqw; height: 1.2cqw; } .dpb-cta:hover { background: #e9edff; } .dpb-cta:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.dpb-pics { position: relative; width: 36cqw; flex-shrink: 0; display: flex; gap: 1px; background: #fff; }
+.dpb-pic { flex: 1 1 0; min-width: 0; display: block; overflow: hidden; background: #dfe3ee; } .dpb-pic img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s; } .dpb-pic:hover img { transform: scale(1.04); }
+.dpb-four { position: absolute; inset-inline-start: 0; bottom: 0; z-index: 2; padding: .5cqw 1.1cqw; background: #fff; color: #1034e8; display: flex; align-items: baseline; gap: .4cqw; line-height: 1.1; } .dpb-four b { font-size: 1.9cqw; font-weight: 800; } .dpb-four small { font-size: 1cqw; font-weight: 700; }
 @container dpb (max-width: 720px) {
-  .dpban { aspect-ratio: auto; flex-direction: column; align-items: stretch; padding: 22px 18px 0; gap: 14px; }
-  .dpb-text { width: auto; gap: 12px; } .dpb-lock { gap: 8px; } .dpb-lock > i { font-size: 16px; }
-  .dpb-armova { height: 32px; padding: 0 14px; font-size: 15px; } .dpb-dp { height: 32px; padding: 0 10px; gap: 8px; } .dpb-ico { width: 22px; height: 22px; border-radius: 6px; } .dpb-word { height: 17px; }
-  .dpb-h { font-size: 26px; } .dpb-row { flex-direction: column; align-items: flex-start; gap: 12px; } .dpb-row p { font-size: 15px; }
-  .dpb-cta { padding: 11px 24px; font-size: 16px; gap: 8px; } .dpb-cta svg { width: 17px; height: 17px; }
-  .dpb-pics { width: 100%; height: 150px; margin-top: 4px; }
-  .dpb-pic { width: 31%; border-width: 3px; border-radius: 12px; box-shadow: 0 8px 18px rgba(0,0,40,.35); } .dpb-pic:nth-child(1) { inset-inline-end: 2%; top: 14px; } .dpb-pic:nth-child(2) { inset-inline-end: 34.5%; top: 2px; width: 31%; } .dpb-pic:nth-child(3) { inset-inline-end: 67%; top: 14px; }
-  .dpb-four { width: 54px; height: 54px; bottom: auto; top: 76px; inset-inline-end: 31%; } .dpb-four b { font-size: 21px; } .dpb-four small { font-size: 11px; }
+  .dpban { aspect-ratio: auto; flex-direction: column; }
+  .dpb-text { padding: 20px 16px 18px; gap: 11px; } .dpb-lock { gap: 8px; } .dpb-lock > i { font-size: 15px; }
+  .dpb-armova { height: 30px; padding: 0 12px; font-size: 14px; } .dpb-dp { height: 30px; padding: 0 10px 0 4px; gap: 7px; } .dpb-ico { width: 22px; height: 22px; } .dpb-word { height: 16px; }
+  .dpb-h { font-size: 20px; } .dpb-row { flex-direction: column; align-items: flex-start; gap: 11px; } .dpb-row p { font-size: 14px; }
+  .dpb-cta { padding: 10px 22px; font-size: 14px; gap: 8px; } .dpb-cta svg { width: 16px; height: 16px; }
+  .dpb-pics { width: auto; height: 190px; }
+  .dpb-four { padding: 5px 12px; } .dpb-four b { font-size: 18px; } .dpb-four small { font-size: 12px; }
 }
