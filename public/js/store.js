@@ -94,7 +94,7 @@
     const gb = (c, n) => { const g = n === 2 ? 3 : 2, s = (17 - g * (n - 1)) / n; let r = ''; for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) r += `<rect x="${(1.5 + x * (s + g)).toFixed(2)}" y="${(1.5 + y * (s + g)).toFixed(2)}" width="${s.toFixed(2)}" height="${s.toFixed(2)}" rx="1.2"/>`; return `<button class="gridbtn ${ui.cols === c ? 'on' : ''}" data-cols="${c}" aria-label="${n}×${n}" aria-pressed="${ui.cols === c}"><svg viewBox="0 0 20 20" aria-hidden="true">${r}</svg></button>`; };
     $('#app').innerHTML = `
       <h1 class="page-title display">${esc(cat ? L(cat.name) : t('allProducts'))}</h1>
-      ${checkoutCfg.installment ? `<p class="dpstrip"><span class="dpmark">${t('dpName')}</span> ${t('dpStrip')}</p>` : ''}
+      ${cat ? (checkoutCfg.installment ? `<p class="dpstrip"><span class="dpmark">${t('dpName')}</span> ${t('dpStrip')}</p>` : '') : dpBanner()}
       <div class="tabs">${tabs}</div>${subTabs}
       <div class="bar">
         <select id="sort">${['newest', 'priceAsc', 'priceDesc'].map((k) => `<option value="${k}" ${ui.sort === k ? 'selected' : ''}>${t(k)}</option>`).join('')}</select>
@@ -121,6 +121,7 @@
     }
     document.querySelectorAll('.card').forEach((c) => { const a = c.querySelector('img.alt'); if (a) c.addEventListener('pointerenter', () => { if (a.dataset.src) { a.src = a.dataset.src; delete a.dataset.src; } }, { once: true }); });
     $('#sort').onchange = (e) => { ui.sort = e.target.value; shopPage(catSlug); };
+    if ($('#dpGo')) $('#dpGo').onclick = () => { const g = document.querySelector('.tabs') || document.querySelector('.grid'); if (g) g.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
     document.querySelectorAll('[data-cols]').forEach((b) => (b.onclick = () => { ui.cols = +b.dataset.cols; shopPage(catSlug); }));
     document.querySelectorAll('[data-kind]').forEach((b) => (b.onclick = () => { ui.kind = b.dataset.kind; shopPage(catSlug); }));
   }
@@ -290,6 +291,21 @@
   let me = null, checkoutCfg = { requireLogin: false };
   // Digipay installments: shown only while the service is switched on (and the amount reaches the minimum)
   const dpOk = (price) => !!checkoutCfg.installment && price >= (checkoutCfg.installmentMin || 0);
+  // banner for the shop front: the photos are real products picked at random on every visit (in stock, with a model photo, one per group)
+  const dpPics = () => {
+    const seen = new Set(), pool = data.products.filter((p) => p.images.some((i) => i.kind === 'model') && (!p.sizes.length || p.sizes.some((z) => z.stock > 0)));
+    for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
+    return pool.filter((p) => { const k = p.group || 'p' + p.id; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 3);
+  };
+  const dpBanner = () => {
+    if (!checkoutCfg.installment) return '';
+    const pics = dpPics().map((p) => { const im = p.images.find((i) => i.kind === 'model'); return `<a class="dpb-pic" data-link href="/product/${encodeURIComponent(p.slug)}" aria-label="${esc(L(p.name))}"><img src="/uploads/t/${encodeURIComponent(im.file)}?w=480" alt="${esc(L(p.name))}" decoding="async"></a>`; }).join('');
+    return `<div class="dpbwrap"><section class="dpban" aria-label="${t('dpTitle')}"><div class="dpb-text">
+      <div class="dpb-lock"><span class="dpb-armova" data-slot="armova-logo">${t('brand')}</span><i aria-hidden="true">×</i><span class="dpb-dp"><img class="dpb-ico" src="/img/digipay/icon.png" alt=""><img class="dpb-word" src="/img/digipay/wordmark-${lang === 'fa' ? 'fa' : 'en'}.png" alt="${t('dpName')}"></span></div>
+      <h2 class="dpb-h">${t('dpBannerH')}</h2>
+      <div class="dpb-row"><p>${t('dpBannerP')}</p><button class="dpb-cta" type="button" id="dpGo">${t('dpCta')}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${lang === 'fa' ? 'M19 12H5M11 6l-6 6 6 6' : 'M5 12h14M13 6l6 6-6 6'}"/></svg></button></div>
+    </div><div class="dpb-pics">${pics}<span class="dpb-four" aria-hidden="true"><b>${num(4)}</b><small>${t('dpInst')}</small></span></div></section></div>`;
+  };
   const dpBox = (price) => (dpOk(price) ? `<div class="dpbox"><span class="dpmark">${t('dpName')}</span><div><b>${t('dpTitle')}</b><span>${t('dpParts').replace('{n}', money(Math.ceil(price / 4)))}</span><small>${t('dpFine')}</small></div></div>` : '');
   // back from the payment page (?pay=paid|failed|pending&order=ID&k=KEY) or a gateway error at checkout
   function payResult(state, id, key, note) {
