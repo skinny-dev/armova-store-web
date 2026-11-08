@@ -94,7 +94,7 @@
     const gb = (c, n) => { const g = n === 2 ? 3 : 2, s = (17 - g * (n - 1)) / n; let r = ''; for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) r += `<rect x="${(1.5 + x * (s + g)).toFixed(2)}" y="${(1.5 + y * (s + g)).toFixed(2)}" width="${s.toFixed(2)}" height="${s.toFixed(2)}" rx="1.2"/>`; return `<button class="gridbtn ${ui.cols === c ? 'on' : ''}" data-cols="${c}" aria-label="${n}×${n}" aria-pressed="${ui.cols === c}"><svg viewBox="0 0 20 20" aria-hidden="true">${r}</svg></button>`; };
     $('#app').innerHTML = `
       <h1 class="page-title display">${esc(cat ? L(cat.name) : t('allProducts'))}</h1>
-      ${cat ? (checkoutCfg.installment && promo().strip !== false ? `<p class="dpstrip"><span class="dpmark">${t('dpName')}</span> ${t('dpStrip')}</p>` : '') : dpBanner()}
+      ${!cat || promo().strip !== false ? dpBanner(cat ? list : undefined) : ''}
       <div class="tabs">${tabs}</div>${subTabs}
       <div class="bar">
         <select id="sort">${['newest', 'priceAsc', 'priceDesc'].map((k) => `<option value="${k}" ${ui.sort === k ? 'selected' : ''}>${t(k)}</option>`).join('')}</select>
@@ -296,14 +296,14 @@
   const dpN = () => promo().count || 4;
   const dpOk = (price) => !!checkoutCfg.installment && price >= (checkoutCfg.installmentMin || 0);
   // banner for the shop front: the photos are real products picked at random on every visit (in stock, with a model photo, one per group)
-  const dpPics = () => {
-    const seen = new Set(), pool = data.products.filter((p) => p.images.some((i) => i.kind === 'model') && (!p.sizes.length || p.sizes.some((z) => z.stock > 0)));
+  const dpPics = (src = data.products) => {
+    const seen = new Set(), pool = src.filter((p) => p.images.some((i) => i.kind === 'model') && (!p.sizes.length || p.sizes.some((z) => z.stock > 0)));
     for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
     return pool.filter((p) => { const k = p.group || 'p' + p.id; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 3);
   };
-  const dpBanner = () => {
+  const dpBanner = (src) => {
     if (!checkoutCfg.installment || promo().banner === false) return '';
-    const pics = dpPics().map((p) => { const im = p.images.find((i) => i.kind === 'model'); return `<a class="dpb-pic" data-link href="/product/${encodeURIComponent(p.slug)}" aria-label="${esc(L(p.name))}"><img src="/uploads/t/${encodeURIComponent(im.file)}?w=480" alt="${esc(L(p.name))}" decoding="async"></a>`; }).join('');
+    const pics = dpPics(src).map((p) => { const im = p.images.find((i) => i.kind === 'model'); return `<a class="dpb-pic" data-link href="/product/${encodeURIComponent(p.slug)}" aria-label="${esc(L(p.name))}"><img src="/uploads/t/${encodeURIComponent(im.file)}?w=480" alt="${esc(L(p.name))}" decoding="async"></a>`; }).join('');
     return `<div class="dpbwrap"><section class="dpban" aria-label="${t('dpTitle')}"><div class="dpb-text">
       <div class="dpb-lock"><span class="dpb-armova" data-slot="armova-logo"><img src="/img/brand/armova-mark-white.svg" alt="" width="258" height="178">${t('brand')}</span><i aria-hidden="true">×</i><span class="dpb-dp"><img class="dpb-ico" src="/img/digipay/icon.png" alt=""><img class="dpb-word" src="/img/digipay/wordmark-${lang === 'fa' ? 'fa' : 'en'}.png" alt="${t('dpName')}"></span></div>
       <h2 class="dpb-h">${esc(dpt('headline', 'dpBannerH'))}</h2>
