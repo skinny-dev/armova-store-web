@@ -138,6 +138,12 @@ module.exports = function (admin) {
     res.json({ ok: e && e.status !== 'failed', status: e && e.status, error: e && e.error, via: e && e.via });
   });
 
+  // ----- visitors who had trouble loading the shop (reported by the browser, confirmed by the server) -----
+  admin.get('/netreports', A.can('settings.manage'), (req, res) => {
+    const all = db.get().netReports || [], week = all.filter((r) => Date.now() - r.at < 7 * 864e5), by = (k) => week.reduce((m, r) => { const v = r[k] || '?'; m[v] = (m[v] || 0) + 1; return m; }, {});
+    res.json({ week: { reports: week.length, hintShown: week.filter((r) => r.show).length, byKind: by('kind'), byCountry: by('country') }, last: all.slice(-50).reverse() });
+  });
+
   // ----- Zibal: re-check an order's payment with the gateway (e.g. the customer never came back) -----
   admin.post('/orders/:id/zibal-check', A.can('orders.manage'), async (req, res) => {
     const o = db.get().orders.find((x) => x.id === Number(req.params.id)); if (!o) return res.status(404).end();

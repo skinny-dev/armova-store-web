@@ -564,5 +564,38 @@
     if (!q) $('#spIn').focus();
   }
 
+  // ---------- connection hint ----------
+  // Photos that fail to load (or a very slow round trip) are reported to /api/netreport; if the server confirms (the files exist, or the delay is real) a small notice suggests turning the VPN off. At most once a day.
+  function showNetHint() {
+    ls.set('netHint', Date.now());
+    const el = document.createElement('div'); el.className = 'nethint'; el.setAttribute('role', 'status');
+    el.innerHTML = `<span class="nh-ic" aria-hidden="true">!</span><p><b>${t('netTitle')}</b><span>${t('netBody')}</span></p><button type="button" aria-label="${t('close')}">✕</button>`;
+    document.body.appendChild(el); requestAnimationFrame(() => el.classList.add('on'));
+    const close = () => { el.classList.remove('on'); setTimeout(() => el.remove(), 300); };
+    el.querySelector('button').onclick = close; setTimeout(close, 16000);
+  }
+  function netWatch() {
+    if (ls.get('netHint', 0) > Date.now() - 864e5) return;
+    const bad = new Set(); let timer = null, done = false;
+    const name = (u) => { try { return decodeURIComponent(String(u).split('?')[0].split('/').pop()); } catch { return ''; } };
+    const report = async (kind, rtt) => {
+      if (done) return;
+      try {
+        const r = await fetch('/api/netreport', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ kind, files: [...bad].slice(0, 6), rtt: rtt || 0 }) });
+        if ((await r.json()).show) { done = true; showNetHint(); }
+      } catch { if (kind === 'slow' && navigator.onLine !== false) { done = true; showNetHint(); } }
+    };
+    document.addEventListener('error', (e) => {
+      const el = e.target; if (!el || el.tagName !== 'IMG') return;
+      const u = el.currentSrc || el.src || ''; if (!/\/uploads\//.test(u)) return;
+      bad.add(name(u)); clearTimeout(timer); timer = setTimeout(() => report('images'), 2500);
+    }, true);
+    addEventListener('load', async () => {
+      const t0 = performance.now();
+      try { await fetch('/api/netcheck?t=' + Date.now(), { cache: 'no-store' }); const rtt = Math.round(performance.now() - t0); if (rtt > 3500) report('slow', rtt); } catch { report('slow', 99999); }
+    });
+  }
+  netWatch();
+
   (async () => { chrome(); if (window.UX) $('#app').innerHTML = `<div class="page-title display ux-skel" style="margin:70px 20px 60px;height:90px;width:40%"></div>${UX.skeletonGrid(8, ui.cols)}`; await Promise.all([load(), loadMe()]); route(); payReturn(); track('view'); })();
 })();

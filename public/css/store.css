@@ -411,3 +411,10 @@ html { scrollbar-gutter: stable; }
   .gnav { top: calc(24px + var(--stage-h) / 2 - 18px) !important; } .gprev { inset-inline-start: calc(clamp(16px, 2.4vw, 40px) + 76px); }
 }
 @media (min-width: 901px) and (max-width: 1180px) { .pdp .gwrap { grid-template-columns: 52px auto; } .gth { width: 52px; } .gprev { inset-inline-start: calc(clamp(16px, 2.4vw, 40px) + 64px); } }
+
+/* Connection hint: a flat notice under the header */
+.nethint { position: fixed; z-index: 57; top: calc(var(--hdr) + 10px); inset-inline: 12px; margin-inline: auto; max-width: 480px; display: flex; align-items: flex-start; gap: 12px; padding: 12px 8px 12px 14px; background: var(--navy); color: #fff; box-shadow: 0 14px 34px rgba(10,27,61,.28); transform: translateY(-14px); opacity: 0; transition: transform .25s, opacity .25s; }
+.nethint.on { transform: none; opacity: 1; }
+.nh-ic { flex: none; width: 22px; height: 22px; display: grid; place-items: center; background: #d9e6ff; color: var(--navy); font-weight: 800; font-size: 14px; }
+.nethint p { margin: 0; display: grid; gap: 2px; flex: 1; font-size: 13px; line-height: 1.6; } .nethint b { font-size: 14px; } .nethint p span { color: #c7d6f5; }
+.nethint button { flex: none; width: 32px; height: 32px; color: #c7d6f5; font-size: 16px; } .nethint button:hover { color: #fff; }

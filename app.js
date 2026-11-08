@@ -303,6 +303,23 @@ async function warmThumbs() {
 }
 if (process.env.WARM_THUMBS === '1') setTimeout(() => warmThumbs().catch(() => {}), 500); // opt-in: thumbnails are otherwise made on first request
 app.use('/uploads', express.static(UPLOADS, { maxAge: '365d', immutable: true, setHeaders: (r) => r.set('X-Content-Type-Options', 'nosniff') }));
+// ---------- connection check ----------
+// The browser reports photos it could not load; only photos that really exist on the server count as a connection problem
+// (a deleted photo is not the visitor's fault). A slow round trip counts too. When the server confirms, the shop shows a "turn your VPN off" hint.
+const geo = (req) => String(req.headers['cf-ipcountry'] || req.headers['x-country-code'] || req.headers['x-vercel-ip-country'] || req.headers['x-geo-country'] || '').toUpperCase().slice(0, 2) || null;
+const NET_FILE = /^[\w.-]{1,120}\.(webp|jpe?g|png|gif|avif)$/i, netHits = new Map();
+app.get('/api/netcheck', (req, res) => { res.set('Cache-Control', 'no-store'); res.json({ ok: true, country: geo(req) }); });
+app.post('/api/netreport', (req, res) => {
+  const ip = String(req.headers['x-forwarded-for'] || req.ip).split(',')[0].trim(), now = Date.now(), hits = (netHits.get(ip) || []).filter((x) => now - x < 600e3);
+  if (hits.length >= 6) return res.json({ ok: true, show: false });
+  hits.push(now); netHits.set(ip, hits); if (netHits.size > 5000) netHits.clear();
+  const b = req.body || {}, kind = b.kind === 'slow' ? 'slow' : 'images', rtt = Math.min(120000, Math.max(0, Number(b.rtt) || 0));
+  const names = (Array.isArray(b.files) ? b.files : []).map(String).filter((n) => NET_FILE.test(n)).slice(0, 6), real = names.filter((n) => fs.existsSync(path.join(UPLOADS, n)));
+  const show = kind === 'slow' ? rtt >= 3500 : real.length >= 2, s = db.get();
+  (s.netReports ||= []).push({ at: now, kind, rtt, failed: names.length, existing: real.length, country: geo(req), show });
+  if (s.netReports.length > 300) s.netReports.splice(0, s.netReports.length - 300);
+  db.save(); res.json({ ok: true, show });
+});
 const seo = require('./lib/seo');
 app.get('/robots.txt', (req, res) => res.type('text/plain').send(seo.robots(req)));
 app.get('/sitemap.xml', (req, res) => res.type('application/xml').send(seo.sitemap(req)));
