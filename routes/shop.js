@@ -11,7 +11,7 @@ const digipay = require('../lib/digipay');
 const str = (v, max = 500) => (typeof v === 'string' ? v.trim().slice(0, max) : '');
 const CUST_MS = 30 * 864e5;
 const pubCustomer = (c) => c && ({ id: c.id, phone: c.phone, name: c.name || '', address: c.address || '', marketingOptIn: !!c.marketingOptIn });
-const checkout = () => ({ requireLogin: false, ...((db.get().settings || {}).checkout || {}), online: zibal.enabled(), sandbox: zibal.cfg().sandbox, installment: digipay.enabled(), installmentMin: digipay.cfg().minTotal, installmentSandbox: digipay.cfg().sandbox });
+const checkout = () => ({ requireLogin: false, ...((db.get().settings || {}).checkout || {}), online: zibal.enabled(), sandbox: zibal.cfg().sandbox, installment: digipay.enabled(), promo: digipay.promo(), installmentMin: digipay.cfg().minTotal, installmentSandbox: digipay.cfg().sandbox });
 // Payment return URL base = the address the customer is actually on (Zibal only accepts the domain registered for the merchant, so a
 // wrong "public address" setting must not be used here). https behind a TLS proxy such as Runflare; the configured address is only a fallback.
 const origin = (req) => {

@@ -155,7 +155,7 @@ module.exports = function (admin) {
     const s = db.get().settings || {}, c = sms.config();
     const z = zibal.cfg(), d = digipay.cfg();
     return { payment: { zibal: { enabled: z.enabled, merchant: z.merchant, sandbox: z.sandbox, fromEnv: z.fromEnv },
-      digipay: { enabled: d.enabled, sandbox: d.sandbox, unit: d.mult === 1 ? 'toman' : 'rial', type: d.type, clientId: d.clientId, username: d.username, hasSecret: !!d.clientSecret, hasPassword: !!d.password, sellerId: d.sellerId, categoryId: d.categoryId, minTotal: d.minTotal, ready: d.ready, fromEnv: !!process.env.DIGIPAY_CLIENT_ID } },
+      digipay: { promo: digipay.promo(), enabled: d.enabled, sandbox: d.sandbox, unit: d.mult === 1 ? 'toman' : 'rial', type: d.type, clientId: d.clientId, username: d.username, hasSecret: !!d.clientSecret, hasPassword: !!d.password, sellerId: d.sellerId, categoryId: d.categoryId, minTotal: d.minTotal, ready: d.ready, fromEnv: !!process.env.DIGIPAY_CLIENT_ID } },
       sms: { provider: c.provider, configured: sms.configured(), enabled: c.enabled, sender: c.sender, otpTemplate: c.otpTemplate, apiKeyMasked: mask(c.apiKey), fromEnv: c.fromEnv },
       checkout: { requireLogin: false, ...(s.checkout || {}) }, alerts: orders.alerts(), automation: { abandonedHours: 3, reviewDays: 3, ...(s.automation || {}) },
       lastFailure: sms.lastFailure(), publicUrl: s.publicUrl || '', storeName: s.storeName || '', promoFooter: s.promoFooter || '' };
@@ -188,6 +188,12 @@ module.exports = function (admin) {
       for (const [k, m] of [['clientId', 80], ['username', 80], ['sellerId', 60], ['categoryId', 60]]) if (n[k] !== undefined) z[k] = id(n[k], m);
       for (const k of ['clientSecret', 'password']) if (typeof n[k] === 'string' && n[k].trim() && !n[k].includes('•')) z[k] = n[k].trim().slice(0, 200);
       if (n.minTotal !== undefined) z.minTotal = Math.max(0, Math.round(Number(n.minTotal)) || 0);
+      if (n.promo && typeof n.promo === 'object') {
+        const q = (z.promo ||= {}), m = n.promo;
+        for (const k of ['banner', 'product', 'strip', 'estimate']) if (m[k] !== undefined) q[k] = !!m[k];
+        if (m.count !== undefined) q.count = Math.min(12, Math.max(2, Math.round(Number(m.count)) || 4));
+        if (m.text && typeof m.text === 'object') { q.text ||= {}; for (const k of digipay.PROMO_TEXTS) { const v = m.text[k]; if (v && typeof v === 'object') q.text[k] = { fa: str(v.fa, 160), en: str(v.en, 160) }; } }
+      }
     }
     if (b.checkout) s.settings.checkout = { requireLogin: !!b.checkout.requireLogin };
     if (b.alerts) {

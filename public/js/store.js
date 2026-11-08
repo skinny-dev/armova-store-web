@@ -23,14 +23,14 @@
   // ---------- chrome ----------
   function chrome() {
     document.documentElement.lang = lang; document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
-    $('#logo').textContent = t('brand');
+    $('#logo').innerHTML = `<img class="mk" src="/img/brand/armova-mark.svg" alt="" width="258" height="178"><span>${esc(t('brand'))}</span>`;
     $('#nav').innerHTML = `<button class="menubtn" id="menuBtn" aria-label="${t('menu')}">☰</button><a href="/" data-link>${t('shop')}</a><a href="/about" data-link>${t('about')}</a><a href="/contact" data-link>${t('contact')}</a>`;
     $('#menuBtn').onclick = () => drawer(`<div class="dh"><b>${t('menu')}</b><button data-close aria-label="${t('close')}">✕</button></div><div class="db"><a class="row" data-link href="/">${t('shop')}</a>${(function walk(pid, depth) { return kids(pid).map((c) => `<a class="row sub" style="padding-inline-start:${20 + depth * 18}px" data-link href="/?cat=${encodeURIComponent(c.slug)}">${depth ? '└ ' : ''}${esc(L(c.name))}</a>${walk(c.id, depth + 1)}`).join(''); })(null, 0)}<a class="row" data-link href="/account">${me ? esc(me.name || t('account')) : t('login')}</a><a class="row" data-link href="/about">${t('about')}</a><a class="row" data-link href="/contact">${t('contact')}</a><button class="row" data-lang><span>${t('language')}</span><b>${t('otherLang')}</b></button></div>`, 'side');
     $('#lang').textContent = t('langBtn');
     const ab = $('#acctBtn'); if (ab) { ab.textContent = me ? (me.name || t('account')) : t('login'); ab.onclick = () => (me ? go('/account') : authDrawer()); }
     const n = cart.reduce((a, i) => a + i.qty, 0);
     $('#cartBtn').textContent = `${t('cart')} (${num(n)})`;
-    $('#foot').innerHTML = `<span>© ${num(new Date().getFullYear())} ${t('brand')}. ${t('rights')}</span><span>${t('brand')}</span>`;
+    $('#foot').innerHTML = `<span>© ${num(new Date().getFullYear())} ${t('brand')}. ${t('rights')}</span><span class="fbrand"><img class="mk" src="/img/brand/armova-mark-black.svg" alt="" width="258" height="178">${t('brand')}</span>`;
   }
   const toggleLang = () => { lang = lang === 'fa' ? 'en' : 'fa'; ls.set('lang', lang); chrome(); route(); if (drawerOpen) openCart(); };
   $('#lang').onclick = toggleLang;
@@ -94,7 +94,7 @@
     const gb = (c, n) => { const g = n === 2 ? 3 : 2, s = (17 - g * (n - 1)) / n; let r = ''; for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) r += `<rect x="${(1.5 + x * (s + g)).toFixed(2)}" y="${(1.5 + y * (s + g)).toFixed(2)}" width="${s.toFixed(2)}" height="${s.toFixed(2)}" rx="1.2"/>`; return `<button class="gridbtn ${ui.cols === c ? 'on' : ''}" data-cols="${c}" aria-label="${n}×${n}" aria-pressed="${ui.cols === c}"><svg viewBox="0 0 20 20" aria-hidden="true">${r}</svg></button>`; };
     $('#app').innerHTML = `
       <h1 class="page-title display">${esc(cat ? L(cat.name) : t('allProducts'))}</h1>
-      ${cat ? (checkoutCfg.installment ? `<p class="dpstrip"><span class="dpmark">${t('dpName')}</span> ${t('dpStrip')}</p>` : '') : dpBanner()}
+      ${cat ? (checkoutCfg.installment && promo().strip !== false ? `<p class="dpstrip"><span class="dpmark">${t('dpName')}</span> ${t('dpStrip')}</p>` : '') : dpBanner()}
       <div class="tabs">${tabs}</div>${subTabs}
       <div class="bar">
         <select id="sort">${['newest', 'priceAsc', 'priceDesc'].map((k) => `<option value="${k}" ${ui.sort === k ? 'selected' : ''}>${t(k)}</option>`).join('')}</select>
@@ -291,6 +291,9 @@
   // ---------- customer login (SMS code) & account ----------
   let me = null, checkoutCfg = { requireLogin: false };
   // Digipay installments: shown only while the service is switched on (and the amount reaches the minimum)
+  const promo = () => checkoutCfg.promo || {};
+  const dpt = (k, fallbackKey) => { const v = (promo().text || {})[k] || {}; return (lang === 'fa' ? v.fa : v.en) || t(fallbackKey); }; // text set in the admin, else the built-in one
+  const dpN = () => promo().count || 4;
   const dpOk = (price) => !!checkoutCfg.installment && price >= (checkoutCfg.installmentMin || 0);
   // banner for the shop front: the photos are real products picked at random on every visit (in stock, with a model photo, one per group)
   const dpPics = () => {
@@ -299,15 +302,15 @@
     return pool.filter((p) => { const k = p.group || 'p' + p.id; if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 3);
   };
   const dpBanner = () => {
-    if (!checkoutCfg.installment) return '';
+    if (!checkoutCfg.installment || promo().banner === false) return '';
     const pics = dpPics().map((p) => { const im = p.images.find((i) => i.kind === 'model'); return `<a class="dpb-pic" data-link href="/product/${encodeURIComponent(p.slug)}" aria-label="${esc(L(p.name))}"><img src="/uploads/t/${encodeURIComponent(im.file)}?w=480" alt="${esc(L(p.name))}" decoding="async"></a>`; }).join('');
     return `<div class="dpbwrap"><section class="dpban" aria-label="${t('dpTitle')}"><div class="dpb-text">
-      <div class="dpb-lock"><span class="dpb-armova" data-slot="armova-logo">${t('brand')}</span><i aria-hidden="true">×</i><span class="dpb-dp"><img class="dpb-ico" src="/img/digipay/icon.png" alt=""><img class="dpb-word" src="/img/digipay/wordmark-${lang === 'fa' ? 'fa' : 'en'}.png" alt="${t('dpName')}"></span></div>
-      <h2 class="dpb-h">${t('dpBannerH')}</h2>
-      <div class="dpb-row"><p>${t('dpBannerP')}</p><button class="dpb-cta" type="button" id="dpGo">${t('dpCta')}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${lang === 'fa' ? 'M19 12H5M11 6l-6 6 6 6' : 'M5 12h14M13 6l6 6-6 6'}"/></svg></button></div>
-    </div><div class="dpb-pics">${pics}<span class="dpb-four" aria-hidden="true"><b>${num(4)}</b><small>${t('dpInst')}</small></span></div></section></div>`;
+      <div class="dpb-lock"><span class="dpb-armova" data-slot="armova-logo"><img src="/img/brand/armova-mark-white.svg" alt="" width="258" height="178">${t('brand')}</span><i aria-hidden="true">×</i><span class="dpb-dp"><img class="dpb-ico" src="/img/digipay/icon.png" alt=""><img class="dpb-word" src="/img/digipay/wordmark-${lang === 'fa' ? 'fa' : 'en'}.png" alt="${t('dpName')}"></span></div>
+      <h2 class="dpb-h">${esc(dpt('headline', 'dpBannerH'))}</h2>
+      <div class="dpb-row"><p>${esc(dpt('sub', 'dpBannerP'))}</p><button class="dpb-cta" type="button" id="dpGo">${esc(dpt('cta', 'dpCta'))}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${lang === 'fa' ? 'M19 12H5M11 6l-6 6 6 6' : 'M5 12h14M13 6l6 6-6 6'}"/></svg></button></div>
+    </div><div class="dpb-pics">${pics}<span class="dpb-four" aria-hidden="true"><b>${num(dpN())}</b><small>${t('dpInst')}</small></span></div></section></div>`;
   };
-  const dpBox = (price) => (dpOk(price) ? `<div class="dpbox"><span class="dpmark">${t('dpName')}</span><div><b>${t('dpTitle')}</b><span>${t('dpParts').replace('{n}', money(Math.ceil(price / 4)))}</span><small>${t('dpFine')}</small></div></div>` : '');
+  const dpBox = (price) => (dpOk(price) && promo().product !== false ? `<div class="dpbox"><span class="dpmark">${t('dpName')}</span><div><b>${t('dpTitle')}</b><span>${t(promo().estimate === false ? 'dpPartsNo' : 'dpParts').replace('{c}', num(dpN())).replace('{n}', money(Math.ceil(price / dpN())))}</span><small>${esc(dpt('fine', 'dpFine'))}</small></div></div>` : '');
   // back from the payment page (?pay=paid|failed|pending&order=ID&k=KEY) or a gateway error at checkout
   function payResult(state, id, key, note) {
     const ok = state === 'paid', wait = state === 'pending';

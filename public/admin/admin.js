@@ -80,7 +80,7 @@
   function showLogin(mode = 'pw') {
     setLang(); session = null;
     const otp = mode === 'otp';
-    $('#root').innerHTML = `<form class="login" id="lf"><h1>${t('title')}</h1>
+    $('#root').innerHTML = `<form class="login" id="lf"><img class="mk lmk" src="/img/brand/armova-mark.svg" alt="" width="258" height="178"><h1>${t('title')}</h1>
       ${otp ? `<label>${t('phone')}<input id="ph" dir="ltr" inputmode="tel" placeholder="09xxxxxxxxx" required autofocus></label><label id="cw" hidden>${t('otpCode')}<input id="cd" dir="ltr" inputmode="numeric" autocomplete="one-time-code" maxlength="6"></label>`
         : `<label>${t('username')}<input id="un" value="owner" autocomplete="username" required></label><label>${t('password')}<input type="password" id="pw" autocomplete="current-password" required autofocus></label>`}
       <div id="le" style="color:var(--bad)"></div><button class="btn" id="lb">${otp ? t('sendCode') : t('login')}</button>
@@ -118,11 +118,11 @@
     const u = session.user, role = session.role;
     const item = (k, cls = '') => `<a href="#${k}" class="${k === cur ? 'on' : ''} ${cls}"><i>${pages[k].icon}</i><span>${t(k)}</span></a>`;
     const tabs = keys.length > 5 ? keys.slice(0, 4) : keys, more = keys.length > 5 ? keys.slice(4) : [];
-    $('#root').innerHTML = `<div class="layout"><nav class="side"><h2>${t('title')}</h2>
+    $('#root').innerHTML = `<div class="layout"><nav class="side"><h2 class="brandrow"><img class="mk" src="/img/brand/armova-mark-white.svg" alt="" width="258" height="178">${t('title')}</h2>
       ${keys.map((k) => item(k)).join('')}<div class="sp"></div>
       <a href="#account" class="who ${cur === 'account' ? 'on' : ''}"><b>${esc(u.name)}</b><small>${esc(role ? nm(role.name) : u.role)}</small></a>
       <button id="lg">${t('lang')}</button><a href="/" target="_blank">↗ ${t('storeLink')}</a><button id="lo">${t('logout')}</button></nav>
-      <header class="mtop"><b>${t('title')}</b><span><a class="btn sec sm" href="#account">${esc(u.name)}</a><button id="lg2" class="btn sec sm">${t('lang')}</button><a class="btn sec sm" href="/" target="_blank">↗</a><button id="lo2" class="btn sec sm">${t('logout')}</button></span></header>
+      <header class="mtop"><b class="brandrow"><img class="mk" src="/img/brand/armova-mark-white.svg" alt="" width="258" height="178">${t('title')}</b><span><a class="btn sec sm" href="#account">${esc(u.name)}</a><button id="lg2" class="btn sec sm">${t('lang')}</button><a class="btn sec sm" href="/" target="_blank">↗</a><button id="lo2" class="btn sec sm">${t('logout')}</button></span></header>
       <main class="main" id="main">${window.UX ? UX.skeletonRows(6) : '<p class="muted loading">…</p>'}</main>
       <nav class="mtabs" style="--n:${tabs.length + (more.length ? 1 : 0)}">${tabs.map((k) => item(k)).join('')}${more.length ? `<button id="more" class="${more.includes(cur) ? 'on' : ''}"><i>⋯</i><span>${t('more')}</span></button>` : ''}</nav></div>`;
     const toggle = () => { lang = lang === 'fa' ? 'en' : 'fa'; try { localStorage.setItem('alang', lang); } catch {} shell(); };
