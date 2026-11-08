@@ -24,13 +24,17 @@
   function chrome() {
     document.documentElement.lang = lang; document.documentElement.dir = lang === 'fa' ? 'rtl' : 'ltr';
     $('#logo').innerHTML = `<img class="mk" src="/img/brand/armova-mark.svg" alt="" width="258" height="178"><span>${esc(t('brand'))}</span>`;
-    $('#nav').innerHTML = `<button class="menubtn" id="menuBtn" aria-label="${t('menu')}">☰</button><a href="/" data-link>${t('shop')}</a><a href="/about" data-link>${t('about')}</a><a href="/contact" data-link>${t('contact')}</a>`;
-    $('#menuBtn').onclick = () => drawer(`<div class="dh"><b>${t('menu')}</b><button data-close aria-label="${t('close')}">✕</button></div><div class="db"><a class="row" data-link href="/">${t('shop')}</a>${(function walk(pid, depth) { return kids(pid).map((c) => `<a class="row sub" style="padding-inline-start:${20 + depth * 18}px" data-link href="/?cat=${encodeURIComponent(c.slug)}">${depth ? '└ ' : ''}${esc(L(c.name))}</a>${walk(c.id, depth + 1)}`).join(''); })(null, 0)}<a class="row" data-link href="/account">${me ? esc(me.name || t('account')) : t('login')}</a><a class="row" data-link href="/about">${t('about')}</a><a class="row" data-link href="/contact">${t('contact')}</a><button class="row" data-lang><span>${t('language')}</span><b>${t('otherLang')}</b></button></div>`, 'side');
+    $('#nav').innerHTML = `<button class="menubtn" id="menuBtn" aria-label="${t('menu')}" aria-haspopup="dialog"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button><a href="/" data-link>${t('shop')}</a><a href="/about" data-link>${t('about')}</a><a href="/contact" data-link>${t('contact')}</a>`;
+    $('#menuBtn').onclick = () => drawer(`<div class="dh"><b class="mbrand"><img class="mk" src="/img/brand/armova-mark.svg" alt="" width="258" height="178">${esc(t('brand'))}</b><button data-close aria-label="${t('close')}">✕</button></div><div class="db mnav">
+      <button class="msearch" type="button" data-search><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg><span>${t('searchPh')}</span></button>
+      <div class="mgroup"><div class="mh">${t('shop')}</div><a class="row" data-link href="/"><span>${t('allProducts')}</span><small>${num(data.products.length)}</small></a>${(function walk(pid, depth) { return kids(pid).map((c) => `<a class="row sub" style="padding-inline-start:${20 + depth * 18}px" data-link href="/category/${encodeURIComponent(c.slug)}"><span>${depth ? '└ ' : ''}${esc(L(c.name))}</span><small>${num(data.products.filter((p) => descIds(c.id).has(p.categoryId)).length)}</small></a>${walk(c.id, depth + 1)}`).join(''); })(null, 0)}</div>
+      <div class="mgroup"><a class="row" data-link href="/account"><span>${me ? esc(me.name || t('account')) : t('login')}</span></a><a class="row" data-link href="/about"><span>${t('about')}</span></a><a class="row" data-link href="/contact"><span>${t('contact')}</span></a></div>
+      <div class="mgroup"><button class="row" data-lang><span>${t('language')}</span><b>${t('otherLang')}</b></button></div></div>`, 'side');
     $('#lang').textContent = t('langBtn');
     { const sb = $('#searchBtn'); if (sb) { sb.setAttribute('aria-label', t('search')); sb.title = t('search') + '  ( / )'; } }
-    const ab = $('#acctBtn'); if (ab) { ab.textContent = me ? (me.name || t('account')) : t('login'); ab.onclick = () => (me ? go('/account') : authDrawer()); }
+    const ab = $('#acctBtn'); if (ab) { const nm = me ? (me.name || t('account')) : t('login'); ab.innerHTML = `<svg class="ic" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="square" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg><span class="lb">${esc(nm)}</span>`; ab.setAttribute('aria-label', nm); ab.onclick = () => (me ? go('/account') : authDrawer()); }
     const n = cart.reduce((a, i) => a + i.qty, 0);
-    $('#cartBtn').textContent = `${t('cart')} (${num(n)})`;
+    $('#cartBtn').innerHTML = `<svg class="ic" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="square" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="lb">${t('cart')} (${num(n)})</span>${n ? `<span class="cnt" aria-hidden="true">${n > 99 ? '99+' : num(n)}</span>` : ''}`; $('#cartBtn').setAttribute('aria-label', `${t('cart')} (${num(n)})`);
     $('#foot').innerHTML = `<span>© ${num(new Date().getFullYear())} ${t('brand')}. ${t('rights')}</span><span class="fbrand"><img class="mk" src="/img/brand/armova-mark-black.svg" alt="" width="258" height="178">${t('brand')}</span>`;
   }
   const toggleLang = () => { lang = lang === 'fa' ? 'en' : 'fa'; ls.set('lang', lang); chrome(); route(); if (drawerOpen) openCart(); };
@@ -134,6 +138,20 @@
   let pick = null;
   const thumb = (p, w = 480) => { const im = p.images.find((i) => i.kind === 'product') || p.images[0]; return im ? `/uploads/t/${encodeURIComponent(im.file)}?w=${w}` : ''; };
   const soldOut = (p) => p.sizes.length && p.sizes.every((s) => s.stock === 0);
+  // full-screen photo viewer for the product gallery
+  let zEl = null;
+  function openZoom(p, start = 0) {
+    if (zEl) return;
+    zEl = document.createElement('div'); zEl.className = 'zoom'; zEl.setAttribute('role', 'dialog'); zEl.setAttribute('aria-modal', 'true'); zEl.setAttribute('aria-label', L(p.name));
+    zEl.innerHTML = `<div class="zbar"><span class="zcount">${num(start + 1)} / ${num(p.images.length)}</span><button type="button" class="zx" aria-label="${t('close')}">✕</button></div><div class="zscroll">${p.images.map((i, k) => `<div class="zslide"><img src="/uploads/${encodeURIComponent(i.file)}" alt="${esc(L(p.name))} ${k + 1}/${p.images.length}" decoding="async"></div>`).join('')}</div>`;
+    document.body.appendChild(zEl); document.body.classList.add('lock');
+    const sc = zEl.querySelector('.zscroll'), cnt = zEl.querySelector('.zcount');
+    sc.children[start].scrollIntoView({ inline: 'start', block: 'nearest' });
+    sc.addEventListener('scroll', () => { cnt.textContent = `${num(Math.round(Math.abs(sc.scrollLeft) / sc.clientWidth) + 1)} / ${num(p.images.length)}`; }, { passive: true });
+    const close = () => { if (!zEl) return; zEl.remove(); zEl = null; document.body.classList.remove('lock'); removeEventListener('keydown', onKey); };
+    const onKey = (e) => { if (e.key === 'Escape') close(); };
+    addEventListener('keydown', onKey); zEl.querySelector('.zx').onclick = close; zEl.querySelector('.zx').focus();
+  }
   function productPage(slug) {
     const p = data.products.find((x) => x.slug === slug);
     if (!p) return staticPage('404', t('notFound'));
@@ -159,7 +177,7 @@
     const pn = order.length > 1 ? [order[(at - 1 + order.length) % order.length], order[(at + 1) % order.length]] : null;
     const acc = (title, body) => body ? `<details><summary>${title}</summary><div class="body">${esc(body)}</div></details>` : '';
     $('#app').innerHTML = `<div class="pdp">
-      <div class="gwrap"><div class="gallery" id="gal">${p.images.map((i) => `<img src="/uploads/${encodeURIComponent(i.file)}" alt="${esc(L(p.name))}">`).join('')}</div>${p.images.length > 1 ? `<div class="gdots" id="gdots">${p.images.map((_, i) => `<i class="${i ? '' : 'on'}"></i>`).join('')}</div>` : ''}</div>
+      <div class="gwrap"><div class="gallery" id="gal" role="group" aria-roledescription="carousel" aria-label="${esc(L(p.name))}">${p.images.map((i, k) => `<img src="/uploads/${encodeURIComponent(i.file)}" alt="${esc(L(p.name))} ${k + 1}/${p.images.length}" data-i="${k}" width="720" height="900" decoding="async" ${k ? 'loading="lazy"' : 'fetchpriority="high"'}>`).join('')}</div>${p.images.length > 1 ? `<span class="gcount" id="gcount" aria-hidden="true">${num(1)} / ${num(p.images.length)}</span><button class="gnav gprev" type="button" aria-label="${t('prev')}" data-g="-1">${lang === 'fa' ? '›' : '‹'}</button><button class="gnav gnext" type="button" aria-label="${t('next')}" data-g="1">${lang === 'fa' ? '‹' : '›'}</button><div class="gdots" id="gdots">${p.images.map((_, k) => `<button type="button" class="${k ? '' : 'on'}" data-k="${k}" aria-label="${num(k + 1)} / ${num(p.images.length)}"></button>`).join('')}</div>` : ''}</div>
       <div class="info">
         <div class="crumbs"><a data-link href="/">${t('shopCrumb')}</a>${cpath.map((c) => ` › <a data-link href="/?cat=${encodeURIComponent(c.slug)}">${esc(L(c.name))}</a>`).join('')}</div>
         <h1 class="display">${esc(L(p.name))}</h1>
@@ -172,8 +190,14 @@
         ${pn ? `<div class="pn"><a data-link href="/product/${encodeURIComponent(pn[0].slug)}">‹ ${t('prev')}</a><a data-link href="/product/${encodeURIComponent(pn[1].slug)}">${t('next')} ›</a></div>` : ''}
       </div></div>
       ${rel.length ? `<section class="related"><h2>${t('related')}</h2><div class="rrow">${rel.map((x) => `<a class="rcard" data-link href="/product/${encodeURIComponent(x.slug)}"><span class="rimg"><img src="${thumb(x)}" alt="${esc(L(x.name))}" loading="lazy" decoding="async"></span><span class="rn">${esc(L(x.name))}</span><span class="rp">${x.sale ? `<s class="price-old">${num(x.price)}</s>` : ''}${money(unit(x))}</span></a>`).join('')}</div></section>` : ''}`;
-    const gal = $('#gal'), dots = document.querySelectorAll('#gdots i');
-    if (dots.length) gal.addEventListener('scroll', () => { const i = Math.round(Math.abs(gal.scrollLeft) / gal.clientWidth); dots.forEach((d, k) => d.classList.toggle('on', k === i)); }, { passive: true });
+    const gal = $('#gal'), dots = [...document.querySelectorAll('#gdots button')], gcount = $('#gcount'), slideTo = (k) => { const n = p.images.length; gal.children[(k + n) % n].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' }); };
+    if (dots.length) {
+      let cur = 0;
+      gal.addEventListener('scroll', () => { const k = Math.round(Math.abs(gal.scrollLeft) / gal.clientWidth); if (k === cur) return; cur = k; dots.forEach((d, n) => d.classList.toggle('on', n === k)); if (gcount) gcount.textContent = `${num(k + 1)} / ${num(p.images.length)}`; }, { passive: true });
+      dots.forEach((d) => (d.onclick = () => slideTo(+d.dataset.k)));
+      document.querySelectorAll('.gnav').forEach((b) => (b.onclick = () => slideTo(cur + +b.dataset.g)));
+    }
+    gal.addEventListener('click', (e) => { const im = e.target.closest('img[data-i]'); if (im) openZoom(p, +im.dataset.i); });
     const chips = [...document.querySelectorAll('.chip[data-size]')], sizeOf = (n) => p.sizes.find((s) => s.name === n), nb = $('#notifyBox');
     const refresh = () => {
       chips.forEach((c) => { const on = c.dataset.size === pick; c.classList.toggle('on', on); c.setAttribute('aria-checked', String(on)); });
@@ -406,7 +430,7 @@
   function drawer(html, cls = '') { const d = $('#drawer'); d.innerHTML = html; d.className = 'drawer on ' + cls; document.body.classList.add('lock'); $('#overlay').classList.add('on'); d.setAttribute('aria-hidden', 'false'); drawerOpen = true; }
   function closeDrawer() { document.body.classList.remove('lock'); $('#drawer').classList.remove('on'); $('#overlay').classList.remove('on'); $('#drawer').setAttribute('aria-hidden', 'true'); drawerOpen = false; }
   $('#overlay').onclick = closeDrawer;
-  $('#drawer').addEventListener('click', (e) => { if (e.target.closest('[data-close]')) closeDrawer(); else if (e.target.closest('[data-lang]')) { closeDrawer(); toggleLang(); } });
+  $('#drawer').addEventListener('click', (e) => { if (e.target.closest('[data-close]')) closeDrawer(); else if (e.target.closest('[data-lang]')) { closeDrawer(); toggleLang(); } else if (e.target.closest('[data-search]')) { closeDrawer(); openSearch(); } });
   addEventListener('keydown', (e) => e.key === 'Escape' && closeDrawer());
 
   // ---------- boot ----------
