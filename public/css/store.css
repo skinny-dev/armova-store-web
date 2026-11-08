@@ -1,8 +1,8 @@
 :root { --bg:#fff; --fg:#0a1b3d; --muted:#5f6c87; --line:#dfe5f1; --tile:#edf1f8; --accent:#0a1b3d; --navy:#0a1b3d; --navy-2:#0c2250; --navy-3:#14316a; --blue:#2861ff; --ink:#d9e6ff; --hdr:64px; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html[lang=fa] body { font-family: 'Dana', system-ui, sans-serif; }
+html[lang=fa] body { font-family: 'Anjoman Max', 'Dana', system-ui, sans-serif; }
 html[lang=en] body { font-family: 'Inter', system-ui, sans-serif; }
-html[lang=fa] .display, html[lang=fa] .logo { font-family: 'Dana', sans-serif; font-weight: 800; }
+html[lang=fa] .display, html[lang=fa] .logo { font-family: 'Anjoman Max', 'Dana', sans-serif; font-weight: 800; }
 .display, .logo { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; }
 body { background: var(--bg); color: var(--fg); font-size: 14px; -webkit-font-smoothing: antialiased; }
 a { color: inherit; text-decoration: none; }
