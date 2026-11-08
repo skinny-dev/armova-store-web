@@ -51,7 +51,7 @@
   // <title>, description and canonical per page (the server renders the same for crawlers; this keeps them right while navigating inside the app)
   const clip = (s, n) => (s.length <= n ? s : s.slice(0, n - 1).replace(/[\s،,؛;:-]+\S*$/, '') + '…');
   function seo(title, desc, noindex) {
-    const fx = document.querySelector('meta[name=x-fixed-title]'); document.title = fx && fx.content.length > 1 && location.pathname === '/' && !location.search ? fx.content : clip(title, 60); // the verification code stays on the home page only
+    document.title = clip(title, 60);
     const set = (sel, make, attr, val) => { let el = document.head.querySelector(sel); if (!el) { el = document.createElement(make); document.head.appendChild(el); } el.setAttribute(attr, val); return el; };
     if (desc) { set('meta[name=description]', 'meta', 'content', clip(desc, 160)).setAttribute('name', 'description'); set('meta[property="og:description"]', 'meta', 'content', clip(desc, 160)).setAttribute('property', 'og:description'); }
     set('meta[property="og:title"]', 'meta', 'content', document.title).setAttribute('property', 'og:title');
