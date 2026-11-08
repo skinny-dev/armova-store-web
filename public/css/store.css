@@ -210,9 +210,9 @@ body.lock { overflow: hidden; }
 [hidden] { display: none !important; }
 
 /* ---- v4: clean grid-density icons ---- */
-.gridbtn { width: 36px; height: 36px; padding: 8px; display: grid; place-items: center; color: var(--muted); opacity: 1; border-radius: 8px; transition: background .12s, color .12s; }
+.gridbtn { width: 36px; height: 36px; padding: 8px; display: grid; place-items: center; color: var(--muted); opacity: 1; border-radius: 0; transition: background .12s, color .12s; }
 .gridbtn svg { width: 20px; height: 20px; fill: currentColor; display: block; } .gridbtn:hover { color: var(--fg); }
-.gridbtn.on { color: var(--fg); background: #efefef; }
+.gridbtn.on { color: var(--fg); background: var(--tile); }
 .seg .gridbtn + button[data-kind] { margin-inline-start: 6px; padding-inline-start: 14px; border-inline-start: 1px solid var(--line); }
 @media (max-width: 900px) { .gridbtn { width: 40px; height: 40px; padding: 9px; } .seg { gap: 4px; } }
 
@@ -286,3 +286,38 @@ html[lang=en] .logo { gap: .45em; }
 .dpbox { display: grid; gap: 6px; margin: 14px 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 0; background: #fff; }
 .dpbox .dpb-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 12px; color: var(--muted); } .dpb-logo { height: 14px; width: auto; }
 .dpbox b { font-size: 14px; line-height: 1.6; font-weight: 700; } .dpbox small { font-size: 11px; color: var(--muted); line-height: 1.6; }
+
+/* Search: header button, full-width sheet with live results, results page */
+.sbtn { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; } .sbtn:hover { opacity: .6; }
+body.srch-lock { overflow: hidden; }
+.srch { position: fixed; inset: 0; z-index: 58; } .srch-bg { position: absolute; inset: 0; background: rgba(10,27,61,.5); animation: srfade .15s; }
+.srch-panel { position: absolute; inset-inline: 0; top: 0; max-height: 92vh; overflow-y: auto; background: #fff; border-bottom: 1px solid var(--line); box-shadow: 0 24px 48px rgba(10,27,61,.22); animation: srdrop .18s ease-out; }
+@keyframes srfade { from { opacity: 0; } } @keyframes srdrop { from { transform: translateY(-14px); opacity: 0; } }
+.srch-in { max-width: 1040px; margin: 0 auto; padding: 18px 20px 14px; }
+.srch-bar { display: flex; align-items: center; gap: 12px; border-bottom: 2px solid var(--navy); padding: 4px 0; }
+.srch-bar input { flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; color: var(--fg); font: inherit; font-size: 24px; padding: 10px 0; border-radius: 0; -webkit-appearance: none; appearance: none; } .srch-bar input::-webkit-search-cancel-button { display: none; }
+.srch-x { width: 36px; height: 36px; font-size: 18px; color: var(--muted); } .srch-x:hover { color: var(--fg); }
+.srch-keys { margin: 10px 0 0; font-size: 11px; color: var(--muted); }
+.sr-cols { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 32px; padding-top: 6px; }
+.sr-sec { padding-top: 16px; } .sr-h { display: flex; justify-content: space-between; align-items: center; margin: 0 0 8px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.sr-link { font-size: 12px; color: var(--navy-3); text-decoration: underline; letter-spacing: 0; text-transform: none; }
+.sr-list { display: grid; }
+.sr-item { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 8px; border: 1px solid transparent; } .sr-item:hover, .sr-item.act { background: var(--tile); border-color: var(--line); }
+.sr-img { width: 52px; height: 65px; background: var(--tile); overflow: hidden; } .sr-img img { width: 100%; height: 100%; object-fit: cover; }
+.sr-tx { display: grid; gap: 2px; min-width: 0; } .sr-tx b { font-size: 14px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; } .sr-tx small { font-size: 12px; color: var(--muted); }
+.sr-pr { font-size: 13px; font-weight: 600; white-space: nowrap; } .sr-pr s { color: var(--muted); font-weight: 400; margin-inline-end: 4px; } .sr-pr.out { color: var(--muted); font-weight: 400; }
+.srch mark, .sp mark { background: #dfe9ff; color: inherit; padding: 0; }
+.sr-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.sr-chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--line); background: #fff; font-size: 13px; cursor: pointer; } .sr-chip small { color: var(--muted); font-size: 11px; } .sr-chip:hover, .sr-chip.act { border-color: var(--navy); background: var(--tile); }
+.sr-pages { display: grid; } .sr-page { padding: 10px 8px; border-bottom: 1px solid var(--line); font-size: 13px; line-height: 1.6; } .sr-page:hover, .sr-page.act { background: var(--tile); }
+.sr-all { display: block; margin-top: 10px; padding: 12px; border: 1px solid var(--navy); text-align: center; font-size: 13px; font-weight: 600; } .sr-all:hover { background: var(--navy); color: #fff; }
+.sr-none { padding: 30px 0 10px; display: grid; gap: 10px; } .sr-none b { font-size: 18px; } .sr-none p, .sr-empty { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+.sp { padding: 0 0 70px; } .sp-title { padding: 40px 20px 18px; font-size: clamp(26px, 3.4vw, 44px); line-height: 1.3; font-weight: 800; }
+.sp-bar { display: flex; gap: 8px; padding: 0 20px 14px; } .sp-bar input { flex: 1; min-width: 0; border: 1px solid var(--fg); padding: 12px; font: inherit; border-radius: 0; background: #fff; } .sp-bar .btn { width: auto; padding: 0 28px; }
+.sp-count { padding: 0 20px 14px; color: var(--muted); font-size: 13px; border-bottom: 1px solid var(--line); } .sp-none { padding: 30px 20px; }
+@media (max-width: 760px) {
+  .srch-panel { max-height: 100vh; height: 100%; } .srch-in { padding: 12px 16px 24px; }
+  .srch-bar input { font-size: 18px; } .sr-cols { grid-template-columns: 1fr; gap: 0; } .srch-keys { display: none; }
+  .sr-item { grid-template-columns: 44px minmax(0, 1fr); } .sr-img { width: 44px; height: 55px; } .sr-pr { grid-column: 2; font-size: 12px; }
+  .sp-title { padding: 24px 16px 14px; } .sp-bar, .sp-count { padding-inline: 16px; }
+}

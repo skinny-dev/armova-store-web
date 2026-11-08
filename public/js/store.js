@@ -6,7 +6,7 @@
   let lang = ls.get('lang', 'fa'); if (!I18N[lang]) lang = 'fa';
   let data = { categories: [], products: [] };
   let cart = ls.get('cart', []);
-  let ui = { kind: 'product', cols: innerWidth <= 900 ? 8 : 4, sort: 'newest' }; // phones and tablets start with the 3x3 (dense) grid
+  let ui = { kind: 'product', cols: 8, sort: 'newest' }; // the 3x3 (dense) grid is the default on every screen
   const t = (k) => I18N[lang][k] ?? k;
   const L = (o) => (o && (o[lang] || o.fa || o.en)) || '';
   const nf = () => new Intl.NumberFormat(lang === 'fa' ? 'fa-IR' : 'en-US');
@@ -27,6 +27,7 @@
     $('#nav').innerHTML = `<button class="menubtn" id="menuBtn" aria-label="${t('menu')}">☰</button><a href="/" data-link>${t('shop')}</a><a href="/about" data-link>${t('about')}</a><a href="/contact" data-link>${t('contact')}</a>`;
     $('#menuBtn').onclick = () => drawer(`<div class="dh"><b>${t('menu')}</b><button data-close aria-label="${t('close')}">✕</button></div><div class="db"><a class="row" data-link href="/">${t('shop')}</a>${(function walk(pid, depth) { return kids(pid).map((c) => `<a class="row sub" style="padding-inline-start:${20 + depth * 18}px" data-link href="/?cat=${encodeURIComponent(c.slug)}">${depth ? '└ ' : ''}${esc(L(c.name))}</a>${walk(c.id, depth + 1)}`).join(''); })(null, 0)}<a class="row" data-link href="/account">${me ? esc(me.name || t('account')) : t('login')}</a><a class="row" data-link href="/about">${t('about')}</a><a class="row" data-link href="/contact">${t('contact')}</a><button class="row" data-lang><span>${t('language')}</span><b>${t('otherLang')}</b></button></div>`, 'side');
     $('#lang').textContent = t('langBtn');
+    { const sb = $('#searchBtn'); if (sb) { sb.setAttribute('aria-label', t('search')); sb.title = t('search') + '  ( / )'; } }
     const ab = $('#acctBtn'); if (ab) { ab.textContent = me ? (me.name || t('account')) : t('login'); ab.onclick = () => (me ? go('/account') : authDrawer()); }
     const n = cart.reduce((a, i) => a + i.qty, 0);
     $('#cartBtn').textContent = `${t('cart')} (${num(n)})`;
@@ -59,6 +60,7 @@
     if ((m = path.match(/^\/category\/([^/]+)$/))) shopPage(m[1]);
     else if (path === '/' || path === '') shopPage(q.get('cat'));
     else if ((m = path.match(/^\/product\/(.+)$/))) productPage(m[1]);
+    else if (path === '/search') searchPage(q.get('q'));
     else if (path === '/account') { seo(t('seoAccount'), '', true); accountPage(); }
     else if (path === '/about') { seo(t('seoAbout'), t('aboutText')); staticPage(t('about'), t('aboutText'), true); }
     else if (path === '/contact') { seo(t('seoContact'), t('contactText')); staticPage(t('contact'), t('contactText')); }
@@ -69,11 +71,17 @@
     if (faq) fetch('/api/faq').then((r) => r.json()).then((list) => { const el = $('#faq'); if (el) el.innerHTML = `<h2>${t('faqTitle')}</h2>` + list.map((f) => `<details class="acc"><summary>${esc(L(f.q))}</summary><p>${esc(L(f.a))}</p></details>`).join(''); }).catch(() => {});
   };
 
+  const cardHtml = (p, withAlt = true) => {
+      const out = p.sizes.length && p.sizes.every((s) => s.stock === 0);
+      const gw = innerWidth < 900 ? 480 : 720, main = img(p, ui.kind, 'uploads/t') + '?w=' + gw, alt2 = p.images.map((i) => '/uploads/t/' + encodeURIComponent(i.file) + '?w=' + gw).find((u) => u !== main);
+      return `<a class="card" data-link aria-label="${esc(L(p.name))}" href="/product/${encodeURIComponent(p.slug)}"><img loading="lazy" decoding="async" width="720" height="900" src="${main}" alt="${esc(L(p.name))}">${withAlt && alt2 ? `<img class="alt" decoding="async" data-src="${alt2}" alt="">` : ''}
+        ${out ? `<span class="badge">${t('soldOut')}</span>` : p.sale ? `<span class="badge sale">−${num(p.sale.percent)}${lang === 'fa' ? '٪' : '%'}</span>` : ''}</a>`;
+  };
   // ---------- shop ----------
   function shopPage(catSlug) {
     const cat = data.categories.find((c) => c.slug === catSlug);
     const inCat = cat ? descIds(cat.id) : null;
-    seo(cat ? `${L(cat.name)} | ${t('seoCat')}` : t('seoHome'), cat ? `${L(cat.name)} — ${t('seoCat')}. ${lang === 'fa' ? 'سایزها و قیمت‌ها را ببینید و همین حالا سفارش دهید.' : 'See sizes and prices and order now.'}` : (lang === 'fa' ? 'آرموا برند پوشاک خیابانی با طراحی ساده، جنس باکیفیت و دوخت دقیق. همین حالا آنلاین سفارش دهید.' : 'Armova is a streetwear label: simple design, quality fabrics, precise construction. Order online now.'));
+    seo(cat ? `${L(cat.name)} | ${t('seoCat')}` : t('seoHome'), cat ? `${L(cat.name)} — ${t('seoCat')}. ${lang === 'fa' ? 'سایزها و قیمت‌ها را ببینید و همین حالا سفارش دهید.' : 'See sizes and prices and order now.'}` : (lang === 'fa' ? 'آرموا؛ پوشاک زنانه و مردانه با طراحی ساده، جنس باکیفیت و دوخت دقیق. همین حالا آنلاین سفارش دهید.' : 'Armova: women’s and men’s clothing with simple design, quality fabrics and precise construction. Order online now.'));
     let list = data.products.filter((p) => !cat || inCat.has(p.categoryId));
     if (ui.sort === 'priceAsc') list.sort((a, b) => unit(a) - unit(b)); else if (ui.sort === 'priceDesc') list.sort((a, b) => unit(b) - unit(a));
     const href = (c) => (c.slug ? '/category/' + encodeURIComponent(c.slug) : '/');
@@ -84,12 +92,7 @@
     const parent = cat ? (kids(cat.id).length ? cat : data.categories.find((x) => x.id === cat.parentId)) : null;
     const subs = parent ? [{ slug: parent.slug, name: t('allIn').replace('{c}', L(parent.name)), id: parent.id }, ...kids(parent.id).map((c) => ({ slug: c.slug, name: L(c.name), id: c.id }))] : [];
     const subTabs = subs.length > 1 ? `<div class="tabs sub">${subs.map((c) => tab(c, cat && c.id === cat.id)).join('')}</div>` : '';
-    const cards = list.map((p) => {
-      const out = p.sizes.length && p.sizes.every((s) => s.stock === 0);
-      const gw = innerWidth < 900 ? 480 : 720, main = img(p, ui.kind, 'uploads/t') + '?w=' + gw, alt2 = p.images.map((i) => '/uploads/t/' + encodeURIComponent(i.file) + '?w=' + gw).find((u) => u !== main);
-      return `<a class="card" data-link aria-label="${esc(L(p.name))}" href="/product/${encodeURIComponent(p.slug)}"><img loading="lazy" decoding="async" width="720" height="900" src="${main}" alt="${esc(L(p.name))}">${alt2 ? `<img class="alt" decoding="async" data-src="${alt2}" alt="">` : ''}
-        ${out ? `<span class="badge">${t('soldOut')}</span>` : p.sale ? `<span class="badge sale">−${num(p.sale.percent)}${lang === 'fa' ? '٪' : '%'}</span>` : ''}</a>`;
-    }).join('');
+    const cards = list.map((p) => cardHtml(p)).join('');
     // grid-density icons: n x n rounded squares (inline SVG, inherits the text color)
     const gb = (c, n) => { const g = n === 2 ? 3 : 2, s = (17 - g * (n - 1)) / n; let r = ''; for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) r += `<rect x="${(1.5 + x * (s + g)).toFixed(2)}" y="${(1.5 + y * (s + g)).toFixed(2)}" width="${s.toFixed(2)}" height="${s.toFixed(2)}" rx="1.2"/>`; return `<button class="gridbtn ${ui.cols === c ? 'on' : ''}" data-cols="${c}" aria-label="${n}×${n}" aria-pressed="${ui.cols === c}"><svg viewBox="0 0 20 20" aria-hidden="true">${r}</svg></button>`; };
     $('#app').innerHTML = `
@@ -410,5 +413,111 @@
   async function load() {
     try { data = await (await fetch('/api/store')).json(); } catch { toast(t('errGeneric')); }
   }
+  // ---------- search ----------
+  // Matches products (name, colour, category, code, properties), categories and pages/FAQ; Persian and Arabic letter forms, digits and half-spaces are normalised.
+  const norm = (v) => String(v || '').toLowerCase().replace(/[۰-۹]/g, (c) => '۰۱۲۳۴۵۶۷۸۹'.indexOf(c)).replace(/[٠-٩]/g, (c) => '٠١٢٣٤٥٦٧٨٩'.indexOf(c))
+    .replace(/ي/g, 'ی').replace(/ك/g, 'ک').replace(/[أإآ]/g, 'ا').replace(/ؤ/g, 'و').replace(/[ۀة]/g, 'ه').replace(/[\u064B-\u065F\u0670\u0640\u200c\u200d]/g, '').replace(/\s+/g, ' ').trim();
+  const hl = (text, q) => { const words = String(q).trim().split(/\s+/).filter(Boolean).map((w) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')); const e = esc(text); return words.length ? e.replace(new RegExp('(' + words.join('|') + ')', 'gi'), '<mark>$1</mark>') : e; };
+  let sIdx = null, faqList = null;
+  const sIndex = () => {
+    if (sIdx && sIdx.src === data.products) return sIdx;
+    const items = data.products.map((p) => {
+      const name = norm(`${(p.name || {}).fa || ''} ${(p.name || {}).en || ''}`);
+      const extra = norm([p.color && `${p.color.fa || ''} ${p.color.en || ''}`, p.sku, ...catPath(p.categoryId).map((c) => `${(c.name || {}).fa || ''} ${(c.name || {}).en || ''}`), ...(p.properties || []).map((r) => `${(r.value || {}).fa || ''} ${(r.value || {}).en || ''}`), L(p.description)].filter(Boolean).join(' '));
+      return { p, name, extra, words: name.split(' ') };
+    });
+    return (sIdx = { src: data.products, items, cats: data.categories.map((c) => ({ c, name: norm(`${(c.name || {}).fa || ''} ${(c.name || {}).en || ''}`) })) });
+  };
+  const pageIndex = () => [
+    { title: t('shop'), href: '/', n: norm(`${t('shop')} ${t('allProducts')}`) }, { title: t('about'), href: '/about', n: norm(`${t('about')} ${t('aboutText')}`) },
+    { title: t('contact'), href: '/contact', n: norm(`${t('contact')} ${t('contactText')}`) }, { title: t('account'), href: '/account', n: norm(`${t('account')} ${t('myOrders')} ${t('login')}`) },
+    ...(faqList || []).map((f) => ({ title: L(f.q), href: '/about', n: norm(`${L(f.q)} ${L(f.a)}`), faq: true })),
+  ];
+  function runSearch(q) {
+    const tk = norm(q).split(' ').filter(Boolean); if (!tk.length) return { tk, products: [], cats: [], pages: [] };
+    const ix = sIndex(), hits = [];
+    for (const it of ix.items) {
+      let sc = 0, ok = true;
+      for (const w of tk) { if (it.words.some((x) => x.startsWith(w))) sc += 10; else if (it.name.includes(w)) sc += 6; else if (it.extra.includes(w)) sc += 2; else { ok = false; break; } }
+      if (ok) hits.push({ p: it.p, sc: sc + (it.p.sizes.length && it.p.sizes.every((z) => z.stock === 0) ? 0 : 1) });
+    }
+    hits.sort((a, b) => b.sc - a.sc || b.p.createdAt - a.p.createdAt);
+    return { tk, products: hits.map((x) => x.p), cats: ix.cats.filter((x) => tk.every((w) => x.name.includes(w))).map((x) => x.c).slice(0, 5), pages: pageIndex().filter((x) => tk.every((w) => x.n.includes(w))).slice(0, 5) };
+  }
+  const recents = () => ls.get('recentSearches', []);
+  const saveRecent = (q) => { q = String(q || '').trim(); if (q.length > 1) ls.set('recentSearches', [q, ...recents().filter((x) => x !== q)].slice(0, 6)); };
+  const catCount = (c) => data.products.filter((p) => descIds(c.id).has(p.categoryId)).length;
+  const srItem = (p, q) => {
+    const im = p.images.find((i) => i.kind === 'product') || p.images[0], out = p.sizes.length && p.sizes.every((z) => z.stock === 0), cat = data.categories.find((c) => c.id === p.categoryId);
+    return `<a class="sr-item" data-link role="option" href="/product/${encodeURIComponent(p.slug)}"><span class="sr-img">${im ? `<img src="/uploads/t/${encodeURIComponent(im.file)}?w=120" alt="" decoding="async">` : ''}</span><span class="sr-tx"><b>${hl(L(p.name), q)}</b><small>${esc(cat ? L(cat.name) : '')}${p.color ? ' · ' + esc(L(p.color)) : ''}</small></span><span class="sr-pr${out ? ' out' : ''}">${out ? t('soldOut') : p.sale ? `<s>${num(p.price)}</s> ${money(unit(p))}` : money(unit(p))}</span></a>`;
+  };
+  const srChip = (c) => `<a class="sr-chip" data-link role="option" href="/category/${encodeURIComponent(c.slug)}">${esc(L(c.name))} <small>${num(catCount(c))}</small></a>`;
+  let sEl = null, sQ = '', sAct = -1;
+  const sItems = () => [...sEl.querySelectorAll('#srchOut .sr-item, #srchOut .sr-chip, #srchOut .sr-page')];
+  const sSetAct = (n) => { const els = sItems(); if (!els.length) return; sAct = (n + els.length) % els.length; els.forEach((e, k) => { e.classList.toggle('act', k === sAct); e.setAttribute('aria-selected', k === sAct); }); els[sAct].scrollIntoView({ block: 'nearest' }); };
+  function paintSearch() {
+    const out = $('#srchOut'), q = sQ.trim(); sAct = -1;
+    if (!q) {
+      const rec = recents(), top = kids(null), fresh = data.products.slice(0, 4);
+      out.innerHTML = `${rec.length ? `<div class="sr-sec"><div class="sr-h"><span>${t('searchRecent')}</span><button type="button" class="sr-link" data-clear>${t('searchClear')}</button></div><div class="sr-chips">${rec.map((r) => `<button type="button" class="sr-chip" data-q="${esc(r)}">${esc(r)}</button>`).join('')}</div></div>` : ''}
+        <div class="sr-sec"><div class="sr-h"><span>${t('searchBrowse')}</span></div><div class="sr-chips">${top.map(srChip).join('')}</div></div>
+        <div class="sr-sec"><div class="sr-h"><span>${t('searchNew')}</span></div><div class="sr-list" role="listbox">${fresh.map((p) => srItem(p, '')).join('')}</div></div>`;
+      return;
+    }
+    const r = runSearch(q);
+    if (!r.products.length && !r.cats.length && !r.pages.length) {
+      out.innerHTML = `<div class="sr-none"><b>${esc(t('searchNone').replace('{q}', q))}</b><p>${t('searchTry')}</p><div class="sr-chips">${kids(null).map(srChip).join('')}</div></div>`; return;
+    }
+    out.innerHTML = `<div class="sr-cols"><div class="sr-sec">${r.products.length ? `<div class="sr-h"><span>${t('searchProducts')}</span><span>${num(r.products.length)}</span></div><div class="sr-list" role="listbox">${r.products.slice(0, 7).map((p) => srItem(p, q)).join('')}</div>${r.products.length > 7 ? `<a class="sr-all" data-link href="/search?q=${encodeURIComponent(q)}">${t('searchAll').replace('{n}', num(r.products.length))} →</a>` : ''}` : `<p class="sr-empty">${t('searchNone').replace('{q}', esc(q))}</p>`}</div>
+      <div class="sr-side">${r.cats.length ? `<div class="sr-sec"><div class="sr-h"><span>${t('searchCats')}</span></div><div class="sr-chips">${r.cats.map(srChip).join('')}</div></div>` : ''}${r.pages.length ? `<div class="sr-sec"><div class="sr-h"><span>${t('searchPages')}</span></div><div class="sr-pages">${r.pages.map((x) => `<a class="sr-page" data-link role="option" href="${x.href}">${hl(x.title, q)}</a>`).join('')}</div></div>` : ''}</div></div>`;
+    sSetAct(0);
+  }
+  const closeSearch = () => { if (!sEl) return; sEl.remove(); sEl = null; document.body.classList.remove('srch-lock'); const b = $('#searchBtn'); if (b) b.focus({ preventScroll: true }); };
+  function openSearch(prefill = '') {
+    if (sEl) { $('#srchIn').focus(); return; }
+    closeDrawer && closeDrawer();
+    if (!faqList) fetch('/api/faq').then((r) => r.json()).then((l) => { faqList = l; if (sEl && sQ.trim()) paintSearch(); }).catch(() => { faqList = []; });
+    sEl = document.createElement('div'); sEl.id = 'srch'; sEl.className = 'srch'; sQ = prefill;
+    sEl.innerHTML = `<div class="srch-bg" data-sx></div><div class="srch-panel" role="dialog" aria-modal="true" aria-label="${t('search')}"><div class="srch-in">
+      <form class="srch-bar" id="srchForm" role="search"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg>
+        <input id="srchIn" type="search" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" placeholder="${t('searchPh')}" aria-label="${t('search')}" aria-controls="srchOut" value="${esc(prefill)}">
+        <button type="button" class="srch-x" data-sx aria-label="${t('close')}">✕</button></form>
+      <div id="srchOut" aria-live="polite"></div><p class="srch-keys">${t('searchKeys')}</p></div></div>`;
+    document.body.appendChild(sEl); document.body.classList.add('srch-lock');
+    const inp = $('#srchIn'); paintSearch(); inp.focus();
+    inp.addEventListener('input', () => { sQ = inp.value; paintSearch(); });
+    inp.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); sSetAct(sAct + 1); } else if (e.key === 'ArrowUp') { e.preventDefault(); sSetAct(sAct - 1); }
+    });
+    $('#srchForm').addEventListener('submit', (e) => {
+      e.preventDefault(); const q = sQ.trim(), els = sItems();
+      if (sAct >= 0 && els[sAct]) { saveRecent(q); els[sAct].click(); return; }
+      if (q) { saveRecent(q); closeSearch(); go('/search?q=' + encodeURIComponent(q)); }
+    });
+    sEl.addEventListener('click', (e) => {
+      if (e.target.closest('[data-sx]')) return closeSearch();
+      const rq = e.target.closest('[data-q]'); if (rq) { inp.value = sQ = rq.dataset.q; paintSearch(); inp.focus(); return; }
+      if (e.target.closest('[data-clear]')) { ls.set('recentSearches', []); paintSearch(); return; }
+      if (e.target.closest('a[data-link]')) { saveRecent(sQ); closeSearch(); } // the router (document click) takes it from here
+    });
+  }
+  addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && sEl) { e.preventDefault(); closeSearch(); return; }
+    const typing = /^(INPUT|TEXTAREA|SELECT)$/.test((e.target || {}).tagName) || (e.target && e.target.isContentEditable);
+    if (((e.key === '/' && !typing && !e.ctrlKey && !e.metaKey) || ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k')) && !sEl) { e.preventDefault(); openSearch(); }
+  });
+  $('#searchBtn').onclick = () => openSearch();
+  function searchPage(q) {
+    q = String(q || '').trim(); seo(t('seoSearch'), '', true);
+    const r = runSearch(q);
+    $('#app').innerHTML = `<section class="sp"><h1 class="display sp-title">${q ? esc(t('searchResultsFor').replace('{q}', q)) : t('search')}</h1>
+      <form class="sp-bar" id="spForm" role="search"><input id="spIn" type="search" autocomplete="off" value="${esc(q)}" placeholder="${t('searchPh')}" aria-label="${t('search')}"><button class="btn" type="submit">${t('search')}</button></form>
+      ${q ? `<p class="sp-count">${t('searchCount').replace('{n}', num(r.products.length))}</p>` : ''}
+      ${r.products.length ? `<div class="grid ${ui.cols >= 8 ? 'dense' : ''}" style="--cols:${ui.cols}">${r.products.map((p) => cardHtml(p, false)).join('')}</div>`
+        : q ? `<div class="sr-none sp-none"><b>${esc(t('searchNone').replace('{q}', q))}</b><p>${t('searchTry')}</p><div class="sr-chips">${kids(null).map(srChip).join('')}</div></div>` : `<div class="sr-chips sp-none">${kids(null).map(srChip).join('')}</div>`}</section>`;
+    $('#spForm').onsubmit = (e) => { e.preventDefault(); const v = $('#spIn').value.trim(); if (v) { saveRecent(v); history.replaceState({}, '', '/search?q=' + encodeURIComponent(v)); route(); } };
+    if (!q) $('#spIn').focus();
+  }
+
   (async () => { chrome(); if (window.UX) $('#app').innerHTML = `<div class="page-title display ux-skel" style="margin:70px 20px 60px;height:90px;width:40%"></div>${UX.skeletonGrid(8, ui.cols)}`; await Promise.all([load(), loadMe()]); route(); payReturn(); track('view'); })();
 })();
