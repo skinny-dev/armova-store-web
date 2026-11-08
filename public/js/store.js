@@ -94,8 +94,8 @@
     const gb = (c, n) => { const g = n === 2 ? 3 : 2, s = (17 - g * (n - 1)) / n; let r = ''; for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) r += `<rect x="${(1.5 + x * (s + g)).toFixed(2)}" y="${(1.5 + y * (s + g)).toFixed(2)}" width="${s.toFixed(2)}" height="${s.toFixed(2)}" rx="1.2"/>`; return `<button class="gridbtn ${ui.cols === c ? 'on' : ''}" data-cols="${c}" aria-label="${n}×${n}" aria-pressed="${ui.cols === c}"><svg viewBox="0 0 20 20" aria-hidden="true">${r}</svg></button>`; };
     $('#app').innerHTML = `
       <h1 class="page-title display">${esc(cat ? L(cat.name) : t('allProducts'))}</h1>
-      ${!cat || promo().strip !== false ? dpBanner(cat ? list : undefined) : ''}
       <div class="tabs">${tabs}</div>${subTabs}
+      ${!cat || promo().strip !== false ? dpBanner(cat ? list : undefined) : ''}
       <div class="bar">
         <select id="sort">${['newest', 'priceAsc', 'priceDesc'].map((k) => `<option value="${k}" ${ui.sort === k ? 'selected' : ''}>${t(k)}</option>`).join('')}</select>
         <span class="count">${num(list.length)} ${t('products')}</span>
@@ -255,6 +255,16 @@
   }
   $('#cartBtn').onclick = openCart;
 
+  // payment methods as a plain radio list: title, one line of detail, the brand mark at the end; sandbox notices in one muted line below
+  const CARD_SVG = '<svg viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="square" aria-hidden="true"><rect x="3" y="6.5" width="22" height="15"/><path d="M3 11.5h22"/><path d="M7 17h5"/></svg>';
+  function payMethods() {
+    const both = checkoutCfg.online && checkoutCfg.installment; let first = true;
+    const row = (value, title, sub, mark) => { const on = first; first = false; return `<label class="pmopt${value === 'digipay' ? ' pmdp' : ''}"><input type="radio" name="pm" value="${value}" ${on ? 'checked' : ''}><span class="pmdot" aria-hidden="true"></span><span class="pmtx"><b>${title}</b><small>${sub}</small></span><span class="pmmark">${mark}</span></label>`; };
+    const parts = [], notes = [];
+    if (checkoutCfg.online) { parts.push(row('zibal', both ? t('payCard') : t('payOnline'), t('payCardSub'), CARD_SVG)); if (checkoutCfg.sandbox) notes.push(t('paySandbox')); }
+    if (checkoutCfg.installment) { parts.push(row('digipay', t('payInstallment'), `<span id="dpSub">${t(promo().estimate === false ? 'dpPartsNo' : 'dpParts').replace('{c}', num(dpN())).replace('{n}', '…')}</span>`, `<img src="/img/digipay/wordmark-${lang === 'fa' ? 'fa' : 'en'}.png" alt="${t('dpName')}">`)); if (checkoutCfg.installmentSandbox) notes.push(t('payInstallmentSandbox')); }
+    return parts.length ? `<fieldset class="paym"><legend>${t('payMethod')}</legend>${parts.join('')}${notes.length ? `<p class="pmnote">${notes.join(' ')}</p>` : ''}</fieldset>` : '';
+  }
   function checkoutForm() {
     if (checkoutCfg.requireLogin && !me) return authDrawer(() => checkoutForm());
     drawer(`<div class="dh"><b>${t('checkout')}</b><button data-close aria-label="${t('close')}">✕</button></div><form class="form db" id="co">
@@ -262,14 +272,18 @@
       ${me ? `<div class="sumrow"><span>${t('phone')}</span><b dir="ltr">${esc(me.phone)}</b></div>` : `<label>${t('phone')}<input name="phone" required inputmode="tel" dir="ltr" autocomplete="tel" placeholder="09xxxxxxxxx"></label>${checkoutCfg.requireLogin ? '' : `<button class="link" type="button" id="coLogin">${t('loginFaster')}</button>`}`}
       <label>${t('address')}<textarea name="address" rows="3" required maxlength="500" autocomplete="street-address">${esc(me ? me.address : '')}</textarea></label>
       <label>${t('note')}<textarea name="note" rows="2" maxlength="500"></textarea></label>
-      ${checkoutCfg.online && checkoutCfg.installment ? `<fieldset class="paym"><legend>${t('payMethod')}</legend><label class="check"><input type="radio" name="pm" value="zibal" checked> <span>${t('payCard')}</span></label><label class="check"><input type="radio" name="pm" value="digipay"> <span>${t('payInstallment')}${checkoutCfg.installmentMin ? ` <small class="muted">· ${t('payInstallmentMin')}: ${money(checkoutCfg.installmentMin)}</small>` : ''}</span></label>${checkoutCfg.installmentSandbox ? `<small class="muted">${t('payInstallmentSandbox')}</small>` : ''}</fieldset>`
-        : checkoutCfg.installment ? `<p class="muted paynote">${t('payInstallment')}${checkoutCfg.installmentSandbox ? '<br>' + t('payInstallmentSandbox') : ''}</p>`
-        : checkoutCfg.online ? `<p class="muted paynote">${t('payOnline')} · ${t('payOnlineHint')}${checkoutCfg.sandbox ? '<br>' + t('paySandbox') : ''}</p>` : ''}
+      ${payMethods()}
       <label class="check"><input type="checkbox" name="opt" ${me && me.marketingOptIn ? 'checked' : ''}> <span>${t('optInSms')}</span></label>
       <div class="sumrow"><span>${t('subtotal')}</span><span id="cSub"></span></div><div class="sumrow" id="cDiscRow" hidden><span>${t('discount')}</span><span id="cDisc"></span></div><div class="sumrow total"><b>${t('total')}</b><b id="cTot"></b></div>
       <div class="err" id="coErr"></div><button class="btn" type="submit" id="coSubmit">${t('placeOrder')}</button><button class="btn ghost" type="button" id="coBack">${t('back')}</button></form>`);
     $('#coBack').onclick = openCart; if ($('#coLogin')) $('#coLogin').onclick = () => authDrawer(() => checkoutForm());
-    refreshTotals('c');
+    refreshTotals('c').then((q) => {
+      const opt = document.querySelector('.pmdp'); if (!q || !opt) return;
+      const sub = $('#dpSub'); if (sub && promo().estimate !== false) sub.textContent = t('dpParts').replace('{c}', num(dpN())).replace('{n}', money(Math.ceil(q.total / dpN())));
+      const low = (checkoutCfg.installmentMin || 0) > q.total, inp = opt.querySelector('input');
+      opt.classList.toggle('off', low); inp.disabled = low;
+      if (low) { const z = document.querySelector('input[name=pm][value=zibal]'); if (z) z.checked = true; if (sub) sub.textContent = t('payInstallmentMin') + ': ' + money(checkoutCfg.installmentMin); }
+    });
     if (checkoutCfg.online || checkoutCfg.installment) $('#coSubmit').textContent = t('payAndOrder');
     $('#co').onsubmit = async (e) => {
       e.preventDefault(); const f = e.target, btn = f.querySelector('[type=submit]'); btn.disabled = true; $('#coErr').textContent = '';
@@ -310,7 +324,7 @@
       <div class="dpb-row"><p>${esc(dpt('sub', 'dpBannerP'))}</p><button class="dpb-cta" type="button" id="dpGo">${esc(dpt('cta', 'dpCta'))}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="${lang === 'fa' ? 'M19 12H5M11 6l-6 6 6 6' : 'M5 12h14M13 6l6 6-6 6'}"/></svg></button></div>
     </div><div class="dpb-pics">${pics}<span class="dpb-four" aria-hidden="true"><b>${num(dpN())}</b><small>${t('dpInst')}</small></span></div></section></div>`;
   };
-  const dpBox = (price) => (dpOk(price) && promo().product !== false ? `<div class="dpbox"><span class="dpmark">${t('dpName')}</span><div><b>${t('dpTitle')}</b><span>${t(promo().estimate === false ? 'dpPartsNo' : 'dpParts').replace('{c}', num(dpN())).replace('{n}', money(Math.ceil(price / dpN())))}</span><small>${esc(dpt('fine', 'dpFine'))}</small></div></div>` : '');
+  const dpBox = (price) => (dpOk(price) && promo().product !== false ? `<div class="dpbox"><div class="dpb-top"><span>${t('dpTitle')}</span><img class="dpb-logo" src="/img/digipay/wordmark-${lang === 'fa' ? 'fa' : 'en'}.png" alt="${t('dpName')}"></div><b>${t(promo().estimate === false ? 'dpPartsNo' : 'dpParts').replace('{c}', num(dpN())).replace('{n}', money(Math.ceil(price / dpN())))}</b><small>${esc(dpt('fine', 'dpFine'))}</small></div>` : '');
   // back from the payment page (?pay=paid|failed|pending&order=ID&k=KEY) or a gateway error at checkout
   function payResult(state, id, key, note) {
     const ok = state === 'paid', wait = state === 'pending';

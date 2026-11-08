@@ -16,8 +16,8 @@ img { display: block; max-width: 100%; }
 .txt:hover, .nav a:hover { opacity: .6; }
 main { padding-top: var(--hdr); min-height: 80vh; }
 
-.page-title { font-size: clamp(56px, 11vw, 150px); line-height: .95; padding: 70px 20px 60px; letter-spacing: -.02em; }
-html[lang=fa] .page-title { font-size: clamp(44px, 8vw, 110px); line-height: 1.2; }
+.page-title { font-size: clamp(36px, 5.5vw, 76px); line-height: 1; padding: 56px 20px 36px; letter-spacing: -.02em; }
+html[lang=fa] .page-title { font-size: clamp(32px, 4.6vw, 62px); line-height: 1.25; letter-spacing: 0; }
 .tabs { display: flex; gap: 8px; padding: 0 20px 24px; flex-wrap: wrap; border-bottom: 1px solid var(--line); }
 .tab { padding: 6px 10px; font-size: 12px; text-transform: uppercase; border: 1px solid transparent; border-radius: 3px; }
 .tab.on { border-color: var(--fg); }
@@ -118,8 +118,8 @@ body.lock { overflow: hidden; }
   .nav a { display: none; }
   .logo { font-size: 28px; }
   .tools { gap: 12px; }
-  .page-title { padding: 32px 16px 22px; font-size: clamp(44px, 16vw, 90px); }
-  html[lang=fa] .page-title { font-size: clamp(38px, 13vw, 76px); }
+  .page-title { padding: 28px 16px 18px; font-size: clamp(30px, 11vw, 52px); }
+  html[lang=fa] .page-title { font-size: clamp(28px, 9vw, 44px); }
   .tabs { flex-wrap: nowrap; overflow-x: auto; padding: 0 16px 16px; gap: 6px; scrollbar-width: none; scroll-snap-type: x proximity; }
   .tabs::-webkit-scrollbar { display: none; }
   .tab { flex: none; padding: 9px 14px; scroll-snap-align: start; border-color: var(--line); }
@@ -266,3 +266,23 @@ body.lock { overflow: hidden; }
 /* Wordmark: Latin in capitals with wide tracking, like the woven label */
 html[lang=en] .logo span { text-transform: uppercase; letter-spacing: .2em; font-size: .6em; padding-inline-start: .2em; }
 html[lang=en] .logo { gap: .45em; }
+
+/* Payment methods: a plain radio list */
+.paym { gap: 0; border: 0; padding: 0; margin: 6px 0 10px; display: block; } .paym legend { padding: 0 0 8px; }
+.form .pmopt { position: relative; display: flex; flex-direction: row; align-items: center; gap: 12px; padding: 14px 14px; margin: 0 0 -1px; border: 1px solid var(--line); background: #fff; font-size: 13px; cursor: pointer; }
+.form .pmopt input { position: absolute; inset: 0; width: 100%; height: 100%; padding: 0; margin: 0; border: 0; opacity: 0; cursor: pointer; }
+.pmopt:has(input:checked) { border-color: var(--navy); background: #f6f8fd; z-index: 1; } .pmopt:has(input:focus-visible) { outline: 2px solid var(--blue); outline-offset: 2px; z-index: 2; }
+.pmdot { width: 18px; height: 18px; flex-shrink: 0; border: 1.5px solid #9aa8c4; border-radius: 50%; background: #fff; display: grid; place-items: center; } .pmdot::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--navy); transform: scale(0); transition: transform .12s; }
+.pmopt:has(input:checked) .pmdot { border-color: var(--navy); } .pmopt:has(input:checked) .pmdot::after { transform: scale(1); }
+.form .pmtx { display: grid; gap: 2px; flex: 1; min-width: 0; line-height: 1.5; } .pmtx b { font-size: 14px; font-weight: 700; } .pmtx small { color: var(--muted); font-size: 12px; }
+.pmmark { flex-shrink: 0; display: flex; align-items: center; color: var(--navy); } .pmmark svg { width: 26px; height: 26px; } .pmmark img { height: 15px; width: auto; }
+.pmnote { margin: 8px 0 0; color: var(--muted); font-size: 11px; line-height: 1.6; }
+.pmopt.off { opacity: .55; cursor: not-allowed; } .pmopt.off input { cursor: not-allowed; }
+/* tabs first (they belong to the heading), then the banner, then the sort bar */
+.tabs + .dpbwrap, .subtabs + .dpbwrap { margin-top: 0; }
+.dpbwrap + .bar { margin-top: 0; }
+
+/* product / cart installment box: quiet, one block, the Digipay mark top right */
+.dpbox { display: grid; gap: 6px; margin: 14px 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 0; background: #fff; }
+.dpbox .dpb-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 12px; color: var(--muted); } .dpb-logo { height: 14px; width: auto; }
+.dpbox b { font-size: 14px; line-height: 1.6; font-weight: 700; } .dpbox small { font-size: 11px; color: var(--muted); line-height: 1.6; }
