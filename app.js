@@ -320,7 +320,7 @@ app.get('*', (req, res) => {
   const r = seo.render(req);
   if (r.redirect) return res.redirect(301, r.redirect);
   const t = (process.env.ENAMAD_TITLE || '').replace(/[^\w\u0600-\u06ff .-]/g, '');
-  const html = t ? r.html.replace(/<title>[^<]*<\/title>/, `<title>${t}</title><meta name="x-fixed-title" content="1">`) : r.html;
+  const html = t && req.path === '/' && !req.query.cat ? r.html.replace(/<title>[^<]*<\/title>/, `<title>${t}</title><meta name="x-fixed-title" content="${t}">`) : r.html; // verification code on the home page only
   res.status(r.status).type('html').send(html);
 });
 

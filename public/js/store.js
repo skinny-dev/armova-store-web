@@ -51,7 +51,7 @@
   // <title>, description and canonical per page (the server renders the same for crawlers; this keeps them right while navigating inside the app)
   const clip = (s, n) => (s.length <= n ? s : s.slice(0, n - 1).replace(/[\s،,؛;:-]+\S*$/, '') + '…');
   function seo(title, desc, noindex) {
-    if (!document.querySelector('meta[name=x-fixed-title]')) document.title = clip(title, 60);
+    const fx = document.querySelector('meta[name=x-fixed-title]'); document.title = fx && fx.content.length > 1 && location.pathname === '/' && !location.search ? fx.content : clip(title, 60); // the verification code stays on the home page only
     const set = (sel, make, attr, val) => { let el = document.head.querySelector(sel); if (!el) { el = document.createElement(make); document.head.appendChild(el); } el.setAttribute(attr, val); return el; };
     if (desc) { set('meta[name=description]', 'meta', 'content', clip(desc, 160)).setAttribute('name', 'description'); set('meta[property="og:description"]', 'meta', 'content', clip(desc, 160)).setAttribute('property', 'og:description'); }
     set('meta[property="og:title"]', 'meta', 'content', document.title).setAttribute('property', 'og:title');
@@ -138,6 +138,12 @@
   let pick = null;
   const thumb = (p, w = 480) => { const im = p.images.find((i) => i.kind === 'product') || p.images[0]; return im ? `/uploads/t/${encodeURIComponent(im.file)}?w=${w}` : ''; };
   const soldOut = (p) => p.sizes.length && p.sizes.every((s) => s.stock === 0);
+  let galApi = null;
+  addEventListener('keydown', (e) => {
+    if (!galApi || !document.querySelector('#gal') || zEl || e.ctrlKey || e.metaKey || e.altKey || /^(INPUT|TEXTAREA|SELECT)$/.test((e.target || {}).tagName) || document.body.classList.contains('lock') || document.querySelector('#srch')) return;
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    e.preventDefault(); const rtl = document.documentElement.dir === 'rtl'; galApi.step((e.key === 'ArrowLeft') === rtl ? 1 : -1);
+  });
   // full-screen photo viewer for the product gallery
   let zEl = null;
   function openZoom(p, start = 0) {
@@ -177,7 +183,7 @@
     const pn = order.length > 1 ? [order[(at - 1 + order.length) % order.length], order[(at + 1) % order.length]] : null;
     const acc = (title, body) => body ? `<details><summary>${title}</summary><div class="body">${esc(body)}</div></details>` : '';
     $('#app').innerHTML = `<div class="pdp">
-      <div class="gwrap"><div class="gallery" id="gal" role="group" aria-roledescription="carousel" aria-label="${esc(L(p.name))}">${p.images.map((i, k) => `<img src="/uploads/${encodeURIComponent(i.file)}" alt="${esc(L(p.name))} ${k + 1}/${p.images.length}" data-i="${k}" width="720" height="900" decoding="async" ${k ? 'loading="lazy"' : 'fetchpriority="high"'}>`).join('')}</div>${p.images.length > 1 ? `<span class="gcount" id="gcount" aria-hidden="true">${num(1)} / ${num(p.images.length)}</span><button class="gnav gprev" type="button" aria-label="${t('prev')}" data-g="-1">${lang === 'fa' ? '›' : '‹'}</button><button class="gnav gnext" type="button" aria-label="${t('next')}" data-g="1">${lang === 'fa' ? '‹' : '›'}</button><div class="gdots" id="gdots">${p.images.map((_, k) => `<button type="button" class="${k ? '' : 'on'}" data-k="${k}" aria-label="${num(k + 1)} / ${num(p.images.length)}"></button>`).join('')}</div>` : ''}</div>
+      <div class="gwrap"><div class="gallery" id="gal" role="group" aria-roledescription="carousel" aria-label="${esc(L(p.name))}">${p.images.map((i, k) => `<img src="/uploads/${encodeURIComponent(i.file)}" alt="${esc(L(p.name))} ${k + 1}/${p.images.length}" data-i="${k}" draggable="false" width="720" height="900" decoding="async" ${k ? 'loading="lazy"' : 'fetchpriority="high"'}>`).join('')}</div>${p.images.length > 1 ? `<span class="gcount" id="gcount" aria-hidden="true">${num(1)} / ${num(p.images.length)}</span><button class="gnav gprev" type="button" aria-label="${t('prev')}" data-g="-1">${lang === 'fa' ? '›' : '‹'}</button><button class="gnav gnext" type="button" aria-label="${t('next')}" data-g="1">${lang === 'fa' ? '‹' : '›'}</button><div class="gdots" id="gdots">${p.images.map((_, k) => `<button type="button" class="${k ? '' : 'on'}" data-k="${k}" aria-label="${num(k + 1)} / ${num(p.images.length)}"></button>`).join('')}</div><div class="gthumbs" id="gthumbs">${p.images.map((im, k) => `<button type="button" class="gth${k ? '' : ' on'}" data-k="${k}" aria-label="${num(k + 1)} / ${num(p.images.length)}"><img src="/uploads/t/${encodeURIComponent(im.file)}?w=480" alt="" loading="lazy" decoding="async"></button>`).join('')}</div>` : ''}</div>
       <div class="info">
         <div class="crumbs"><a data-link href="/">${t('shopCrumb')}</a>${cpath.map((c) => ` › <a data-link href="/?cat=${encodeURIComponent(c.slug)}">${esc(L(c.name))}</a>`).join('')}</div>
         <h1 class="display">${esc(L(p.name))}</h1>
@@ -190,14 +196,29 @@
         ${pn ? `<div class="pn"><a data-link href="/product/${encodeURIComponent(pn[0].slug)}">‹ ${t('prev')}</a><a data-link href="/product/${encodeURIComponent(pn[1].slug)}">${t('next')} ›</a></div>` : ''}
       </div></div>
       ${rel.length ? `<section class="related"><h2>${t('related')}</h2><div class="rrow">${rel.map((x) => `<a class="rcard" data-link href="/product/${encodeURIComponent(x.slug)}"><span class="rimg"><img src="${thumb(x)}" alt="${esc(L(x.name))}" loading="lazy" decoding="async"></span><span class="rn">${esc(L(x.name))}</span><span class="rp">${x.sale ? `<s class="price-old">${num(x.price)}</s>` : ''}${money(unit(x))}</span></a>`).join('')}</div></section>` : ''}`;
-    const gal = $('#gal'), dots = [...document.querySelectorAll('#gdots button')], gcount = $('#gcount'), slideTo = (k) => { const n = p.images.length; gal.children[(k + n) % n].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' }); };
+    galApi = null;
+    const gal = $('#gal'), dots = [...document.querySelectorAll('#gdots button')], thumbs = [...document.querySelectorAll('#gthumbs button')], gcount = $('#gcount'), slideTo = (k) => { const n = p.images.length; gal.children[(k + n) % n].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' }); };
     if (dots.length) {
       let cur = 0;
-      gal.addEventListener('scroll', () => { const k = Math.round(Math.abs(gal.scrollLeft) / gal.clientWidth); if (k === cur) return; cur = k; dots.forEach((d, n) => d.classList.toggle('on', n === k)); if (gcount) gcount.textContent = `${num(k + 1)} / ${num(p.images.length)}`; }, { passive: true });
-      dots.forEach((d) => (d.onclick = () => slideTo(+d.dataset.k)));
+      gal.addEventListener('scroll', () => { const k = Math.round(Math.abs(gal.scrollLeft) / gal.clientWidth); if (k === cur) return; cur = k; dots.forEach((d, n) => d.classList.toggle('on', n === k)); thumbs.forEach((d, n) => d.classList.toggle('on', n === k)); if (thumbs[k]) thumbs[k].scrollIntoView({ block: 'nearest', inline: 'nearest' }); if (gcount) gcount.textContent = `${num(k + 1)} / ${num(p.images.length)}`; }, { passive: true });
+      dots.concat(thumbs).forEach((d) => (d.onclick = () => slideTo(+d.dataset.k)));
+      galApi = { step: (d) => slideTo(cur + d) };
       document.querySelectorAll('.gnav').forEach((b) => (b.onclick = () => slideTo(cur + +b.dataset.g)));
     }
-    gal.addEventListener('click', (e) => { const im = e.target.closest('img[data-i]'); if (im) openZoom(p, +im.dataset.i); });
+    let drag = null, moved = false;
+    const endDrag = () => {
+      if (!drag) return; const n = p.images.length, w = gal.clientWidth, rtl = document.documentElement.dir === 'rtl', dx = drag.dx * (rtl ? -1 : 1), fast = Date.now() - drag.t < 350;
+      const k = Math.min(n - 1, Math.max(0, drag.k0 + (dx < -(fast ? 18 : 40) ? 1 : dx > (fast ? 18 : 40) ? -1 : 0)));
+      drag = null; gal.classList.remove('drag'); gal.children[k].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' }); setTimeout(() => { moved = false; }, 60);
+    };
+    gal.addEventListener('pointerdown', (e) => {
+      if (e.pointerType !== 'mouse' || e.button !== 0 || p.images.length < 2) return;
+      drag = { x: e.clientX, left: gal.scrollLeft, dx: 0, t: Date.now(), k0: Math.round(Math.abs(gal.scrollLeft) / gal.clientWidth) }; moved = false;
+      try { gal.setPointerCapture(e.pointerId); } catch {}
+    });
+    gal.addEventListener('pointermove', (e) => { if (!drag) return; drag.dx = e.clientX - drag.x; if (!moved && Math.abs(drag.dx) > 4) { moved = true; gal.classList.add('drag'); } if (moved) gal.scrollLeft = drag.left - drag.dx; });
+    gal.addEventListener('pointerup', endDrag); gal.addEventListener('pointercancel', endDrag); gal.addEventListener('lostpointercapture', endDrag);
+    gal.addEventListener('click', (e) => { if (moved) return; const im = e.target.closest('img[data-i]'); if (im) openZoom(p, +im.dataset.i); });
     const chips = [...document.querySelectorAll('.chip[data-size]')], sizeOf = (n) => p.sizes.find((s) => s.name === n), nb = $('#notifyBox');
     const refresh = () => {
       chips.forEach((c) => { const on = c.dataset.size === pick; c.classList.toggle('on', on); c.setAttribute('aria-checked', String(on)); });

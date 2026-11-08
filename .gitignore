@@ -11,3 +11,4 @@ uploads/*.jpg
 uploads/*.png
 
 data/sync.json
+.env
