@@ -13,6 +13,7 @@
   const num = (n) => nf().format(n);
   const money = (n) => `${num(n)} ${t('currency')}`;
   const unit = (p) => (p.sale ? p.sale.price : p.price);
+  const szl = (n) => (String(n).toLowerCase() === 'free' ? t('freeSize') : n); // the size name "Free" is shown as فری سایز / Free size
   const kids = (id) => data.categories.filter((c) => (c.parentId || null) === id).sort((a, b) => a.order - b.order);
   const descIds = (id) => { const s = new Set([id]); const w = (x) => kids(x).forEach((c) => { s.add(c.id); w(c.id); }); w(id); return s; };
   const catPath = (id) => { const out = []; let c = data.categories.find((x) => x.id === id), g = 0; while (c && g++ < 6) { out.unshift(c); c = data.categories.find((x) => x.id === c.parentId); } return out; };
@@ -173,7 +174,7 @@
     const rows = (p.properties || []).filter((r) => !(colorName && (r.label.en === 'Color' || r.label.fa === 'رنگ'))).map((r) => `<div><dt>${esc(L(r.label))}</dt><dd>${esc(L(r.value))}</dd></div>`).join('');
     const sizeChips = p.sizes.length
       ? `<div class="og"><div class="olabel">${t('size')}: <b id="sizeLbl">—</b><span class="low" id="sizeHint"></span></div>
-          <div class="chips" role="radiogroup" aria-label="${t('size')}">${p.sizes.map((s) => `<button type="button" role="radio" aria-checked="false" class="chip ${s.stock <= 0 ? 'out' : ''}" data-size="${esc(s.name)}">${esc(s.name)}</button>`).join('')}</div>
+          <div class="chips" role="radiogroup" aria-label="${t('size')}">${p.sizes.map((s) => `<button type="button" role="radio" aria-checked="false" class="chip ${s.stock <= 0 ? 'out' : ''}" data-size="${esc(s.name)}">${esc(szl(s.name))}</button>`).join('')}</div>
           <div class="notifybox" id="notifyBox" hidden><span id="notifyMsg"></span><button class="link" id="notifyBtn" type="button">${t('notifyMe')}</button></div></div>` : '';
     const allOut = p.sizes.length === 0 || p.sizes.every((s) => s.stock <= 0);
     const peers = data.products.filter((x) => x.categoryId === p.categoryId && x.id !== p.id && (!p.group || x.group !== p.group));
@@ -229,7 +230,7 @@
     };
     chips.forEach((c) => (c.onclick = () => {
       const s = sizeOf(c.dataset.size);
-      if (s.stock <= 0) { pick = null; nb.hidden = false; nb.dataset.size = s.name; $('#notifyMsg').textContent = `${s.name} — ${t('soldOut')}`; refresh(); return; }
+      if (s.stock <= 0) { pick = null; nb.hidden = false; nb.dataset.size = s.name; $('#notifyMsg').textContent = `${szl(s.name)} — ${t('soldOut')}`; refresh(); return; }
       nb.hidden = true; pick = pick === s.name ? null : s.name; refresh();
     }));
     if ($('#notifyBtn')) $('#notifyBtn').onclick = async () => {
@@ -285,7 +286,7 @@
     const lines = cartLines(), est = lines.reduce((a, l) => a + unit(l.p) * l.qty, 0), count = lines.reduce((a, l) => a + l.qty, 0);
     drawer(`<div class="dh"><b>${t('cart')}</b><button data-close aria-label="${t('close')}">✕</button></div>
       <div class="db">${lines.length ? lines.map((l, i) => `<div class="line"><a data-link href="/product/${encodeURIComponent(l.p.slug)}"><img src="${img(l.p, 'product', 'uploads/t')}?w=480" alt=""></a>
-        <div class="lc"><div class="top2"><span>${esc(L(l.p.name))}</span><span>${l.p.sale ? `<s class="price-old">${num(l.p.price)}</s>` : ''}${money(unit(l.p))}</span></div><span>${t('size')}: ${esc(l.size)}</span>
+        <div class="lc"><div class="top2"><span>${esc(L(l.p.name))}</span><span>${l.p.sale ? `<s class="price-old">${num(l.p.price)}</s>` : ''}${money(unit(l.p))}</span></div><span>${t('size')}: ${esc(szl(l.size))}</span>
         <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-top:auto"><div class="qty"><button data-q="${i}:-1">−</button><span>${num(l.qty)}</span><button data-q="${i}:1">+</button></div>
         <button class="link" data-rm="${i}">${t('remove')}</button></div></div></div>`).join('') : `<p class="empty">${t('emptyCart')}</p>`}</div>
       ${lines.length ? `<div class="df"><div class="coupon"><input id="cpn" dir="ltr" autocomplete="off" placeholder="${t('couponCode')}" value="${esc(coupon)}"><button class="btn ghost" id="cpnBtn">${t('apply')}</button></div><div id="cpnMsg" class="err"></div>
@@ -427,7 +428,7 @@
       <h2>${t('myOrders')}</h2>${orders.map((o) => { const idx = stepIdx(o.status), bad = ['cancelled', 'return_requested', 'return_approved', 'return_rejected', 'returned'].includes(o.status); return `<div class="ord">
         <div class="oh"><b>${t('orderNum')} ${num(o.id)}</b><span>${new Date(o.createdAt).toLocaleDateString(lang === 'fa' ? 'fa-IR' : 'en-GB')}</span><span class="stb ${bad ? 'bad' : ''}">${t('st_' + o.status)}</span></div>
         ${idx !== undefined && !bad ? `<div class="steps">${steps.map((s, i) => `<span class="${i <= idx ? 'on' : ''}">${t(s)}</span>`).join('')}</div>` : ''}
-        ${o.items.map((i) => `<div class="oi"><span>${esc(L(i.name))} · ${esc(i.size)} ×${num(i.qty)}</span><span>${money(i.price * i.qty)}</span></div>`).join('')}
+        ${o.items.map((i) => `<div class="oi"><span>${esc(L(i.name))} · ${esc(szl(i.size))} ×${num(i.qty)}</span><span>${money(i.price * i.qty)}</span></div>`).join('')}
         <div class="oi tot"><b>${t('total')}</b><b>${money(o.total)}${o.discount ? ` <small>(−${num(o.discount)})</small>` : ''}</b></div>
         <div class="oi"><span>${t('payment')}</span><span class="paypill ${o.paymentStatus === 'paid' ? 'ok' : o.paymentStatus === 'unpaid' ? 'wait' : 'bad'}">${t('pay_' + o.paymentStatus)}</span></div>
         ${o.trackingCode ? `<div class="oi"><span>${t('trackingCode')}</span><b dir="ltr">${esc(o.trackingCode)}</b></div>` : ''}

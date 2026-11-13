@@ -19,6 +19,7 @@
       variants: 'تنوع و مشخصات', group: 'گروه رنگ‌ها (کلید)', groupHint: 'محصولاتی با کلید یکسان در صفحه محصول به هم لینک می‌شوند', sku: 'کد محصول', colorFa: 'رنگ (فارسی)', colorEn: 'رنگ (انگلیسی)', colorHex: 'کد رنگ', props: 'ویژگی‌ها', propLabelFa: 'عنوان (فا)', propLabelEn: 'عنوان (EN)', propValFa: 'مقدار (فا)', propValEn: 'مقدار (EN)', addProp: 'افزودن ویژگی', menu: 'منو', more: 'بیشتر', allOrders: 'همه',
       revenue: 'درآمد', views: 'بازدید', newOrders: 'سفارش جدید', totalOrders: 'کل سفارش‌ها', lowStock: 'موجودی کم', outStock: 'ناموجود', last14: 'آمار ۱۴ روز اخیر', topProducts: 'پربازدیدترین محصولات', byCategory: 'محصولات به تفکیک دسته', pViews: 'بازدید محصول', carts: 'افزودن به سبد',
       zCheck: 'بررسی پرداخت با زیبال', zRef: 'کد پیگیری', zCard: 'کارت', zPending: 'منتظر پرداخت', zChecked: 'وضعیت پرداخت به‌روز شد', zError: 'خطا در اتصال به درگاه',
+      colorsTitle: 'رنگ‌های این مدل', colorsHint: 'هر رنگ عکس‌ها و موجودی خودش را دارد؛ قیمت، دسته، توضیحات و لیست سایزها بین همه رنگ‌ها مشترک است.', colorsAfterSave: 'بعد از ذخیره‌ی اولین رنگ، می‌توانید رنگ‌های بعدی را از همین‌جا اضافه کنید.', addColor: 'افزودن رنگ', applyAll: 'ذخیره‌ی قیمت، دسته، توضیحات و سایزها برای همه‌ی رنگ‌ها', createColor: 'ساخت رنگ', colorCreated: 'رنگ جدید اضافه شد', stockPerSize: 'موجودی هر سایز', sizePresets: 'سایزهای آماده', pFree: 'فری سایز', pL4: 'S تا XL', pL5: 'S تا XXL', colorPhotos: 'عکس‌های این رنگ',
       add: 'افزودن', edit: 'ویرایش', del: 'حذف', save: 'ذخیره', cancel: 'انصراف', confirmDel: 'مطمئن هستید؟', saved: 'ذخیره شد', deleted: 'حذف شد', error: 'خطا رخ داد', name: 'نام', nameFa: 'نام (فارسی)', nameEn: 'نام (انگلیسی)', descFa: 'توضیحات (فارسی)', descEn: 'توضیحات (انگلیسی)', detFa: 'مشخصات (فارسی)', detEn: 'مشخصات (انگلیسی)',
       category: 'دسته', price: 'قیمت (تومان)', compare: 'قیمت قبل از تخفیف', status: 'وضعیت', active: 'فعال', draft: 'پیش‌نویس', stock: 'موجودی', sizes: 'سایزها', size: 'سایز', addSize: 'سایز جدید', images: 'تصاویر', upload: 'آپلود تصویر', fromLib: 'انتخاب از فایل‌ها', kindProduct: 'عکس محصول', kindModel: 'عکس مدل', order: 'ترتیب', count: 'تعداد',
       catInUse: 'این دسته محصول دارد.', fileInUse: 'این فایل در یک محصول استفاده شده است.', usedBy: 'استفاده در', unused: 'استفاده نشده', copyUrl: 'کپی لینک', copied: 'کپی شد', dropHere: 'تصاویر را اینجا رها کنید یا کلیک کنید (JPG, PNG, WebP, حداکثر ۱۰MB)', totalSize: 'حجم کل', empty: 'موردی وجود ندارد', done: 'تأیید', pick: 'انتخاب',
@@ -40,6 +41,7 @@
       variants: 'Variants & properties', group: 'Color group (key)', groupHint: 'Products sharing a key are linked together on the product page', sku: 'Product code', colorFa: 'Color (Farsi)', colorEn: 'Color (English)', colorHex: 'Color hex', props: 'Properties', propLabelFa: 'Label (FA)', propLabelEn: 'Label (EN)', propValFa: 'Value (FA)', propValEn: 'Value (EN)', addProp: 'Add property', menu: 'Menu', more: 'More', allOrders: 'All',
       revenue: 'Revenue', views: 'Visits', newOrders: 'New orders', totalOrders: 'Total orders', lowStock: 'Low stock', outStock: 'Out of stock', last14: 'Last 14 days', topProducts: 'Most viewed products', byCategory: 'Products by category', pViews: 'Product views', carts: 'Add to cart',
       zCheck: 'Check payment with Zibal', zRef: 'Reference', zCard: 'Card', zPending: 'Awaiting payment', zChecked: 'Payment status updated', zError: 'Could not reach the gateway',
+      colorsTitle: 'Colours of this model', colorsHint: 'Each colour has its own photos and stock; price, category, texts and the size list are shared by all colours.', colorsAfterSave: 'After saving the first colour you can add the others from here.', addColor: 'Add colour', applyAll: 'Save price, category, texts and sizes for all colours', createColor: 'Create colour', colorCreated: 'Colour added', stockPerSize: 'Stock per size', sizePresets: 'Quick sizes', pFree: 'Free size', pL4: 'S to XL', pL5: 'S to XXL', colorPhotos: 'Photos of this colour',
       add: 'Add', edit: 'Edit', del: 'Delete', save: 'Save', cancel: 'Cancel', confirmDel: 'Are you sure?', saved: 'Saved', deleted: 'Deleted', error: 'Something went wrong', name: 'Name', nameFa: 'Name (Farsi)', nameEn: 'Name (English)', descFa: 'Description (Farsi)', descEn: 'Description (English)', detFa: 'Specifications (Farsi)', detEn: 'Specifications (English)',
       category: 'Category', price: 'Price (Toman)', compare: 'Compare-at price', status: 'Status', active: 'Active', draft: 'Draft', stock: 'Stock', sizes: 'Sizes', size: 'Size', addSize: 'Add size', images: 'Images', upload: 'Upload images', fromLib: 'Pick from files', kindProduct: 'Product shot', kindModel: 'Model shot', order: 'Order', count: 'Count',
       catInUse: 'This category still has products.', fileInUse: 'This file is used by a product.', usedBy: 'Used by', unused: 'Unused', copyUrl: 'Copy URL', copied: 'Copied', dropHere: 'Drop images here or click (JPG, PNG, WebP, max 10MB)', totalSize: 'Total size', empty: 'Nothing here yet', done: 'Done', pick: 'Pick',
@@ -341,6 +343,38 @@
   function productForm(p, cats) {
     const m = p ? JSON.parse(JSON.stringify(p)) : { name: {}, description: {}, details: {}, categoryId: (cats[0] || {}).id, price: 0, comparePrice: 0, sizes: [{ name: 'M', stock: 0 }], images: [], active: true, group: '', sku: '', color: null, properties: [] };
     m.properties = m.properties || []; m.color = m.color || { fa: '', en: '', hex: '' };
+    let sibs = [];
+    if (p && p.group) api('/products').then((l) => { sibs = l.filter((x) => x.group === p.group); if ($('#nf')) { sync(); draw(); } }).catch(() => {});
+    const colorsBlock = () => (p ? `<div class="colors"><label><span>${t('colorsTitle')}</span></label><small class="muted">${t('colorsHint')}</small>
+      <div class="clist">${sibs.map((x) => `<div class="citem ${x.id === p.id ? 'cur' : ''}"><img src="${(x.images[0] ? '/uploads/t/' + encodeURIComponent(x.images[0].file) + '?w=480' : '')}" alt=""><span>${esc(x.color ? nm(x.color) : '—')}</span><small class="muted">${esc(nm(x.name))}</small>${x.id === p.id ? '' : `<button type="button" class="btn sec sm" data-ce="${x.id}">${t('edit')}</button>`}</div>`).join('')}</div>
+      <button class="btn sec sm" id="ac2" type="button">+ ${t('addColor')}</button>${sibs.length > 1 ? `<label class="switchrow"><span>${t('applyAll')}</span><input type="checkbox" id="sa" checked></label>` : ''}</div>` : `<small class="muted">${t('colorsAfterSave')}</small>`);
+    const colorSheet = async () => {
+      sync();
+      try { await api(`/products/${p.id}`, { method: 'PUT', body: m }); } catch (e) { return toast(errMsg(e)); } // save the model first: the new colour copies exactly what you see
+      const nc = { fa: '', en: '', hex: '#cccccc', images: [], stock: {} };
+      m.sizes.forEach((z) => (nc.stock[z.name] = 0));
+      const read = () => { nc.fa = $('#ncf').value; nc.en = $('#nce').value; nc.hex = $('#nch').value; document.querySelectorAll('[data-cs]').forEach((e) => (nc.stock[e.dataset.cs] = Number(e.value) || 0)); };
+      const paint = () => {
+        $('#modal').innerHTML = `<div class="sheet"><h1>${t('addColor')}</h1>
+          <div class="grid3"><label><span>${t('colorFa')}</span><input id="ncf" dir="rtl" value="${esc(nc.fa)}" autofocus></label><label><span>${t('colorEn')}</span><input id="nce" dir="ltr" value="${esc(nc.en)}"></label><label><span>${t('colorHex')}</span><input id="nch" type="color" value="${esc(nc.hex)}"></label></div>
+          <div class="sizes"><label><span>${t('stockPerSize')}</span></label>${m.sizes.map((z) => `<div class="r"><span>${esc(z.name)}</span><input data-cs="${esc(z.name)}" type="number" min="0" value="${nc.stock[z.name] || 0}"></div>`).join('')}</div>
+          <div><label><span>${t('colorPhotos')}</span></label><div class="imgs">${nc.images.map((f, i) => `<div class="it"><img src="/uploads/t/${encodeURIComponent(f)}?w=480" alt=""><div><button type="button" class="btn danger sm" data-cr="${i}">✕</button></div></div>`).join('')}</div>
+            <div style="margin-top:10px"><button type="button" class="btn sec sm" id="cup">${t('upload')}</button><input type="file" id="cfi" multiple accept="image/*" hidden></div></div>
+          <div class="actions sticky"><button class="btn sec" id="cx">${t('cancel')}</button><button class="btn" id="cok">${t('createColor')}</button></div></div>`;
+        $('#cx').onclick = () => { sync(); draw(); };
+        $('#cup').onclick = () => { read(); $('#cfi').click(); };
+        $('#cfi').onchange = async (e) => { read(); const fd = new FormData(); [...e.target.files].forEach((f) => fd.append('files', f)); try { const r = await api('/files', { method: 'POST', body: fd }); r.uploaded.forEach((f) => nc.images.push(f)); } catch { toast(t('error')); } paint(); };
+        document.querySelectorAll('[data-cr]').forEach((b) => (b.onclick = () => { read(); nc.images.splice(+b.dataset.cr, 1); paint(); }));
+        $('#cok').onclick = async () => {
+          read(); if (!nc.fa.trim() && !nc.en.trim()) return toast(t('colorFa'));
+          try {
+            const made = await api(`/products/${p.id}/colors`, { method: 'POST', body: { color: { fa: nc.fa, en: nc.en, hex: nc.hex }, images: nc.images.map((f) => ({ file: f, kind: 'product' })), stock: nc.stock } });
+            toast(t('colorCreated')); m.group = made.group; p.group = made.group; sibs = (await api('/products')).filter((x) => x.group === made.group); draw();
+          } catch (e) { toast(errMsg(e)); }
+        };
+      };
+      paint();
+    };
     const draw = () => {
       modal(`<h1>${p ? t('edit') : t('add')}</h1>
         <div class="grid2"><label><span>${t('nameFa')}</span><input id="nf" dir="rtl" value="${esc(m.name.fa)}"></label><label><span>${t('nameEn')}</span><input id="ne" dir="ltr" value="${esc(m.name.en)}"></label></div>
@@ -353,8 +387,8 @@
           <div class="grid2"><label><span>${t('group')}</span><input id="gp" dir="ltr" value="${esc(m.group)}" placeholder="pocket"><small>${t('groupHint')}</small></label><label><span>${t('sku')}</span><input id="sk" dir="ltr" value="${esc(m.sku)}"></label></div>
           <div class="grid3"><label><span>${t('colorFa')}</span><input id="cfa" dir="rtl" value="${esc(m.color.fa)}"></label><label><span>${t('colorEn')}</span><input id="cen" dir="ltr" value="${esc(m.color.en)}"></label><label><span>${t('colorHex')}</span><input id="chx" type="color" value="${esc(m.color.hex || '#cccccc')}"></label></div>
           <label><span>${t('props')}</span></label>${m.properties.map((r, i) => `<div class="prow"><input data-pk="${i}:fa" dir="rtl" placeholder="${t('propLabelFa')}" value="${esc(r.label.fa)}"><input data-pk="${i}:en" dir="ltr" placeholder="${t('propLabelEn')}" value="${esc(r.label.en)}"><input data-pv="${i}:fa" dir="rtl" placeholder="${t('propValFa')}" value="${esc(r.value.fa)}"><input data-pv="${i}:en" dir="ltr" placeholder="${t('propValEn')}" value="${esc(r.value.en)}"><button class="btn danger sm" data-pr="${i}">✕</button></div>`).join('')}
-          <button class="btn sec sm" id="ap">+ ${t('addProp')}</button></fieldset>
-        <div class="sizes"><label><span>${t('sizes')}</span></label>${m.sizes.map((s, i) => `<div class="r"><input data-sn="${i}" value="${esc(s.name)}" placeholder="${t('size')}"><input data-ss="${i}" type="number" min="0" value="${s.stock}" placeholder="${t('stock')}"><button class="btn danger sm" data-sr="${i}">✕</button></div>`).join('')}<button class="btn sec sm" id="as">+ ${t('addSize')}</button></div>
+          <button class="btn sec sm" id="ap">+ ${t('addProp')}</button>${colorsBlock()}</fieldset>
+        <div class="sizes"><label><span>${t('sizes')}</span></label><div class="presets"><small class="muted">${t('sizePresets')}</small><button type="button" class="btn sec sm" data-preset="free">${t('pFree')}</button><button type="button" class="btn sec sm" data-preset="l4">${t('pL4')}</button><button type="button" class="btn sec sm" data-preset="l5">${t('pL5')}</button></div>${m.sizes.map((s, i) => `<div class="r"><input data-sn="${i}" value="${esc(s.name)}" placeholder="${t('size')}"><input data-ss="${i}" type="number" min="0" value="${s.stock}" placeholder="${t('stock')}"><button class="btn danger sm" data-sr="${i}">✕</button></div>`).join('')}<button class="btn sec sm" id="as">+ ${t('addSize')}</button></div>
         <div><label><span>${t('images')}</span></label><div class="imgs">${m.images.map((im, i) => `<div class="it">${i === 0 ? `<span class="mainb">★ ${t('mainImg')}</span>` : ''}<img src="/uploads/t/${encodeURIComponent(im.file)}?w=480" alt=""><select data-ik="${i}"><option value="product" ${im.kind === 'product' ? 'selected' : ''}>${t('kindProduct')}</option><option value="model" ${im.kind === 'model' ? 'selected' : ''}>${t('kindModel')}</option></select>
           <div><button class="btn sec sm" data-iu="${i}">↑</button><button class="btn sec sm" data-id="${i}">↓</button><button class="btn danger sm" data-ir="${i}">✕</button></div></div>`).join('')}</div>
           <div style="margin-top:10px;display:flex;gap:8px"><button class="btn sec sm" id="up">${t('upload')}</button><button class="btn sec sm" id="lib">${t('fromLib')}</button><input type="file" id="fi" multiple accept="image/*" hidden></div></div>
@@ -375,6 +409,9 @@
     const bind = () => {
       $('#ap').onclick = () => { sync(); m.properties.push({ label: { fa: '', en: '' }, value: { fa: '', en: '' } }); draw(); };
       document.querySelectorAll('[data-pr]').forEach((b) => (b.onclick = () => { sync(); m.properties.splice(b.dataset.pr, 1); draw(); }));
+      document.querySelectorAll('[data-preset]').forEach((b) => (b.onclick = () => { sync(); const keep = Object.fromEntries(m.sizes.map((z) => [z.name, z.stock])), total = m.sizes.reduce((a, z) => a + (z.stock || 0), 0), names = { free: ['Free'], l4: ['S', 'M', 'L', 'XL'], l5: ['S', 'M', 'L', 'XL', 'XXL'] }[b.dataset.preset]; m.sizes = names.map((n) => ({ name: n, stock: keep[n] ?? (names.length === 1 ? total : 0) })); draw(); }));
+      if ($('#ac2')) $('#ac2').onclick = colorSheet;
+      document.querySelectorAll('[data-ce]').forEach((b) => (b.onclick = () => { const x = sibs.find((q) => q.id === +b.dataset.ce); if (x) { closeModal(true); productForm(x, cats); } }));
       $('#x').onclick = () => closeModal();
       $('#as').onclick = () => { sync(); m.sizes.push({ name: '', stock: 0 }); draw(); };
       document.querySelectorAll('[data-sr]').forEach((b) => (b.onclick = () => { sync(); m.sizes.splice(b.dataset.sr, 1); draw(); }));
@@ -387,8 +424,8 @@
         document.querySelectorAll('[data-f]').forEach((b) => (b.onclick = () => { const f = b.dataset.f; sel.has(f) ? sel.delete(f) : sel.add(f); b.classList.toggle('sel'); }));
         $('#lx').onclick = draw; $('#lo').onclick = () => { sel.forEach((f) => m.images.push({ file: f, kind: 'product' })); draw(); }; };
       $('#ok').onclick = async () => {
-        sync();
-        try { await api(p ? `/products/${p.id}` : '/products', { method: p ? 'PUT' : 'POST', body: m }); closeModal(true); toast(t('saved')); products(); }
+        sync(); const all = !!($('#sa') && $('#sa').checked);
+        try { await api(p ? `/products/${p.id}` : '/products', { method: p ? 'PUT' : 'POST', body: m }); if (p && all && m.group) await api(`/products/${p.id}/sync-colors`, { method: 'POST' }); closeModal(true); toast(t('saved')); products(); }
         catch (e) { toast(errMsg(e)); }
       };
     };

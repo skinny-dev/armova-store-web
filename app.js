@@ -170,6 +170,37 @@ admin.put('/products/:id', A.can('products.edit'), (req, res) => {
   const err = applyProduct(p, req.body); if (err) return res.status(400).json({ error: err });
   db.save(); ordersLib.checkBackInStock(); ordersLib.clearLowStockFlags(); res.json(p);
 });
+// A "model" is a group of products that are the colours of one design (same group key). One call adds a colour with its photos: price, category, texts and size list are copied from the model.
+const isColorRow = (r) => /^(رنگ)$/.test(String((r.label || {}).fa || '').trim()) || /colou?r/i.test(String((r.label || {}).en || ''));
+const withoutColor = (name, color) => { const n = String(name || '').trim(), c = String(color || '').trim(); return c && n.toLowerCase().endsWith(c.toLowerCase()) ? n.slice(0, -c.length).trim() : n; };
+admin.post('/products/:id/colors', A.can('products.edit'), (req, res) => {
+  const s = db.get(), src = s.products.find((x) => x.id === Number(req.params.id)), b = req.body || {};
+  if (!src) return res.status(404).end();
+  const col = { ...bi(b.color, 40), hex: /^#[0-9a-f]{6}$/i.test(String((b.color || {}).hex || '')) ? String(b.color.hex).toLowerCase() : '' };
+  if (!col.fa && !col.en) return res.status(400).json({ error: 'color_required' });
+  col.fa ||= col.en; col.en ||= col.fa;
+  if (!src.group) src.group = slugify(src.slug || src.name.en) || ('m' + src.id);
+  const files = new Set(fs.readdirSync(UPLOADS)), stock = b.stock && typeof b.stock === 'object' ? b.stock : {};
+  const images = (Array.isArray(b.images) ? b.images : []).filter((i) => i && files.has(i.file)).map((i) => ({ file: i.file, kind: i.kind === 'model' ? 'model' : 'product' }));
+  const name = { fa: `${withoutColor(src.name.fa, src.color && src.color.fa)} ${col.fa}`.trim().slice(0, 120), en: `${withoutColor(src.name.en, src.color && src.color.en)} ${col.en}`.trim().slice(0, 120) };
+  const p = { id: db.nextId(), createdAt: Date.now(), views: 0, group: src.group, sku: '', color: col, name, description: src.description, details: src.details, categoryId: src.categoryId, price: src.price, comparePrice: src.comparePrice, active: src.active !== false, images,
+    sizes: src.sizes.map((z) => ({ name: z.name, stock: Math.max(0, Math.floor(Number(stock[z.name])) || 0) })),
+    properties: src.properties.map((r) => (isColorRow(r) ? { label: r.label, value: { fa: col.fa, en: col.en } } : r)) };
+  p.slug = uniqueSlug(s.products, p.name.en); s.products.push(p); db.save(); ordersLib.checkBackInStock(); res.json(p);
+});
+// Copy the shared fields of this colour (price, category, texts, size list, common properties) to every other colour of the model. Each colour keeps its own photos, name, colour and stock.
+admin.post('/products/:id/sync-colors', A.can('products.edit'), (req, res) => {
+  const s = db.get(), src = s.products.find((x) => x.id === Number(req.params.id));
+  if (!src) return res.status(404).end(); if (!src.group) return res.status(409).json({ error: 'no_group' });
+  let n = 0;
+  for (const p of s.products) {
+    if (p.id === src.id || p.group !== src.group) continue;
+    Object.assign(p, { price: src.price, comparePrice: src.comparePrice, categoryId: src.categoryId, description: src.description, details: src.details, active: src.active });
+    p.sizes = src.sizes.map((z) => ({ name: z.name, stock: (p.sizes.find((q) => q.name === z.name) || {}).stock || 0 }));
+    p.properties = [...p.properties.filter(isColorRow), ...src.properties.filter((r) => !isColorRow(r))]; n++;
+  }
+  db.save(); ordersLib.checkBackInStock(); res.json({ ok: true, updated: n });
+});
 // Bulk edit: { ids, active?, price?, categoryId?, stock?, delete? } — only provided fields are applied.
 admin.post('/products/bulk', A.can('products.bulk', 'products.edit'), (req, res) => {
   const s = db.get(), b = req.body || {};
